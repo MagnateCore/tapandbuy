@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tap & Buy</title>
+    <title>Tap & Buy Store</title>
     <style>
         :root {
             --brand-yellow: #F1C40F;
@@ -37,7 +37,7 @@
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 800;
             color: var(--brand-dark-blue);
         }
@@ -76,14 +76,14 @@
             margin-bottom: 15px;
         }
 
-        .radio-gallery {
+        .product-gallery {
             display: flex;
             justify-content: center;
             gap: 10px;
             margin-bottom: 15px;
         }
 
-        .radio-gallery img {
+        .product-gallery img {
             width: 100px;
             height: auto;
             object-fit: contain;
@@ -186,7 +186,7 @@
 
     <div class="store-container">
         <header>
-            <div class="logo">tap<span>&</span>Buy</div>
+            <div class="logo">Tap &<span> Buy</span> Store</div>
             <div>☰</div>
         </header>
 
@@ -197,25 +197,24 @@
         </div>
 
         <div class="featured-product">
-            <!-- Usamos una clase para que el script lea el título dinámicamente -->
-            <div class="product-title" id="productTitle">Primer Producto Ganador: Radio Solar Multiuso</div>
+            <div class="product-title" id="productTitle">Producto Destacado Principal</div>
             
-            <div class="radio-gallery">
-                <img src="verde.png" alt="Radio Solar Verde">
-                <img src="naranja.png" alt="Radio Solar Naranja">
-                <img src="roja.png" alt="Radio Solar Roja">
+            <div class="product-gallery">
+                <img src="image_0.png" alt="Vista 1">
+                <img src="image_0.png" alt="Vista 2">
+                <img src="image_0.png" alt="Vista 3">
             </div>
 
-            <div class="product-desc">Radio solar de emergencia con manivela, linterna LED, banco de energía y alerta SOS. Ideal para exteriores.</div>
+            <div class="product-desc">Descripción detallada de las características principales del producto destacado actual.</div>
             <button class="btn-buy" id="btnBuy">Añadir al Carrito</button>
         </div>
 
         <div class="more-section">
-            <div class="section-title">Más Productos Ganadores</div>
+            <div class="section-title">Más Productos Destacados</div>
             <div class="products-grid">
-                <div class="product-card"><img src="image_0.png" alt="Smartwatch"></div>
-                <div class="product-card"><img src="image_0.png" alt="Licuadora"></div>
-                <div class="product-card"><img src="image_0.png" alt="Audífonos"></div>
+                <div class="product-card"><img src="image_0.png" alt="Producto 1"></div>
+                <div class="product-card"><img src="image_0.png" alt="Producto 2"></div>
+                <div class="product-card"><img src="image_0.png" alt="Producto 3"></div>
             </div>
             <button class="btn-more">Ver Más</button>
         </div>
@@ -231,12 +230,10 @@
     <script>
         document.getElementById('btnBuy').addEventListener('click', async () => {
             const webhookUrl = 'https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H';
-            
-            // Extracción dinámica: el script lee el texto que tenga el producto en la pantalla
             const dynamicProduct = document.getElementById('productTitle').innerText;
             
             const payload = {
-                store: "Tap & Buy",
+                store: "Tap & Buy Store",
                 product: dynamicProduct,
                 action: "add_to_cart",
                 timestamp: new Date().toISOString()
