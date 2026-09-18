@@ -1,231 +1,266 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tap & Buy</title>
-    <style>
-        :root {
-            --brand-yellow: #F1C40F;
-            --brand-dark-blue: #34495E;
-            --brand-bg: #FFFFFE;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tap & Buy</title>
+    <style>
+        :root {
+            --brand-yellow: #F1C40F;
+            --brand-dark-blue: #34495E;
+            --brand-bg: #FFFFFE;
+            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
 
-        body {
-            font-family: var(--font-family);
-            background-color: var(--brand-bg);
-            color: var(--brand-dark-blue);
-            margin: 0;
-            padding: 0;
-        }
+        body {
+            font-family: var(--font-family);
+            background-color: var(--brand-bg);
+            color: var(--brand-dark-blue);
+            margin: 0;
+            padding: 0;
+        }
 
-        .store-container {
-            max-width: 414px;
-            margin: 0 auto;
-            background-color: var(--brand-bg);
-            padding-bottom: 70px;
-        }
+        .store-container {
+            max-width: 414px;
+            margin: 0 auto;
+            background-color: var(--brand-bg);
+            padding-bottom: 70px;
+        }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #FFFFFF;
-            border-bottom: 1px solid #eaeaea;
-        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #eaeaea;
+        }
 
-        .logo {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--brand-dark-blue);
-        }
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--brand-dark-blue);
+        }
 
-        .logo span {
-            color: var(--brand-yellow);
-        }
+        .logo span {
+            color: var(--brand-yellow);
+        }
 
-        .search-section {
-            padding: 15px;
-            background-color: #FFFFFF;
-        }
+        .search-section {
+            padding: 15px;
+            background-color: #FFFFFF;
+        }
 
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-sizing: border-box;
-            outline: none;
-        }
+        .search-bar input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            outline: none;
+        }
 
-        .featured-product {
-            background-color: #FFFFFF;
-            margin: 10px 0;
-            padding: 20px 15px;
-            border-top: 1px solid #eaeaea;
-            border-bottom: 1px solid #eaeaea;
-        }
+        .featured-product {
+            background-color: #FFFFFF;
+            margin: 10px 0;
+            padding: 20px 15px;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+        }
 
-        .product-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--brand-dark-blue);
-            margin-bottom: 15px;
-        }
+        .product-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--brand-dark-blue);
+            margin-bottom: 15px;
+        }
 
-        .radio-gallery {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+        .radio-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
-        .radio-gallery img {
-            width: 100px;
-            height: auto;
-            object-fit: contain;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 5px;
-        }
+        .radio-gallery img {
+            width: 100px;
+            height: auto;
+            object-fit: contain;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 5px;
+        }
 
-        .product-desc {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
+        .product-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
 
-        .btn-buy {
-            background-color: var(--brand-yellow);
-            color: var(--brand-dark-blue);
-            font-weight: 700;
-            font-size: 16px;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
+        .btn-buy {
+            background-color: var(--brand-yellow);
+            color: var(--brand-dark-blue);
+            font-weight: 700;
+            font-size: 16px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-        .more-section {
-            padding: 15px;
-            background-color: #FFFFFF;
-        }
+        .more-section {
+            padding: 15px;
+            background-color: #FFFFFF;
+        }
 
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brand-dark-blue);
-            margin-bottom: 15px;
-            text-align: center;
-        }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--brand-dark-blue);
+            margin-bottom: 15px;
+            text-align: center;
+        }
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
 
-        .product-card {
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-        }
+        .product-card {
+            background-color: #f9f9f9;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+        }
 
-        .product-card img {
-            max-width: 100%;
-            height: 60px;
-            object-fit: contain;
-        }
+        .product-card img {
+            max-width: 100%;
+            height: 60px;
+            object-fit: contain;
+        }
 
-        .btn-more {
-            background-color: transparent;
-            color: var(--brand-dark-blue);
-            border: 1px solid var(--brand-dark-blue);
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            display: block;
-            margin: 0 auto;
-            cursor: pointer;
-        }
+        .btn-more {
+            background-color: transparent;
+            color: var(--brand-dark-blue);
+            border: 1px solid var(--brand-dark-blue);
+            padding: 8px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            display: block;
+            margin: 0 auto;
+            cursor: pointer;
+        }
 
-        nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 414px;
-            background-color: #FFFFFF;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #eaeaea;
-        }
+        nav.bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 414px;
+            background-color: #FFFFFF;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px 0;
+            border-top: 1px solid #eaeaea;
+        }
 
-        .nav-item {
-            text-align: center;
-            font-size: 12px;
-            color: #888;
-        }
+        .nav-item {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+        }
 
-        .nav-item.active {
-            color: var(--brand-yellow);
-        }
-    </style>
+        .nav-item.active {
+            color: var(--brand-yellow);
+        }
+    </style>
 </head>
 <body>
 
-    <div class="store-container">
-        <header>
-            <div class="logo">tap<span>&</span>Buy</div>
-            <div>☰</div>
-        </header>
+    <div class="store-container">
+        <header>
+            <div class="logo">tap<span>&</span>Buy</div>
+            <div>☰</div>
+        </header>
 
-        <div class="search-section">
-            <div class="search-bar">
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
+        <div class="search-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search">
+            </div>
+        </div>
 
-        <div class="featured-product">
-            <div class="product-title">Primer Producto Ganador: Radio Solar Multiuso</div>
-            
-            <div class="radio-gallery">
-                <img src="verde.png" alt="Radio Solar Verde">
-                <img src="naranja.png" alt="Radio Solar Naranja">
-                <img src="roja.png" alt="Radio Solar Roja">
-            </div>
+        <div class="featured-product">
+            <!-- Usamos una clase para que el script lea el título dinámicamente -->
+            <div class="product-title" id="productTitle">Primer Producto Ganador: Radio Solar Multiuso</div>
+            
+            <div class="radio-gallery">
+                <img src="verde.png" alt="Radio Solar Verde">
+                <img src="naranja.png" alt="Radio Solar Naranja">
+                <img src="roja.png" alt="Radio Solar Roja">
+            </div>
 
-            <div class="product-desc">Radio solar de emergencia con manivela, linterna LED, banco de energía y alerta SOS. Ideal para exteriores.</div>
-            <button class="btn-buy">Añadir al Carrito</button>
-        </div>
+            <div class="product-desc">Radio solar de emergencia con manivela, linterna LED, banco de energía y alerta SOS. Ideal para exteriores.</div>
+            <button class="btn-buy" id="btnBuy">Añadir al Carrito</button>
+        </div>
 
-        <div class="more-section">
-            <div class="section-title">Más Productos Ganadores</div>
-            <div class="products-grid">
-                <div class="product-card"><img src="image_0.png" alt="Smartwatch"></div>
-                <div class="product-card"><img src="image_0.png" alt="Licuadora"></div>
-                <div class="product-card"><img src="image_0.png" alt="Audífonos"></div>
-            </div>
-            <button class="btn-more">Ver Más</button>
-        </div>
-    </div>
+        <div class="more-section">
+            <div class="section-title">Más Productos Ganadores</div>
+            <div class="products-grid">
+                <div class="product-card"><img src="image_0.png" alt="Smartwatch"></div>
+                <div class="product-card"><img src="image_0.png" alt="Licuadora"></div>
+                <div class="product-card"><img src="image_0.png" alt="Audífonos"></div>
+            </div>
+            <button class="btn-more">Ver Más</button>
+        </div>
+    </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-item active">🏠 Inicio</div>
-        <div class="nav-item">🔍 Buscar</div>
-        <div class="nav-item">🛒 Carrito</div>
-        <div class="nav-item">👤 Perfil</div>
-    </nav>
+    <nav class="bottom-nav">
+        <div class="nav-item active">🏠 Inicio</div>
+        <div class="nav-item">🔍 Buscar</div>
+        <div class="nav-item">🛒 Carrito</div>
+        <div class="nav-item">👤 Perfil</div>
+    </nav>
 
+    <script>
+        document.getElementById('btnBuy').addEventListener('click', async () => {
+            const webhookUrl = 'https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H';
+            
+            // Extracción dinámica: el script lee el texto que tenga el producto en la pantalla
+            const dynamicProduct = document.getElementById('productTitle').innerText;
+            
+            const payload = {
+                store: "Tap & Buy",
+                product: dynamicProduct,
+                action: "add_to_cart",
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    alert('¡Producto añadido con éxito y registrado en Magnate Core!');
+                } else {
+                    alert('Hubo un detalle al procesar la solicitud.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('No se pudo conectar con el motor de ventas.');
+            }
+        });
+    </script>
 </body>
 </html>
