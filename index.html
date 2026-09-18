@@ -1,263 +1,531 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tap & Buy Store</title>
-    <style>
-        :root {
-            --brand-yellow: #F1C40F;
-            --brand-dark-blue: #34495E;
-            --brand-bg: #FFFFFE;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tap &amp; Buy Store — Secure Quote &amp; Shipping</title>
+<style>
+  :root {
+    --navy: #1a252f;
+    --gold: #D4AF37;
+    --gold-light: #f9f6ed;
+    --gold-border: #e6cb68;
+    --green: #0ea86c;
+    --green-dark: #0b8a58;
+    --bg: #f4f6f9;
+    --card: #ffffff;
+    --line: #dde3ea;
+    --text: #2b3a4a;
+    --muted: #7b8a99;
+    --notice-bg: #fdf8e8;
+    --notice-text: #8a7000;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; display: flex; justify-content: center;
+    padding: 24px 14px 60px;
+  }
+  .card {
+    background: var(--card); width: 100%; max-width: 480px;
+    border-radius: 22px; padding: 24px 24px 30px;
+    box-shadow: 0 8px 30px rgba(22, 50, 79, .08);
+    overflow: hidden;
+    border-top: 4px solid var(--gold);
+  }
+  .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .back-link { color: var(--muted); font-size: 14px; text-decoration: none; }
+  .back-link:hover { color: var(--navy); }
+  .sound-toggle {
+    border: 1.5px solid var(--line); background: #fff; border-radius: 50%;
+    width: 36px; height: 36px; font-size: 16px; cursor: pointer;
+    transition: transform .15s;
+  }
+  .sound-toggle:active { transform: scale(.9); }
 
-        body {
-            font-family: var(--font-family);
-            background-color: var(--brand-bg);
-            color: var(--brand-dark-blue);
-            margin: 0;
-            padding: 0;
-        }
+  .logo { text-align: center; font-size: 33px; font-weight: 800; color: var(--navy); letter-spacing: -1px; white-space: nowrap; }
+  .logo .ltr { display: inline-block; animation: popIn .5s cubic-bezier(.34,1.56,.64,1) backwards; }
+  @keyframes popIn {
+    0% { opacity: 0; transform: translateY(18px) scale(.7); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .logo .amp { color: var(--gold); display: inline-block; animation: pulse 2s ease-in-out 1.2s infinite; text-shadow: 0 2px 8px rgba(212,175,55,0.3); }
+  @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.22); } }
+  .logo:hover .ltr { animation: bounceLtr .4s ease; }
+  @keyframes bounceLtr { 30% { transform: translateY(-6px); } }
+  .logo-wrap { text-align: center; }
+  .tagline { text-align: center; color: var(--muted); font-size: 14px; margin: 10px 0 16px; }
 
-        .store-container {
-            max-width: 414px;
-            margin: 0 auto;
-            background-color: var(--brand-bg);
-            padding-bottom: 70px;
-        }
+  .ship-line { position: relative; height: 34px; margin: 0 4px 14px; }
+  .ship-track { position: absolute; top: 50%; left: 0; right: 0; height: 0; border-top: 2px dashed var(--line); }
+  .ship-track::before {
+    content: ""; position: absolute; top: -1px; left: 0; height: 3px; width: 40%;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    animation: speedGlow 2.2s linear infinite;
+  }
+  @keyframes speedGlow { 0% { left: -40%; } 100% { left: 100%; } }
+  .ship-icon {
+    position: absolute; top: 50%; left: 0; transform: translateY(-58%);
+    font-size: 20px; animation: flyAcross 4s ease-in-out infinite;
+    filter: drop-shadow(0 2px 3px rgba(212,175,55,.3));
+  }
+  @keyframes flyAcross {
+    0%   { left: 0; transform: translateY(-58%) rotate(0deg); }
+    50%  { left: calc(100% - 26px); transform: translateY(-58%) rotate(0deg); }
+    52%  { transform: translateY(-58%) scaleX(-1); }
+    100% { left: 0; transform: translateY(-58%) scaleX(-1); }
+  }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: #FFFFFF;
-            border-bottom: 1px solid #eaeaea;
-        }
+  .ticker-wrap { overflow: hidden; background: var(--navy); border-radius: 10px; margin-bottom: 18px; padding: 8px 0; border: 1px solid rgba(212,175,55,0.2); }
+  .ticker { display: inline-block; white-space: nowrap; animation: tick 16s linear infinite; }
+  .ticker span { color: #fff; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; margin: 0 18px; }
+  .ticker .dot { color: var(--gold); }
+  @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        .logo {
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--brand-dark-blue);
-        }
+  .stats { display: flex; justify-content: center; gap: 28px; margin-bottom: 18px; }
+  .stat { text-align: center; }
+  .stat b { display: block; font-size: 20px; color: var(--navy); }
+  .stat span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
 
-        .logo span {
-            color: var(--brand-yellow);
-        }
+  .notice {
+    background: var(--notice-bg); color: var(--notice-text);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px; padding: 14px 16px; font-size: 13.5px;
+    text-align: center; line-height: 1.55; margin-bottom: 6px;
+  }
+  label { display: block; font-weight: 600; font-size: 14.5px; margin: 16px 0 7px; color: var(--navy); }
+  input, select, textarea {
+    width: 100%; padding: 14px 16px; border: 1.5px solid var(--line);
+    border-radius: 12px; font-size: 15px; font-family: inherit;
+    color: var(--text); background: #fff; outline: none;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px rgba(212,175,55,.15);
+  }
+  input::placeholder, textarea::placeholder { color: #aab6c2; }
+  select {
+    appearance: none; -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'><path d='M1 1l6 6 6-6' stroke='%237b8a99' stroke-width='2' fill='none' stroke-linecap='round'/></svg>");
+    background-repeat: no-repeat; background-position: right 16px center;
+  }
+  textarea { resize: vertical; min-height: 74px; }
 
-        .search-section {
-            padding: 15px;
-            background-color: #FFFFFF;
-        }
+  .btn-submit {
+    width: 100%; margin-top: 22px; padding: 16px;
+    background: var(--navy); color: var(--gold); border: 1px solid var(--gold-border); border-radius: 14px;
+    font-size: 16.5px; font-weight: 700; cursor: pointer;
+    box-shadow: 0 5px 0 #0d1217, 0 8px 18px rgba(26,37,47,.25);
+    transition: transform .08s, box-shadow .08s, background .15s;
+    position: relative; overflow: hidden;
+  }
+  .btn-submit:hover { background: #23313e; }
+  .btn-submit:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #0d1217, 0 2px 6px rgba(26,37,47,.2);
+  }
+  .btn-submit:disabled { opacity: .65; cursor: wait; }
+  .ripple {
+    position: absolute; border-radius: 50%; background: rgba(212,175,55,.3);
+    transform: scale(0); animation: rip .5s ease-out forwards; pointer-events: none;
+  }
+  @keyframes rip { to { transform: scale(4); opacity: 0; } }
+  .secure-note { text-align: center; color: var(--muted); font-size: 12.5px; margin-top: 16px; }
+  .hidden { display: none; }
+  .success { text-align: center; padding: 34px 6px; }
+  .success .check { font-size: 52px; animation: popIn .5s cubic-bezier(.34,1.56,.64,1); display:inline-block; }
+  .success h2 { color: var(--navy); font-size: 21px; margin: 10px 0 8px; }
+  .success p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
 
-        .search-bar input {
-            width: 100%;
-            padding: 10px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            box-sizing: border-box;
-            outline: none;
-        }
-
-        .featured-product {
-            background-color: #FFFFFF;
-            margin: 10px 0;
-            padding: 20px 15px;
-            border-top: 1px solid #eaeaea;
-            border-bottom: 1px solid #eaeaea;
-        }
-
-        .product-title {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--brand-dark-blue);
-            margin-bottom: 15px;
-        }
-
-        .product-gallery {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .product-gallery img {
-            width: 100px;
-            height: auto;
-            object-fit: contain;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 5px;
-        }
-
-        .product-desc {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-
-        .btn-buy {
-            background-color: var(--brand-yellow);
-            color: var(--brand-dark-blue);
-            font-weight: 700;
-            font-size: 16px;
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .more-section {
-            padding: 15px;
-            background-color: #FFFFFF;
-        }
-
-        .section-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--brand-dark-blue);
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .product-card {
-            background-color: #f9f9f9;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .product-card img {
-            max-width: 100%;
-            height: 60px;
-            object-fit: contain;
-        }
-
-        .btn-more {
-            background-color: transparent;
-            color: var(--brand-dark-blue);
-            border: 1px solid var(--brand-dark-blue);
-            padding: 8px 20px;
-            border-radius: 6px;
-            font-weight: 600;
-            display: block;
-            margin: 0 auto;
-            cursor: pointer;
-        }
-
-        nav.bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 414px;
-            background-color: #FFFFFF;
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 0;
-            border-top: 1px solid #eaeaea;
-        }
-
-        .nav-item {
-            text-align: center;
-            font-size: 12px;
-            color: #888;
-        }
-
-        .nav-item.active {
-            color: var(--brand-yellow);
-        }
-    </style>
+  @media (prefers-reduced-motion: reduce) {
+    .ticker, .ship-icon, .ship-track::before, .logo .amp { animation: none !important; }
+    .logo .ltr { opacity: 1; transform: none; animation: none; }
+  }
+</style>
+<base target="_blank">
 </head>
 <body>
 
-    <div class="store-container">
-        <header>
-            <div class="logo">Tap &<span> Buy</span> Store</div>
-            <div>☰</div>
-        </header>
+<div class="card">
+  <div class="topbar">
+    <a class="back-link" href="index.html">&larr; Back to catalog</a>
+    <button class="sound-toggle" id="soundToggle" title="Sound on/off">&#x1F50A;</button>
+  </div>
 
-        <div class="search-section">
-            <div class="search-bar">
-                <input type="text" placeholder="Search">
-            </div>
-        </div>
+  <div id="formView">
+    <div class="logo-wrap">
+      <div class="logo" id="logo">
+        <span class="ltr" style="animation-delay:.04s">T</span><span class="ltr" style="animation-delay:.09s">a</span><span class="ltr" style="animation-delay:.14s">p</span><span class="amp ltr" style="animation-delay:.19s">&amp;</span><span class="ltr" style="animation-delay:.24s">B</span><span class="ltr" style="animation-delay:.29s">u</span><span class="ltr" style="animation-delay:.34s">y</span><span class="ltr" style="animation-delay:.39s">&nbsp;</span><span class="ltr" style="animation-delay:.44s; font-weight:600;">S</span><span class="ltr" style="animation-delay:.49s; font-weight:600;">t</span><span class="ltr" style="animation-delay:.54s; font-weight:600;">o</span><span class="ltr" style="animation-delay:.59s; font-weight:600;">r</span><span class="ltr" style="animation-delay:.64s; font-weight:600;">e</span>
+      </div>
+    </div>
+    <div class="tagline">Direct Global Order &amp; Secure Dispatch</div>
 
-        <div class="featured-product">
-            <div class="product-title" id="productTitle">Producto Destacado Principal</div>
-            
-            <div class="product-gallery">
-                <img src="image_0.png" alt="Vista 1">
-                <img src="image_0.png" alt="Vista 2">
-                <img src="image_0.png" alt="Vista 3">
-            </div>
-
-            <div class="product-desc">Descripción detallada de las características principales del producto destacado actual.</div>
-            <button class="btn-buy" id="btnBuy">Añadir al Carrito</button>
-        </div>
-
-        <div class="more-section">
-            <div class="section-title">Más Productos Destacados</div>
-            <div class="products-grid">
-                <div class="product-card"><img src="image_0.png" alt="Producto 1"></div>
-                <div class="product-card"><img src="image_0.png" alt="Producto 2"></div>
-                <div class="product-card"><img src="image_0.png" alt="Producto 3"></div>
-            </div>
-            <button class="btn-more">Ver Más</button>
-        </div>
+    <div class="ship-line">
+      <div class="ship-track"></div>
+      <div class="ship-icon">&#x2708;&#xFE0F;</div>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="nav-item active">🏠 Inicio</div>
-        <div class="nav-item">🔍 Buscar</div>
-        <div class="nav-item">🛒 Carrito</div>
-        <div class="nav-item">👤 Perfil</div>
-    </nav>
+    <div class="ticker-wrap">
+      <div class="ticker">
+        <span>&#9889; 24H DISPATCH</span><span class="dot">&#9679;</span>
+        <span>&#127760; GLOBAL SHIPPING</span><span class="dot">&#9679;</span>
+        <span>&#128274; SECURE QUOTE</span><span class="dot">&#9679;</span>
+        <span>&#128666; DIRECT SUPPLIER</span><span class="dot">&#9679;</span>
+        <span>&#9889; 24H DISPATCH</span><span class="dot">&#9679;</span>
+        <span>&#127760; GLOBAL SHIPPING</span><span class="dot">&#9679;</span>
+        <span>&#128274; SECURE QUOTE</span><span class="dot">&#9679;</span>
+        <span>&#128666; DIRECT SUPPLIER</span><span class="dot">&#9679;</span>
+      </div>
+    </div>
 
-    <script>
-        document.getElementById('btnBuy').addEventListener('click', async () => {
-            const webhookUrl = 'https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H';
-            const dynamicProduct = document.getElementById('productTitle').innerText;
-            
-            const payload = {
-                store: "Tap & Buy Store",
-                product: dynamicProduct,
-                action: "add_to_cart",
-                timestamp: new Date().toISOString()
-            };
+    <div class="stats">
+      <div class="stat"><b id="statOrders">0</b><span>Orders shipped</span></div>
+      <div class="stat"><b>2&times;/day</b><span>Processing</span></div>
+      <div class="stat"><b>196</b><span>Countries</span></div>
+    </div>
 
-            try {
-                const response = await fetch(webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(payload)
-                });
+    <div class="notice">
+      &#9200; <strong>Scheduled Processing:</strong> Orders and precise shipping
+      quotes are processed twice daily. We will email your exact total and
+      secure payment link promptly.
+    </div>
 
-                if (response.ok) {
-                    alert('¡Producto añadido con éxito y registrado en Magnate Core!');
-                } else {
-                    alert('Hubo un detalle al procesar la solicitud.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('No se pudo conectar con el motor de ventas.');
-            }
-        });
-    </script>
+    <form id="quoteForm" novalidate>
+      <label for="fProduct">Product of Interest</label>
+      <input type="text" id="fProduct" placeholder="e.g., Solar Powered Radio, Model X..." required>
+
+      <label for="fPais">Destination Country</label>
+      <select id="fPais" required>
+        <option value="" disabled selected>Select your country...</option>
+          <option value="Afghanistan">Afghanistan</option>
+          <option value="Albania">Albania</option>
+          <option value="Algeria">Algeria</option>
+          <option value="Andorra">Andorra</option>
+          <option value="Angola">Angola</option>
+          <option value="Antigua and Barbuda">Antigua and Barbuda</option>
+          <option value="Argentina">Argentina</option>
+          <option value="Armenia">Armenia</option>
+          <option value="Australia">Australia</option>
+          <option value="Austria">Austria</option>
+          <option value="Azerbaijan">Azerbaijan</option>
+          <option value="Bahamas">Bahamas</option>
+          <option value="Bahrain">Bahrain</option>
+          <option value="Bangladesh">Bangladesh</option>
+          <option value="Barbados">Barbados</option>
+          <option value="Belarus">Belarus</option>
+          <option value="Belgium">Belgium</option>
+          <option value="Belize">Belize</option>
+          <option value="Benin">Benin</option>
+          <option value="Bhutan">Bhutan</option>
+          <option value="Bolivia">Bolivia</option>
+          <option value="Bosnia and Herzegovina">Bosnia and Herzegovina</option>
+          <option value="Botswana">Botswana</option>
+          <option value="Brazil">Brazil</option>
+          <option value="Brunei">Brunei</option>
+          <option value="Bulgaria">Bulgaria</option>
+          <option value="Burkina Faso">Burkina Faso</option>
+          <option value="Burundi">Burundi</option>
+          <option value="Cabo Verde">Cabo Verde</option>
+          <option value="Cambodia">Cambodia</option>
+          <option value="Cameroon">Cameroon</option>
+          <option value="Canada">Canada</option>
+          <option value="Central African Republic">Central African Republic</option>
+          <option value="Chad">Chad</option>
+          <option value="Chile">Chile</option>
+          <option value="China">China</option>
+          <option value="Colombia">Colombia</option>
+          <option value="Comoros">Comoros</option>
+          <option value="Congo (Brazzaville)">Congo (Brazzaville)</option>
+          <option value="Congo (Kinshasa)">Congo (Kinshasa)</option>
+          <option value="Costa Rica">Costa Rica</option>
+          <option value="Croatia">Croatia</option>
+          <option value="Cuba">Cuba</option>
+          <option value="Cyprus">Cyprus</option>
+          <option value="Czechia">Czechia</option>
+          <option value="Denmark">Denmark</option>
+          <option value="Djibouti">Djibouti</option>
+          <option value="Dominica">Dominica</option>
+          <option value="Dominican Republic">Dominican Republic</option>
+          <option value="Ecuador">Ecuador</option>
+          <option value="Egypt">Egypt</option>
+          <option value="El Salvador">El Salvador</option>
+          <option value="Equatorial Guinea">Equatorial Guinea</option>
+          <option value="Eritrea">Eritrea</option>
+          <option value="Estonia">Estonia</option>
+          <option value="Eswatini">Eswatini</option>
+          <option value="Ethiopia">Ethiopia</option>
+          <option value="Fiji">Fiji</option>
+          <option value="Finland">Finland</option>
+          <option value="France">France</option>
+          <option value="Gabon">Gabon</option>
+          <option value="Gambia">Gambia</option>
+          <option value="Georgia">Georgia</option>
+          <option value="Germany">Germany</option>
+          <option value="Ghana">Ghana</option>
+          <option value="Greece">Greece</option>
+          <option value="Grenada">Grenada</option>
+          <option value="Guatemala">Guatemala</option>
+          <option value="Guinea">Guinea</option>
+          <option value="Guinea-Bissau">Guinea-Bissau</option>
+          <option value="Guyana">Guyana</option>
+          <option value="Haiti">Haiti</option>
+          <option value="Honduras">Honduras</option>
+          <option value="Hungary">Hungary</option>
+          <option value="Iceland">Iceland</option>
+          <option value="India">India</option>
+          <option value="Indonesia">Indonesia</option>
+          <option value="Iran">Iran</option>
+          <option value="Iraq">Iraq</option>
+          <option value="Ireland">Ireland</option>
+          <option value="Israel">Israel</option>
+          <option value="Italy">Italy</option>
+          <option value="Ivory Coast">Ivory Coast</option>
+          <option value="Jamaica">Jamaica</option>
+          <option value="Japan">Japan</option>
+          <option value="Jordan">Jordan</option>
+          <option value="Kazakhstan">Kazakhstan</option>
+          <option value="Kenya">Kenya</option>
+          <option value="Kiribati">Kiribati</option>
+          <option value="Kuwait">Kuwait</option>
+          <option value="Kyrgyzstan">Kyrgyzstan</option>
+          <option value="Laos">Laos</option>
+          <option value="Latvia">Latvia</option>
+          <option value="Lebanon">Lebanon</option>
+          <option value="Lesotho">Lesotho</option>
+          <option value="Liberia">Liberia</option>
+          <option value="Libya">Libya</option>
+          <option value="Liechtenstein">Liechtenstein</option>
+          <option value="Lithuania">Lithuania</option>
+          <option value="Luxembourg">Luxembourg</option>
+          <option value="Madagascar">Madagascar</option>
+          <option value="Malawi">Malawi</option>
+          <option value="Malaysia">Malaysia</option>
+          <option value="Maldives">Maldives</option>
+          <option value="Mali">Mali</option>
+          <option value="Malta">Malta</option>
+          <option value="Marshall Islands">Marshall Islands</option>
+          <option value="Mauritania">Mauritania</option>
+          <option value="Mauritius">Mauritius</option>
+          <option value="Mexico">Mexico</option>
+          <option value="Micronesia">Micronesia</option>
+          <option value="Moldova">Moldova</option>
+          <option value="Monaco">Monaco</option>
+          <option value="Mongolia">Mongolia</option>
+          <option value="Montenegro">Montenegro</option>
+          <option value="Morocco">Morocco</option>
+          <option value="Mozambique">Mozambique</option>
+          <option value="Myanmar">Myanmar</option>
+          <option value="Namibia">Namibia</option>
+          <option value="Nauru">Nauru</option>
+          <option value="Nepal">Nepal</option>
+          <option value="Netherlands">Netherlands</option>
+          <option value="New Zealand">New Zealand</option>
+          <option value="Nicaragua">Nicaragua</option>
+          <option value="Niger">Niger</option>
+          <option value="Nigeria">Nigeria</option>
+          <option value="North Korea">North Korea</option>
+          <option value="North Macedonia">North Macedonia</option>
+          <option value="Norway">Norway</option>
+          <option value="Oman">Oman</option>
+          <option value="Pakistan">Pakistan</option>
+          <option value="Palau">Palau</option>
+          <option value="Palestine">Palestine</option>
+          <option value="Panama">Panama</option>
+          <option value="Papua New Guinea">Papua New Guinea</option>
+          <option value="Paraguay">Paraguay</option>
+          <option value="Peru">Peru</option>
+          <option value="Philippines">Philippines</option>
+          <option value="Poland">Poland</option>
+          <option value="Portugal">Portugal</option>
+          <option value="Qatar">Qatar</option>
+          <option value="Romania">Romania</option>
+          <option value="Russia">Russia</option>
+          <option value="Rwanda">Rwanda</option>
+          <option value="Saint Kitts and Nevis">Saint Kitts and Nevis</option>
+          <option value="Saint Lucia">Saint Lucia</option>
+          <option value="Saint Vincent and the Grenadines">Saint Vincent and the Grenadines</option>
+          <option value="Samoa">Samoa</option>
+          <option value="San Marino">San Marino</option>
+          <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+          <option value="Saudi Arabia">Saudi Arabia</option>
+          <option value="Senegal">Senegal</option>
+          <option value="Serbia">Serbia</option>
+          <option value="Seychelles">Seychelles</option>
+          <option value="Sierra Leone">Sierra Leone</option>
+          <option value="Singapore">Singapore</option>
+          <option value="Slovakia">Slovakia</option>
+          <option value="Slovenia">Slovenia</option>
+          <option value="Solomon Islands">Solomon Islands</option>
+          <option value="Somalia">Somalia</option>
+          <option value="South Africa">South Africa</option>
+          <option value="South Korea">South Korea</option>
+          <option value="South Sudan">South Sudan</option>
+          <option value="Spain">Spain</option>
+          <option value="Sri Lanka">Sri Lanka</option>
+          <option value="Sudan">Sudan</option>
+          <option value="Suriname">Suriname</option>
+          <option value="Sweden">Sweden</option>
+          <option value="Switzerland">Switzerland</option>
+          <option value="Syria">Syria</option>
+          <option value="Taiwan">Taiwan</option>
+          <option value="Tajikistan">Tajikistan</option>
+          <option value="Tanzania">Tanzania</option>
+          <option value="Thailand">Thailand</option>
+          <option value="Timor-Leste">Timor-Leste</option>
+          <option value="Togo">Togo</option>
+          <option value="Tonga">Tonga</option>
+          <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+          <option value="Tunisia">Tunisia</option>
+          <option value="Turkey">Turkey</option>
+          <option value="Turkmenistan">Turkmenistan</option>
+          <option value="Tuvalu">Tuvalu</option>
+          <option value="Uganda">Uganda</option>
+          <option value="Ukraine">Ukraine</option>
+          <option value="United Arab Emirates">United Arab Emirates</option>
+          <option value="United Kingdom">United Kingdom</option>
+          <option value="United States">United States</option>
+          <option value="Uruguay">Uruguay</option>
+          <option value="Uzbekistan">Uzbekistan</option>
+          <option value="Vanuatu">Vanuatu</option>
+          <option value="Vatican City">Vatican City</option>
+          <option value="Venezuela">Venezuela</option>
+          <option value="Vietnam">Vietnam</option>
+          <option value="Yemen">Yemen</option>
+          <option value="Zambia">Zambia</option>
+          <option value="Zimbabwe">Zimbabwe</option>
+      </select>
+
+      <label for="fNombre">Full Name</label>
+      <input type="text" id="fNombre" placeholder="Your full name" required>
+
+      <label for="fEmail">Email Address (Secure Quote Delivery)</label>
+      <input type="email" id="fEmail" placeholder="name@example.com" required>
+
+      <label for="fDireccion">Shipping Address &amp; Details (Optional)</label>
+      <textarea id="fDireccion" placeholder="City, postal code, street address..."></textarea>
+
+      <button type="submit" class="btn-submit" id="btnSubmit">Request Secure Quote &amp; Shipping</button>
+      <div class="secure-note">&#128274; Secure, direct processing via official email dispatch</div>
+    </form>
+  </div>
+
+  <div id="successView" class="success hidden">
+    <div class="check">&#9989;</div>
+    <h2>Request received!</h2>
+    <p>Thank you for your interest. Your quote and secure payment link<br>
+    will be emailed to you after our twice-daily processing window.</p>
+  </div>
+</div>
+
+<script>
+/* ================================================
+   CONFIGURACIÓN — Credenciales integradas
+================================================ */
+const WEBHOOK_URL = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
+const SECRET = "TB-_R8Q_NhIutCuDMG_6F_Pxw";
+
+/* ===== SONIDO (Web Audio API — sin archivos externos) ===== */
+let soundOn = true;
+let audioCtx = null;
+
+function beep(freq, start, dur, vol, type) {
+  if (!soundOn) return;
+  try {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    const o = audioCtx.createOscillator();
+    const g = audioCtx.createGain();
+    o.type = type || "sine";
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(vol || 0.15, audioCtx.currentTime + start);
+    g.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + start + dur);
+    o.connect(g); g.connect(audioCtx.destination);
+    o.start(audioCtx.currentTime + start);
+    o.stop(audioCtx.currentTime + start + dur);
+  } catch (e) {}
+}
+const playTap     = () => { beep(520, 0, .07, .2, "triangle"); beep(880, .04, .06, .12, "sine"); };
+const playSuccess = () => { beep(523, 0, .12, .15); beep(659, .1, .12, .15); beep(784, .2, .2, .15); };
+
+document.getElementById("soundToggle").addEventListener("click", function() {
+  soundOn = !soundOn;
+  this.textContent = soundOn ? "\u{1F50A}" : "\u{1F507}";
+  if (soundOn) playTap();
+});
+
+/* ===== CONTADOR ANIMADO ===== */
+(function animateCounter() {
+  const el = document.getElementById("statOrders");
+  const target = 1240;
+  let n = 0;
+  const step = Math.max(1, Math.floor(target / 60));
+  const t = setInterval(() => {
+    n += step;
+    if (n >= target) { n = target; clearInterval(t); }
+    el.textContent = n.toLocaleString() + "+";
+  }, 28);
+})();
+
+/* ===== RIPPLE + SONIDO EN EL BOTON ===== */
+document.getElementById("btnSubmit").addEventListener("pointerdown", function(e) {
+  playTap();
+  const r = this.getBoundingClientRect();
+  const d = Math.max(r.width, r.height);
+  const rip = document.createElement("span");
+  rip.className = "ripple";
+  rip.style.width = rip.style.height = d + "px";
+  rip.style.left = (e.clientX - r.left - d / 2) + "px";
+  rip.style.top = (e.clientY - r.top - d / 2) + "px";
+  this.appendChild(rip);
+  setTimeout(() => rip.remove(), 550);
+});
+
+/* ===== PRE-RELLENAR PRODUCTO DESDE CATALOGO (?product=...) ===== */
+const params = new URLSearchParams(location.search);
+const pre = params.get("product");
+if (pre) document.getElementById("fProduct").value = pre;
+
+/* ===== ENVIO AL MOTOR ===== */
+document.getElementById("quoteForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById("btnSubmit");
+  btn.disabled = true; btn.textContent = "Sending...";
+
+  const payload = {
+    secret: SECRET,
+    evento: "SOLICITUD_COTIZACION",
+    canal: "landing",
+    tienda: "tap_and_buy",
+    pedido_id: "TB-" + Date.now(),
+    producto: document.getElementById("fProduct").value.trim(),
+    cliente: {
+      nombre: document.getElementById("fNombre").value.trim(),
+      contacto: document.getElementById("fEmail").value.trim()
+    },
+    pais: document.getElementById("fPais").value,
+    direccion: document.getElementById("fDireccion").value.trim(),
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    playSuccess();
+    document.getElementById("formView").classList.add("hidden");
+    document.getElementById("successView").classList.remove("hidden");
+  } catch (err) {
+    alert("Error sending your request. Please try again or contact us by email.");
+  } finally {
+    btn.disabled = false; btn.textContent = "Request Secure Quote & Shipping";
+  }
+});
+</script>
+
 </body>
 </html>
