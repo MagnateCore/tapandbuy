@@ -6,19 +6,17 @@
 <title>Tap &amp; Buy Store — Secure Quote &amp; Shipping</title>
 <style>
   :root {
-    --navy: #1a252f;
-    --gold: #D4AF37;
-    --gold-light: #f9f6ed;
-    --gold-border: #e6cb68;
+    --navy: #34495E;
     --green: #0ea86c;
     --green-dark: #0b8a58;
+    --teal: #3AAFA9;   /* & de marca (verde teal oficial) */
     --bg: #f4f6f9;
     --card: #ffffff;
     --line: #dde3ea;
     --text: #2b3a4a;
     --muted: #7b8a99;
-    --notice-bg: #fdf8e8;
-    --notice-text: #8a7000;
+    --notice-bg: #fdf3d7;
+    --notice-text: #8a6d00;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
@@ -32,7 +30,6 @@
     border-radius: 22px; padding: 24px 24px 30px;
     box-shadow: 0 8px 30px rgba(22, 50, 79, .08);
     overflow: hidden;
-    border-top: 4px solid var(--gold);
   }
   .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .back-link { color: var(--muted); font-size: 14px; text-decoration: none; }
@@ -50,7 +47,7 @@
     0% { opacity: 0; transform: translateY(18px) scale(.7); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
   }
-  .logo .amp { color: var(--gold); display: inline-block; animation: pulse 2s ease-in-out 1.2s infinite; text-shadow: 0 2px 8px rgba(212,175,55,0.3); }
+  .logo .amp { color: var(--teal); display: inline-block; animation: pulse 2s ease-in-out 1.2s infinite; }
   @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.22); } }
   .logo:hover .ltr { animation: bounceLtr .4s ease; }
   @keyframes bounceLtr { 30% { transform: translateY(-6px); } }
@@ -61,14 +58,14 @@
   .ship-track { position: absolute; top: 50%; left: 0; right: 0; height: 0; border-top: 2px dashed var(--line); }
   .ship-track::before {
     content: ""; position: absolute; top: -1px; left: 0; height: 3px; width: 40%;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    background: linear-gradient(90deg, transparent, var(--green), transparent);
     animation: speedGlow 2.2s linear infinite;
   }
   @keyframes speedGlow { 0% { left: -40%; } 100% { left: 100%; } }
   .ship-icon {
     position: absolute; top: 50%; left: 0; transform: translateY(-58%);
     font-size: 20px; animation: flyAcross 4s ease-in-out infinite;
-    filter: drop-shadow(0 2px 3px rgba(212,175,55,.3));
+    filter: drop-shadow(0 2px 3px rgba(22,50,79,.25));
   }
   @keyframes flyAcross {
     0%   { left: 0; transform: translateY(-58%) rotate(0deg); }
@@ -77,10 +74,10 @@
     100% { left: 0; transform: translateY(-58%) scaleX(-1); }
   }
 
-  .ticker-wrap { overflow: hidden; background: var(--navy); border-radius: 10px; margin-bottom: 18px; padding: 8px 0; border: 1px solid rgba(212,175,55,0.2); }
+  .ticker-wrap { overflow: hidden; background: var(--navy); border-radius: 10px; margin-bottom: 18px; padding: 8px 0; }
   .ticker { display: inline-block; white-space: nowrap; animation: tick 16s linear infinite; }
   .ticker span { color: #fff; font-size: 12px; font-weight: 600; letter-spacing: 1.5px; margin: 0 18px; }
-  .ticker .dot { color: var(--gold); }
+  .ticker .dot { color: var(--green); }
   @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
   .stats { display: flex; justify-content: center; gap: 28px; margin-bottom: 18px; }
@@ -90,7 +87,6 @@
 
   .notice {
     background: var(--notice-bg); color: var(--notice-text);
-    border: 1px solid var(--gold-border);
     border-radius: 12px; padding: 14px 16px; font-size: 13.5px;
     text-align: center; line-height: 1.55; margin-bottom: 6px;
   }
@@ -102,8 +98,8 @@
     transition: border-color .15s, box-shadow .15s;
   }
   input:focus, select:focus, textarea:focus {
-    border-color: var(--gold);
-    box-shadow: 0 0 0 4px rgba(212,175,55,.15);
+    border-color: var(--green);
+    box-shadow: 0 0 0 4px rgba(14,168,108,.12);
   }
   input::placeholder, textarea::placeholder { color: #aab6c2; }
   select {
@@ -115,20 +111,19 @@
 
   .btn-submit {
     width: 100%; margin-top: 22px; padding: 16px;
-    background: var(--navy); color: var(--gold); border: 1px solid var(--gold-border); border-radius: 14px;
+    background: var(--green); color: #fff; border: none; border-radius: 14px;
     font-size: 16.5px; font-weight: 700; cursor: pointer;
-    box-shadow: 0 5px 0 #0d1217, 0 8px 18px rgba(26,37,47,.25);
-    transition: transform .08s, box-shadow .08s, background .15s;
+    box-shadow: 0 5px 0 var(--green-dark), 0 8px 18px rgba(14,168,108,.35);
+    transition: transform .08s, box-shadow .08s;
     position: relative; overflow: hidden;
   }
-  .btn-submit:hover { background: #23313e; }
   .btn-submit:active {
     transform: translateY(5px);
-    box-shadow: 0 0 0 #0d1217, 0 2px 6px rgba(26,37,47,.2);
+    box-shadow: 0 0 0 var(--green-dark), 0 2px 6px rgba(14,168,108,.3);
   }
   .btn-submit:disabled { opacity: .65; cursor: wait; }
   .ripple {
-    position: absolute; border-radius: 50%; background: rgba(212,175,55,.3);
+    position: absolute; border-radius: 50%; background: rgba(255,255,255,.5);
     transform: scale(0); animation: rip .5s ease-out forwards; pointer-events: none;
   }
   @keyframes rip { to { transform: scale(4); opacity: 0; } }
@@ -421,7 +416,8 @@
 
 <script>
 /* ================================================
-   CONFIGURACIÓN — Credenciales integradas
+   CONFIGURACIÓN — pega aquí tus valores
+   L1 · 01_PASARELA_ENTRADA (Catch Webhook → Live URL)
 ================================================ */
 const WEBHOOK_URL = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
 const SECRET = "TB-_R8Q_NhIutCuDMG_6F_Pxw";
@@ -458,7 +454,7 @@ document.getElementById("soundToggle").addEventListener("click", function() {
 /* ===== CONTADOR ANIMADO ===== */
 (function animateCounter() {
   const el = document.getElementById("statOrders");
-  const target = 1240;
+  const target = 1240; // AJUSTA a tu numero real
   let n = 0;
   const step = Math.max(1, Math.floor(target / 60));
   const t = setInterval(() => {
