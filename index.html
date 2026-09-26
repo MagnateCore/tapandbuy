@@ -423,9 +423,10 @@
 </div>
 
 <script>
-// CONFIGURA TUS CREDENCIALES DE EMAILJS AQUÍ
+// CREDENCIALES DE EMAILJS Y WEBHOOK DE ACTIVEPIECES
 const EMAILJS_SERVICE_ID = "service_wwez1p8";
 const EMAILJS_TEMPLATE_ID = "template_k33kf6t";
+const ACTIVEPIECES_WEBHOOK_URL = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
 
 let soundOn = true;
 let audioCtx = null;
@@ -489,13 +490,32 @@ document.getElementById("quoteForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("btnSubmit");
   btn.disabled = true; btn.textContent = "Sending...";
 
+  // Recolectar datos del formulario para enviar al Webhook y a EmailJS en paralelo
+  const formData = {
+    producto: document.getElementById("fProduct").value,
+    pais: document.getElementById("fPais").value,
+    nombre: document.getElementById("fNombre").value,
+    email: document.getElementById("fEmail").value,
+    direccion: document.getElementById("fDireccion").value,
+    timestamp: new Date().toISOString()
+  };
+
   try {
-    await emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#quoteForm');
+    // Disparar EmailJS y el Webhook de Activepieces simultáneamente
+    await Promise.all([
+      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#quoteForm'),
+      fetch(ACTIVEPIECES_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      })
+    ]);
+
     playSuccess();
     document.getElementById("formView").classList.add("hidden");
     document.getElementById("successView").classList.remove("hidden");
   } catch (err) {
-    alert("Error sending your request. Please try again or check your EmailJS configuration.");
+    alert("Error sending your request. Please try again or check your configuration.");
     btn.disabled = false;
     btn.textContent = "Request Secure Quote & Shipping";
   }
