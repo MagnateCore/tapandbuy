@@ -142,7 +142,6 @@
   }
 </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 
@@ -420,7 +419,6 @@
 <script>
 /* ============================================================
    CONFIG — Las ÚNICAS líneas que se editan a mano
-   (cualquier cambio futuro se hace aquí, nunca abajo)
 ============================================================ */
 const WEBHOOK_URL  = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
 const SECRET       = "TB-_R8Q_NhIutCuDMG_6F_Pxw";
@@ -490,8 +488,10 @@ document.getElementById("quoteForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("btnSubmit");
   btn.disabled = true; btn.textContent = "Sending...";
 
-  // 1) Contrato JSON para el MOTOR (Magnate Core): secret + estructura exacta
+  // ID único de pedido
   const orderId = "TB-" + Date.now();
+
+  // 1) Contrato JSON para el MOTOR (Magnate Core)
   const motorPayload = {
     secret: SECRET,
     evento: "SOLICITUD_COTIZACION",
@@ -508,8 +508,16 @@ document.getElementById("quoteForm").addEventListener("submit", async (e) => {
     timestamp: new Date().toISOString()
   };
 
+  // Parámetros limpios y controlados para EmailJS (asegura que las variables lleguen bien)
+  const emailParams = {
+    to_name: document.getElementById("fNombre").value.trim(),
+    email: document.getElementById("fEmail").value.trim(),
+    product: document.getElementById("fProduct").value.trim(),
+    order_id: orderId
+  };
+
   try {
-    // 2) PRIMERO el motor (candado: si el motor no confirma, no prometemos nada)
+    // 2) PRIMERO el motor (candado de seguridad)
     const res = await fetch(WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -517,11 +525,11 @@ document.getElementById("quoteForm").addEventListener("submit", async (e) => {
     });
     if (!res.ok) throw new Error("Motor HTTP " + res.status);
 
-    // 3) DESPUÉS la confirmación al cliente (EmailJS — best effort)
+    // 3) DESPUÉS el envío de correo al cliente mediante EmailJS con parámetros explícitos
     try {
-      await emailjs.sendForm(EJS_SERVICE, EJS_TEMPLATE, "#quoteForm");
+      await emailjs.send(EJS_SERVICE, EJS_TEMPLATE, emailParams);
     } catch (mailErr) {
-      console.warn("EmailJS falló (el pedido SÍ fue recibido):", mailErr);
+      console.warn("EmailJS falló (el pedido SÍ fue recibido por el motor):", mailErr);
     }
 
     playSuccess();
