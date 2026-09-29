@@ -4,15 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tap &amp; Buy Store — Secure Quote &amp; Shipping</title>
-<!-- SDK de EmailJS -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script type="text/javascript">
-  (function(){
-    // Inicializa con tu Public Key de EmailJS
-    emailjs.init({
-      publicKey: "JHg8MbqKKJtW-GHyV",
-    });
-  })();
+  (function(){ emailjs.init({ publicKey: "JHg8MbqKKJtW-GHyV" }); })();
 </script>
 <style>
   :root {
@@ -148,6 +142,7 @@
   }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 
@@ -195,7 +190,7 @@
       secure payment link promptly.
     </div>
 
-    <form id="quoteForm" novalidate>
+    <form id="quoteForm">
       <label for="fProduct">Product of Interest</label>
       <input type="text" id="fProduct" name="producto" placeholder="e.g., Solar Powered Radio, Model X..." required>
 
@@ -423,10 +418,15 @@
 </div>
 
 <script>
-// CREDENCIALES DE EMAILJS Y WEBHOOK DE ACTIVEPIECES
-const EMAILJS_SERVICE_ID = "service_wwez1p8";
-const EMAILJS_TEMPLATE_ID = "template_k33kf6t";
-const ACTIVEPIECES_WEBHOOK_URL = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
+/* ============================================================
+   CONFIG — Las ÚNICAS líneas que se editan a mano
+   (cualquier cambio futuro se hace aquí, nunca abajo)
+============================================================ */
+const WEBHOOK_URL  = "https://cloud.activepieces.com/api/v1/webhooks/i4X82FVvLkL4YXlpMvu5H";
+const SECRET       = "TB-_R8Q_NhIutCuDMG_6F_Pxw";
+const EJS_SERVICE  = "service_wwez1p8";
+const EJS_TEMPLATE = "template_k33kf6t";
+/* ============================================================ */
 
 let soundOn = true;
 let audioCtx = null;
@@ -490,32 +490,45 @@ document.getElementById("quoteForm").addEventListener("submit", async (e) => {
   const btn = document.getElementById("btnSubmit");
   btn.disabled = true; btn.textContent = "Sending...";
 
-  // Recolectar datos del formulario para enviar al Webhook y a EmailJS en paralelo
-  const formData = {
-    producto: document.getElementById("fProduct").value,
+  // 1) Contrato JSON para el MOTOR (Magnate Core): secret + estructura exacta
+  const orderId = "TB-" + Date.now();
+  const motorPayload = {
+    secret: SECRET,
+    evento: "SOLICITUD_COTIZACION",
+    canal: "landing",
+    tienda: "tap_and_buy",
+    pedido_id: orderId,
+    producto: document.getElementById("fProduct").value.trim(),
+    cliente: {
+      nombre: document.getElementById("fNombre").value.trim(),
+      contacto: document.getElementById("fEmail").value.trim()
+    },
     pais: document.getElementById("fPais").value,
-    nombre: document.getElementById("fNombre").value,
-    email: document.getElementById("fEmail").value,
-    direccion: document.getElementById("fDireccion").value,
+    direccion: document.getElementById("fDireccion").value.trim(),
     timestamp: new Date().toISOString()
   };
 
   try {
-    // Disparar EmailJS y el Webhook de Activepieces simultáneamente
-    await Promise.all([
-      emailjs.sendForm(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, '#quoteForm'),
-      fetch(ACTIVEPIECES_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData)
-      })
-    ]);
+    // 2) PRIMERO el motor (candado: si el motor no confirma, no prometemos nada)
+    const res = await fetch(WEBHOOK_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(motorPayload)
+    });
+    if (!res.ok) throw new Error("Motor HTTP " + res.status);
+
+    // 3) DESPUÉS la confirmación al cliente (EmailJS — best effort)
+    try {
+      await emailjs.sendForm(EJS_SERVICE, EJS_TEMPLATE, "#quoteForm");
+    } catch (mailErr) {
+      console.warn("EmailJS falló (el pedido SÍ fue recibido):", mailErr);
+    }
 
     playSuccess();
     document.getElementById("formView").classList.add("hidden");
     document.getElementById("successView").classList.remove("hidden");
   } catch (err) {
-    alert("Error sending your request. Please try again or check your configuration.");
+    alert("Error sending your request. Please try again or contact us by email.");
     btn.disabled = false;
     btn.textContent = "Request Secure Quote & Shipping";
   }
