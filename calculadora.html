@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ImportaPro — Calculadora de Costos de Importación China → Destino</title>
+<title>ImportaPro — Tap &amp; Buy Store</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -11,15 +11,10 @@ tailwind.config = {
   theme: {
     extend: {
       colors: {
-        gold: {
-          DEFAULT: '#D4AF37',
-          light: '#E8CE6A',
-          dark:  '#A8842C'
-        }
+        brand: { DEFAULT: '#3AAFA9', dark: '#2c8a85', light: '#5ec9c4' },
+        navy: { DEFAULT: '#34495E', dark: '#1e2b37', light: '#4e6d8d' }
       },
-      fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif']
-      }
+      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
     }
   }
 }
@@ -31,20 +26,12 @@ tailwind.config = {
   input[type=number]::-webkit-outer-spin-button,
   input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
-
-  .gold-gradient { background: linear-gradient(135deg, #D4AF37 0%, #E8CE6A 50%, #B8952E 100%); }
-  .gold-text { background: linear-gradient(135deg, #D4AF37, #F0E08A, #B8952E); -webkit-background-clip: text; background-clip: text; color: transparent; }
-
+  .brand-gradient { background: linear-gradient(135deg, #34495E 0%, #1e2b37 100%); }
+  .brand-text { background: linear-gradient(135deg, #3AAFA9, #5ec9c4); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .card-glow { transition: box-shadow .3s ease, transform .3s ease; }
-  .card-glow:hover { box-shadow: 0 0 30px rgba(212,175,55,.25); transform: translateY(-2px); }
-
+  .card-glow:hover { box-shadow: 0 0 30px rgba(58,175,169,.25); transform: translateY(-2px); }
   .fade-in { animation: fadeIn .4s ease both; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-  /* Toggle switch */
-  .toggle-track { transition: background-color .3s ease; }
-  .toggle-thumb { transition: transform .3s cubic-bezier(.4,0,.2,1); }
-
   .bar-fill { transition: width .5s cubic-bezier(.4,0,.2,1); }
 </style>
 </head>
@@ -54,30 +41,35 @@ tailwind.config = {
   <header class="sticky top-0 z-20 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl gold-gradient flex items-center justify-center shadow-lg shadow-amber-500/20">
-          <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-          </svg>
+        <div class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center shadow-lg shadow-cyan-900/20">
+          <svg class="w-5 h-5 text-[#3AAFA9]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
         <div>
           <h1 class="text-lg md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Importa<span class="gold-text">Pro</span>
+            Tap<span class="text-[#3AAFA9]">&amp;</span>Buy <span class="brand-text">ImportaPro</span>
           </h1>
-          <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 -mt-0.5">Costos China → Destino Final · Courier &amp; Carga General</p>
+          <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 -mt-0.5">Direct Global Order &amp; Secure Dispatch</p>
         </div>
       </div>
 
-      <!-- Modo oscuro toggle -->
-      <button id="themeToggle" aria-label="Cambiar tema"
-        class="flex items-center gap-2 px-3 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-gold/50 transition">
-        <span id="themeIconSun" class="hidden dark:block text-gold-light">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4 7 17m10-10 1.4-1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
-        </span>
-        <span id="themeIconMoon" class="dark:hidden text-slate-600">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 15.5A9.7 9.7 0 0 1 12 21.75 9 9 0 1 1 21.75 15.5Z"/></svg>
-        </span>
-        <span class="text-xs font-semibold text-slate-700 dark:text-slate-300 hidden sm:inline" id="themeLabel">Oscuro</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <!-- Selector de Idioma -->
+        <button id="langToggle" aria-label="Cambiar idioma"
+          class="px-3 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-[#3AAFA9]/50 text-xs font-bold text-slate-700 dark:text-slate-300 transition">
+          🇪🇸 ES
+        </button>
+
+        <!-- Modo oscuro toggle -->
+        <button id="themeToggle" aria-label="Cambiar tema"
+          class="flex items-center gap-2 px-3 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-[#3AAFA9]/50 transition">
+          <span id="themeIconSun" class="hidden dark:block text-[#3AAFA9]">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4 7 17m10-10 1.4-1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+          </span>
+          <span id="themeIconMoon" class="dark:hidden text-slate-600">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 15.5A9.7 9.7 0 0 1 12 21.75 9 9 0 1 1 21.75 15.5Z"/></svg>
+          </span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -85,35 +77,35 @@ tailwind.config = {
   <main class="max-w-6xl mx-auto px-4 py-8 md:py-12">
 
     <div class="text-center mb-10 fade-in">
-      <h2 class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-        Calcula tu <span class="gold-text">precio exacto</span> de importación
+      <h2 id="tMainTitle" class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+        Calcula tu <span class="brand-text">precio exacto</span> de importación
       </h2>
-      <p class="mt-2 text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
-        De los yuanes del proveedor al precio final sugerido en tu moneda. Incluye envío internacional, comisión del agente y tu margen comercial.
+      <p id="tMainSubtitle" class="mt-2 text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+        De los yuanes del proveedor al precio final sugerido. Incluye envío internacional, comisión y tu margen comercial.
       </p>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
-      <!-- ========== FORMULARIO DE ENTRADAS ========== -->
+      <!-- ========== FORMULARIO ========== -->
       <section class="lg:col-span-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 md:p-8 fade-in">
-        <h3 class="text-sm font-bold uppercase tracking-widest text-gold mb-6 flex items-center gap-2">
+        <h3 id="tSectionParams" class="text-sm font-bold uppercase tracking-widest text-[#3AAFA9] mb-6 flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-6 4h3M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3.5-2-3.5 2-3.5-2L5 21Z"/></svg>
-          Datos de entrada
+          Parámetros de cálculo
         </h3>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
 
           <!-- Precio producto CNY -->
           <div class="sm:col-span-2">
-            <label for="inPrecioCny" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Precio del producto <span class="text-gold font-bold">¥ CNY</span>
+            <label id="lblPrecioCny" for="inPrecioCny" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              Precio del producto <span class="text-[#3AAFA9] font-bold">¥ CNY</span>
             </label>
             <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gold font-bold">¥</span>
-              <input id="inPrecioCny" type="number" min="0" step="0.01" value="45"
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#3AAFA9] font-bold">¥</span>
+              <input id="inPrecioCny" type="text" inputmode="decimal" value="45"
                 class="w-full pl-9 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="Ej: 45">
             </div>
@@ -121,14 +113,14 @@ tailwind.config = {
 
           <!-- Tasa de cambio -->
           <div>
-            <label for="inTasa" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Tasa de cambio <span class="text-slate-400 font-normal">(1 USD = ? CNY)</span>
+            <label id="lblTasa" for="inTasa" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+              Tasa de cambio <span class="text-slate-400 font-normal">(Yuanes por 1 USD, ej: 7.20)</span>
             </label>
             <div class="relative">
               <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">CNY/USD</span>
-              <input id="inTasa" type="number" min="0.01" step="0.0001" value="7.2"
+              <input id="inTasa" type="text" inputmode="decimal" value="7.2"
                 class="w-full pl-16 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="7.20">
             </div>
@@ -136,18 +128,18 @@ tailwind.config = {
 
           <!-- Peso -->
           <div>
-            <label for="inPeso" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            <label id="lblPeso" for="inPeso" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               Peso del producto
             </label>
             <div class="flex gap-2">
-              <input id="inPeso" type="number" min="0" step="0.001" value="0.5"
+              <input id="inPeso" type="text" inputmode="decimal" value="0.5"
                 class="flex-1 min-w-0 pl-4 pr-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="0.5">
               <select id="inPesoUnidad"
                 class="px-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold text-slate-900 dark:text-white font-semibold transition">
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] text-slate-900 dark:text-white font-semibold transition">
                 <option value="kg">Kg</option>
                 <option value="g">gr</option>
               </select>
@@ -156,29 +148,28 @@ tailwind.config = {
 
           <!-- Tarifa envío -->
           <div>
-            <label for="inTarifaKg" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            <label id="lblTarifa" for="inTarifaKg" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               Tarifa de envío intl. <span class="text-slate-400 font-normal">(USD/Kg)</span>
             </label>
             <div class="relative">
               <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
-              <input id="inTarifaKg" type="number" min="0" step="0.01" value="12"
+              <input id="inTarifaKg" type="text" inputmode="decimal" value="12"
                 class="w-full pl-8 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="12">
             </div>
-            <p class="mt-1 text-[11px] text-slate-400">Courier estándar. Ej: 10–15 USD/Kg</p>
           </div>
 
           <!-- Comisión -->
           <div>
-            <label for="inComision" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            <label id="lblComision" for="inComision" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
               Comisión agente / pasarela <span class="text-slate-400 font-normal">(%)</span>
             </label>
             <div class="relative">
-              <input id="inComision" type="number" min="0" max="100" step="0.1" value="5"
+              <input id="inComision" type="text" inputmode="decimal" value="5"
                 class="w-full pl-4 pr-9 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="5">
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
@@ -188,92 +179,82 @@ tailwind.config = {
           <!-- Margen -->
           <div class="sm:col-span-2">
             <label for="inMargen" class="flex items-center justify-between text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              <span>Margen de ganancia (Markup) <span class="text-slate-400 font-normal">(%)</span></span>
-              <span id="margenBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-gold/10 text-gold border border-gold/30">50%</span>
+              <span id="lblMargen">Margen de ganancia (Markup) <span class="text-slate-400 font-normal">(%)</span></span>
+              <span id="margenBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#3AAFA9]/10 text-[#3AAFA9] border border-[#3AAFA9]/30">50%</span>
             </label>
             <div class="relative">
-              <input id="inMargen" type="number" min="0" max="1000" step="1" value="50"
+              <input id="inMargen" type="text" inputmode="decimal" value="50"
                 class="w-full pl-4 pr-9 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-gold focus:border-transparent
+                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
                        text-slate-900 dark:text-white font-semibold transition"
                 placeholder="50">
               <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
             </div>
             <input id="margenSlider" type="range" min="0" max="200" step="1" value="50"
-              class="mt-3 w-full accent-[#D4AF37] cursor-pointer">
-            <div class="flex justify-between text-[10px] text-slate-400 mt-1">
-              <span>0%</span><span>50%</span><span>100%</span><span>150%</span><span>200%</span>
-            </div>
+              class="mt-3 w-full accent-[#3AAFA9] cursor-pointer">
           </div>
         </div>
 
         <!-- Botones -->
         <div class="mt-8 flex flex-col sm:flex-row gap-3">
           <button id="btnCalcular"
-            class="flex-1 gold-gradient text-slate-900 font-extrabold py-3.5 rounded-xl shadow-lg shadow-amber-500/25
-                   hover:shadow-amber-500/40 hover:brightness-110 active:scale-[.98] transition text-sm tracking-wide uppercase">
+            class="flex-1 bg-navy hover:bg-[#2c8a85] text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-cyan-900/20
+                   transition text-sm tracking-wide uppercase border border-[#3AAFA9]/30">
             Calcular costos
           </button>
           <button id="btnReset"
             class="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400
-                   font-semibold hover:border-gold hover:text-gold active:scale-[.98] transition text-sm">
+                   font-semibold hover:border-[#3AAFA9] hover:text-[#3AAFA9] transition text-sm">
             Restablecer
           </button>
         </div>
-
-        <p class="mt-4 text-[11px] leading-relaxed text-slate-400 dark:text-slate-500">
-          * Los cálculos se actualizan automáticamente al escribir. La comisión se aplica sobre el costo de la mercancía (producto en USD). El envío se calcula proporcional al peso en Kg. No incluye aranceles ni IVA locales.
-        </p>
       </section>
 
       <!-- ========== RESULTADOS ========== -->
       <section class="lg:col-span-2 flex flex-col gap-4">
 
         <!-- Precio de venta sugerido -->
-        <div class="card-glow rounded-2xl gold-gradient p-6 md:p-7 text-slate-900 shadow-xl shadow-amber-500/20 fade-in">
-          <div class="flex items-center justify-between">
-            <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-800/70">Precio de venta sugerido</p>
-            <svg class="w-5 h-5 text-slate-800/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-2.2 0-4 1.1-4 2.5S9.8 13 12 13s4 1.1 4 2.5S14.2 18 12 18m0-10v-2m0 12v2m0-12c1.7 0 3 .8 3.5 2M12 6c-1.7 0-3 .8-3.5 2m7 8c-.5 1.2-1.8 2-3.5 2"/></svg>
-          </div>
-          <p id="outPrecioVenta" class="mt-2 text-4xl md:text-5xl font-extrabold tracking-tight">$0.00</p>
-          <p class="mt-1 text-xs font-semibold text-slate-800/70">USD · con margen aplicado</p>
+        <div class="card-glow rounded-2xl bg-navy p-6 md:p-7 text-white shadow-xl shadow-cyan-950/30 fade-in border border-[#3AAFA9]/30">
+          <p id="tResVenta" class="text-[11px] font-extrabold uppercase tracking-widest text-[#5ec9c4]">Precio de venta sugerido</p>
+          <p id="outPrecioVenta" class="mt-2 text-4xl md:text-5xl font-extrabold tracking-tight text-white">$0.00</p>
+          <p id="tResVentaSub" class="mt-1 text-xs font-semibold text-slate-300">USD · con margen aplicado</p>
           <div class="mt-4 grid grid-cols-2 gap-3">
-            <div class="bg-slate-900/10 rounded-xl px-3 py-2.5">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-800/60">Ganancia neta</p>
-              <p id="outGanancia" class="text-lg font-extrabold">$0.00</p>
+            <div class="bg-black/20 rounded-xl px-3 py-2.5">
+              <p id="tResGanancia" class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Ganancia neta</p>
+              <p id="outGanancia" class="text-lg font-extrabold text-[#3AAFA9]">$0.00</p>
             </div>
-            <div class="bg-slate-900/10 rounded-xl px-3 py-2.5">
-              <p class="text-[10px] font-bold uppercase tracking-wider text-slate-800/60">Margen sobre venta</p>
-              <p id="outMargenReal" class="text-lg font-extrabold">0%</p>
+            <div class="bg-black/20 rounded-xl px-3 py-2.5">
+              <p id="tResMargenReal" class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Margen real</p>
+              <p id="outMargenReal" class="text-lg font-extrabold text-white">0%</p>
             </div>
           </div>
         </div>
 
         <!-- Costo total puesto en destino -->
         <div class="card-glow rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm fade-in">
-          <p class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Costo total puesto en destino</p>
+          <p id="tResCostoTotal" class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Costo total puesto en destino</p>
           <p id="outCostoTotal" class="mt-1 text-3xl font-extrabold text-slate-900 dark:text-white">$0.00</p>
-          <p class="text-xs text-slate-400 mt-0.5">USD · costo real de adquisición</p>
+          <p id="tResCostoSub" class="text-xs text-slate-400 mt-0.5">USD · costo real de adquisición</p>
         </div>
 
         <!-- Desglose -->
         <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm fade-in">
-          <h4 class="text-[11px] font-extrabold uppercase tracking-widest text-gold mb-4">Desglose de costos</h4>
+          <h4 id="tSectionDesglose" class="text-[11px] font-extrabold uppercase tracking-widest text-[#3AAFA9] mb-4">Desglose de costos</h4>
 
           <div class="space-y-3.5">
             <div>
               <div class="flex justify-between text-sm mb-1">
-                <span class="text-slate-600 dark:text-slate-400 font-medium">Producto (¥ → $)</span>
+                <span id="tLabelProd" class="text-slate-600 dark:text-slate-400 font-medium">Producto (¥ → $)</span>
                 <span id="outCostoProducto" class="font-bold text-slate-900 dark:text-white">$0.00</span>
               </div>
               <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                <div id="barProducto" class="bar-fill h-full rounded-full bg-gold" style="width:0%"></div>
+                <div id="barProducto" class="bar-fill h-full rounded-full bg-[#3AAFA9]" style="width:0%"></div>
               </div>
             </div>
 
             <div>
               <div class="flex justify-between text-sm mb-1">
-                <span class="text-slate-600 dark:text-slate-400 font-medium">Envío internacional</span>
+                <span id="tLabelEnvio" class="text-slate-600 dark:text-slate-400 font-medium">Envío internacional</span>
                 <span id="outCostoEnvio" class="font-bold text-slate-900 dark:text-white">$0.00</span>
               </div>
               <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
@@ -283,7 +264,7 @@ tailwind.config = {
 
             <div>
               <div class="flex justify-between text-sm mb-1">
-                <span class="text-slate-600 dark:text-slate-400 font-medium">Comisión agente</span>
+                <span id="tLabelCom" class="text-slate-600 dark:text-slate-400 font-medium">Comisión agente</span>
                 <span id="outCostoComision" class="font-bold text-slate-900 dark:text-white">$0.00</span>
               </div>
               <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
@@ -293,26 +274,20 @@ tailwind.config = {
           </div>
 
           <div class="mt-5 pt-4 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
-            <span class="text-sm font-semibold text-slate-500 dark:text-slate-400">Subtotal costos</span>
-            <span id="outSubtotal" class="text-lg font-extrabold text-gold">$0.00</span>
-          </div>
-        </div>
-
-        <!-- Resumen moneda origen -->
-        <div class="rounded-2xl bg-slate-900 dark:bg-slate-800 p-5 text-sm text-slate-300 shadow-sm fade-in">
-          <h4 class="text-[11px] font-extrabold uppercase tracking-widest text-gold-light mb-3">Referencia rápida</h4>
-          <div class="space-y-2">
-            <div class="flex justify-between"><span>Precio original</span><span class="font-bold text-white" id="refCny">¥0</span></div>
-            <div class="flex justify-between"><span>Peso usado</span><span class="font-bold text-white" id="refPeso">0 kg</span></div>
-            <div class="flex justify-between"><span>Equiv. en CNY del costo total</span><span class="font-bold text-white" id="refCnyTotal">¥0</span></div>
+            <span id="tLabelSubtotal" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Subtotal costos</span>
+            <span id="outSubtotal" class="text-lg font-extrabold text-[#3AAFA9]">$0.00</span>
           </div>
         </div>
 
       </section>
     </div>
 
-    <footer class="mt-12 text-center text-xs text-slate-400 dark:text-slate-600">
-      ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.
+    <!-- Footer -->
+    <footer class="mt-12 text-center text-xs text-slate-400 dark:text-slate-600 space-y-2">
+      <p id="tFooterDesc">Tap &amp; Buy Store · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
+      <p>
+        <a href="policies.html" id="tFooterLink" class="text-[#3AAFA9] hover:underline font-semibold transition">Términos, Privacidad y Políticas de Tap &amp; Buy Store</a>
+      </p>
     </footer>
   </main>
 
@@ -320,39 +295,97 @@ tailwind.config = {
 (function () {
   'use strict';
 
-  // ============ ESTADO INICIAL ============
-  const DEFAULTS = {
-    precioCny: 45, tasa: 7.2, peso: 0.5, pesoUnidad: 'kg',
-    tarifaKg: 12, comision: 5, margen: 50
+  // Diccionario Bilingüe
+  const i18n = {
+    es: {
+      langBtn: "🇪🇸 ES",
+      themeLabel: "Oscuro",
+      mainTitle: "Calcula tu <span class='brand-text'>precio exacto</span> de importación",
+      mainSub: "De los yuanes del proveedor al precio final sugerido. Incluye envío internacional, comisión y tu margen comercial.",
+      sectionParams: "Parámetros de cálculo",
+      lblPrecioCny: "Precio del producto <span class='text-[#3AAFA9] font-bold'>¥ CNY</span>",
+      lblTasa: "Tasa de cambio <span class='text-slate-400 font-normal'>(Yuanes por 1 USD, ej: 7.20)</span>",
+      lblPeso: "Peso del producto",
+      lblTarifa: "Tarifa de envío intl. <span class='text-slate-400 font-normal'>(USD/Kg)</span>",
+      lblComision: "Comisión agente / pasarela <span class='text-slate-400 font-normal'>(%)</span>",
+      lblMargen: "Margen de ganancia (Markup) <span class='text-slate-400 font-normal'>(%)</span>",
+      btnCalcular: "Calcular costos",
+      btnReset: "Restablecer",
+      resVenta: "Precio de venta sugerido",
+      resVentaSub: "USD · con margen aplicado",
+      resGanancia: "Ganancia neta",
+      resMargenReal: "Margen real",
+      resCostoTotal: "Costo total puesto en destino",
+      resCostoSub: "USD · costo real de adquisición",
+      sectionDesglose: "Desglose de costos",
+      labelProd: "Producto (¥ → $)",
+      labelEnvio: "Envío internacional",
+      labelCom: "Comisión agente",
+      labelSubtotal: "Subtotal costos",
+      footerDesc: "Tap &amp; Buy Store · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.",
+      footerLink: "Términos, Privacidad y Políticas de Tap &amp; Buy Store"
+    },
+    en: {
+      langBtn: "🇬🇧 EN",
+      themeLabel: "Dark",
+      mainTitle: "Calculate your <span class='brand-text'>exact import price</span>",
+      mainSub: "From supplier's yuan to the suggested final price. Includes international shipping, commission, and profit markup.",
+      sectionParams: "Calculation Parameters",
+      lblPrecioCny: "Product Price <span class='text-[#3AAFA9] font-bold'>¥ CNY</span>",
+      lblTasa: "Exchange Rate <span class='text-slate-400 font-normal'>(Yuan per 1 USD, e.g., 7.20)</span>",
+      lblPeso: "Product Weight",
+      lblTarifa: "Intl. Shipping Rate <span class='text-slate-400 font-normal'>(USD/Kg)</span>",
+      lblComision: "Agent / Gateway Fee <span class='text-slate-400 font-normal'>(%)</span>",
+      lblMargen: "Profit Margin (Markup) <span class='text-slate-400 font-normal'>(%)</span>",
+      btnCalcular: "Calculate Costs",
+      btnReset: "Reset",
+      resVenta: "Suggested Selling Price",
+      resVentaSub: "USD · with markup applied",
+      resGanancia: "Net Profit",
+      resMargenReal: "Real Margin",
+      resCostoTotal: "Total Cost Delivered",
+      resCostoSub: "USD · actual acquisition cost",
+      sectionDesglose: "Cost Breakdown",
+      labelProd: "Product (¥ → $)",
+      labelEnvio: "International Shipping",
+      labelCom: "Agent Commission",
+      labelSubtotal: "Subtotal Costs",
+      footerDesc: "Tap &amp; Buy Store · Logistics estimation tool · Values are reference-only and do not replace customs advice.",
+      footerLink: "Terms, Privacy & Policies of Tap &amp; Buy Store"
+    }
   };
 
-  // ============ REFERENCIAS DOM ============
+  let currentLang = 'es';
+
   const $ = id => document.getElementById(id);
   const inputs = {
-    precioCny: $('inPrecioCny'), tasa: $('inTasa'), peso: $('inPeso'),
-    pesoUnidad: $('inPesoUnidad'), tarifaKg: $('inTarifaKg'),
-    comision: $('inComision'), margen: $('inMargen'), margenSlider: $('margenSlider')
+    precioCny: $('inPrecioCny'), tasa: $('inTasa'), peso:$('inPeso'),
+    pesoUnidad: $('inPesoUnidad'), tarifaKg:$('inTarifaKg'),
+    comision: $('inComision'), margen: $('inMargen'), margenSlider:$('margenSlider')
   };
   const outs = {
-    precioVenta: $('outPrecioVenta'), ganancia: $('outGanancia'), margenReal: $('outMargenReal'),
-    costoTotal: $('outCostoTotal'), costoProducto: $('outCostoProducto'), costoEnvio: $('outCostoEnvio'),
-    costoComision: $('outCostoComision'), subtotal: $('outSubtotal'),
-    barProducto: $('barProducto'), barEnvio: $('barEnvio'), barComision: $('barComision'),
-    refCny: $('refCny'), refPeso: $('refPeso'), refCnyTotal: $('refCnyTotal'),
+    precioVenta: $('outPrecioVenta'), ganancia: $('outGanancia'), margenReal:$('outMargenReal'),
+    costoTotal: $('outCostoTotal'), costoProducto: $('outCostoProducto'), costoEnvio:$('outCostoEnvio'),
+    costoComision: $('outCostoComision'), subtotal:$('outSubtotal'),
+    barProducto: $('barProducto'), barEnvio: $('barEnvio'), barComision:$('barComision'),
     margenBadge: $('margenBadge')
   };
 
-  // ============ UTILIDADES ============
-  const fmtUSD = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(isFinite(n) ? n : 0);
-  const fmtCNY = n => '¥' + new Intl.NumberFormat('zh-CN', { maximumFractionDigits: 2 }).format(isFinite(n) ? n : 0);
-  const num = v => { const n = parseFloat(v); return isFinite(n) && n >= 0 ? n : 0; };
+  // Función num blindada contra comas (Latam / Venezuela)
+  const num = v => {
+    if (typeof v === 'string') {
+      v = v.replace(',', '.');
+    }
+    const n = parseFloat(v);
+    return isFinite(n) && n >= 0 ? n : 0;
+  };
 
-  // ============ TEMA OSCURO ============
+  const fmtUSD = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(isFinite(n) ? n : 0);
+
+  // Sistema de Temas (Oscuro/Claro)
   const root = document.documentElement;
-  const themeLabel = $('themeLabel');
   function applyTheme(dark) {
     root.classList.toggle('dark', dark);
-    themeLabel.textContent = dark ? 'Oscuro' : 'Claro';
     try { localStorage.setItem('importapro-theme', dark ? 'dark' : 'light'); } catch (e) {}
   }
   let savedTheme = null;
@@ -360,37 +393,65 @@ tailwind.config = {
   applyTheme(savedTheme ? savedTheme === 'dark' : true);
   $('themeToggle').addEventListener('click', () => applyTheme(!root.classList.contains('dark')));
 
-  // ============ CÁLCULO PRINCIPAL ============
+  // Sistema de Idiomas
+  function setLanguage(lang) {
+    currentLang = lang;
+    const t = i18n[lang];
+    $('langToggle').textContent = t.langBtn;
+    $('tMainTitle').innerHTML = t.mainTitle;
+    $('tMainSubtitle').textContent = t.mainSub;
+    $('tSectionParams').innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-6 4h3M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3.5-2-3.5 2-3.5-2L5 21Z"/></svg> ${t.sectionParams}`;
+    $('lblPrecioCny').innerHTML = t.lblPrecioCny;
+    $('lblTasa').innerHTML = t.lblTasa;
+    $('lblPeso').textContent = t.lblPeso;
+    $('lblTarifa').innerHTML = t.lblTarifa;
+    $('lblComision').innerHTML = t.lblComision;
+    $('lblMargen').innerHTML = t.lblMargen;
+    $('btnCalcular').textContent = t.btnCalcular;
+    $('btnReset').textContent = t.btnReset;
+    $('tResVenta').textContent = t.resVenta;
+    $('tResVentaSub').textContent = t.resVentaSub;
+    $('tResGanancia').textContent = t.resGanancia;
+    $('tResMargenReal').textContent = t.resMargenReal;
+    $('tResCostoTotal').textContent = t.resCostoTotal;
+    $('tResCostoSub').textContent = t.resCostoSub;
+    $('tSectionDesglose').textContent = t.sectionDesglose;
+    $('tLabelProd').textContent = t.labelProd;
+    $('tLabelEnvio').textContent = t.labelEnvio;
+    $('tLabelCom').textContent = t.labelCom;
+    $('tLabelSubtotal').textContent = t.labelSubtotal;
+    $('tFooterDesc').innerHTML = t.footerDesc;
+    $('tFooterLink').innerHTML = t.footerLink;
+    try { localStorage.setItem('importapro-lang', lang); } catch (e) {}
+  }
+
+  let savedLang = 'es';
+  try { savedLang = localStorage.getItem('importapro-lang') || 'es'; } catch (e) {}
+  setLanguage(savedLang);
+
+  $('langToggle').addEventListener('click', () => {
+    setLanguage(currentLang === 'es' ? 'en' : 'es');
+  });
+
+  // Lógica de cálculo
   function calcular() {
-    const precioCny   = num(inputs.precioCny.value);
-    const tasa        = num(inputs.tasa.value);
-    const pesoCrudo   = num(inputs.peso.value);
-    const pesoKg      = inputs.pesoUnidad.value === 'g' ? pesoCrudo / 1000 : pesoCrudo;
-    const tarifaKg    = num(inputs.tarifaKg.value);
+    const precioCny = num(inputs.precioCny.value);
+    const tasa = num(inputs.tasa.value);
+    const pesoKg = inputs.pesoUnidad.value === 'g' ? num(inputs.peso.value) / 1000 : num(inputs.peso.value);
+    const tarifaKg = num(inputs.tarifaKg.value);
     const comisionPct = num(inputs.comision.value);
-    const margenPct   = num(inputs.margen.value);
+    const margenPct = num(inputs.margen.value);
 
-    // 1. Producto CNY -> USD
     const costoProducto = tasa > 0 ? precioCny / tasa : 0;
-
-    // 2. Envío proporcional por peso
     const costoEnvio = pesoKg * tarifaKg;
-
-    // 3. Comisión del agente sobre la mercancía
     const costoComision = costoProducto * (comisionPct / 100);
-
-    // 4. Costo total puesto en destino
     const costoTotal = costoProducto + costoEnvio + costoComision;
 
-    // 5. Precio de venta con markup
     const precioVenta = costoTotal * (1 + margenPct / 100);
     const ganancia = precioVenta - costoTotal;
     const margenReal = precioVenta > 0 ? (ganancia / precioVenta) * 100 : 0;
-
-    // 6. Barras proporcionales del desglose
     const base = costoTotal > 0 ? costoTotal : 1;
 
-    // ===== Render =====
     outs.costoProducto.textContent = fmtUSD(costoProducto);
     outs.costoEnvio.textContent    = fmtUSD(costoEnvio);
     outs.costoComision.textContent = fmtUSD(costoComision);
@@ -404,16 +465,10 @@ tailwind.config = {
     outs.barProducto.style.width = Math.min(100, (costoProducto / base) * 100) + '%';
     outs.barEnvio.style.width    = Math.min(100, (costoEnvio / base) * 100) + '%';
     outs.barComision.style.width = Math.min(100, (costoComision / base) * 100) + '%';
-
-    outs.refCny.textContent      = fmtCNY(precioCny);
-    outs.refPeso.textContent     = pesoKg.toFixed(3).replace(/\.?0+$/, '') + ' kg';
-    outs.refCnyTotal.textContent = fmtCNY(tasa > 0 ? costoTotal * tasa : 0);
   }
 
-  // ============ EVENTOS ============
   Object.values(inputs).forEach(el => {
     el.addEventListener('input', () => {
-      // Sincronizar slider ↔ input numérico del margen
       if (el === inputs.margenSlider) inputs.margen.value = el.value;
       if (el === inputs.margen) inputs.margenSlider.value = Math.min(200, num(el.value));
       calcular();
@@ -421,24 +476,18 @@ tailwind.config = {
     el.addEventListener('change', calcular);
   });
 
-  $('btnCalcular').addEventListener('click', () => {
-    calcular();
-    document.querySelector('section.lg\\:col-span-2').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  });
-
-  $('btnReset').addEventListener('click', () => {
-    inputs.precioCny.value = DEFAULTS.precioCny;
-    inputs.tasa.value = DEFAULTS.tasa;
-    inputs.peso.value = DEFAULTS.peso;
-    inputs.pesoUnidad.value = DEFAULTS.pesoUnidad;
-    inputs.tarifaKg.value = DEFAULTS.tarifaKg;
-    inputs.comision.value = DEFAULTS.comision;
-    inputs.margen.value = DEFAULTS.margen;
-    inputs.margenSlider.value = DEFAULTS.margen;
+  $('btnCalcular').addEventListener('click', calcular);$('btnReset').addEventListener('click', () => {
+    inputs.precioCny.value = '45';
+    inputs.tasa.value = '7.2';
+    inputs.peso.value = '0.5';
+    inputs.pesoUnidad.value = 'kg';
+    inputs.tarifaKg.value = '12';
+    inputs.comision.value = '5';
+    inputs.margen.value = '50';
+    inputs.margenSlider.value = '50';
     calcular();
   });
 
-  // ============ ARRANQUE ============
   calcular();
 })();
 </script>
