@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ImportaPro — Calculadora de Costos de Importación</title>
+<meta name="description" content="Calculá en segundos cuánto te cuesta de verdad importar de China: producto, envío, comisiones y tu margen real. Pago único, acceso inmediato.">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { --teal:#3AAFA9; --navy:#34495E; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .btn-buy { box-shadow:0 5px 0 #0b8a58, 0 8px 18px rgba(14,168,108,.35); transition:transform .08s, box-shadow .08s; }
+  .btn-buy:active { transform:translateY(5px); box-shadow:0 0 0 #0b8a58; }
+</style>
+<base target="_blank">
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<!-- ===== CONFIGURACIÓN (editá antes de publicar) =====
+  1. En el botón de compra: reemplazá HREF_NOWPAYMENTS por tu link de pago.
+  2. En "después de pagar": reemplazá URL_ACCESO por la URL real de la app.
+  3. En el footer: reemplazá EMAIL_SOPORTE por tu correo de soporte.
+==================================================== -->
+
+<header class="max-w-5xl mx-auto px-5 pt-8 flex items-center justify-between">
+  <div class="text-xl font-extrabold tracking-tight" style="color:var(--navy)">Importa<span style="color:var(--teal)">Pro</span></div>
+  <a href="#comprar" class="text-sm font-semibold px-4 py-2 rounded-full border border-slate-300 hover:border-teal-500 hover:text-teal-600 transition">Comprar acceso</a>
+</header>
+
+<section class="max-w-3xl mx-auto px-5 pt-16 pb-12 text-center">
+  <h1 class="text-4xl md:text-5xl font-extrabold leading-tight" style="color:var(--navy)">
+    ¿Cuánto te cuesta de verdad<br class="hidden md:block"> importar de China?
+  </h1>
+  <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto">
+    ImportaPro calcula en segundos tu costo total: producto, envío, comisiones y
+    <strong>margen real</strong> — no el markup que te imaginás. En español y en inglés, desde el celular.
+  </p>
+  <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a id="comprar" href="HREF_NOWPAYMENTS" class="btn-buy bg-emerald-500 text-white text-lg font-bold px-10 py-4 rounded-2xl">Comprar acceso — USD 12</a>
+    <span class="text-sm text-slate-500">Pago único · Acceso inmediato · Sin suscripción</span>
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 py-10 grid md:grid-cols-3 gap-6">
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">⚡</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)">Resultado en vivo</h3>
+    <p class="text-slate-600 text-sm">Ingresás precio del proveedor, tipo de cambio, peso y tarifa de envío. Todo se recalcula al instante, sin botones de "calcular".</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">🎯</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)">Margen real, no markup</h3>
+    <p class="text-slate-600 text-sm">Te muestra el porcentaje de ganancia real sobre el precio de venta — el número que decide si el negocio cierra o no.</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">📱</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)">Funciona en cualquier lado</h3>
+    <p class="text-slate-600 text-sm">Web, sin instalación. Ideal para cotizar con el proveedor de China abierto al lado, desde el teléfono.</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 py-12">
+  <h2 class="text-2xl font-extrabold text-center mb-8" style="color:var(--navy)">Cómo funciona</h2>
+  <ol class="space-y-6">
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">1</span>
+      <div><strong>Comprás tu acceso</strong> con un pago único. Al confirmarse, recibís un email con tu link y código.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">2</span>
+      <div><strong>Abrís ImportaPro</strong> desde cualquier dispositivo e ingresás los datos de tu cotización (en yuanes o dólares).</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">3</span>
+      <div><strong>Ves tu costo total y precio de venta sugerido</strong> con margen real. Decidís si el producto vale la pena antes de pagarle a nadie.</div>
+    </li>
+  </ol>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-12">
+  <h2 class="text-2xl font-extrabold text-center mb-6" style="color:var(--navy)">Preguntas frecuentes</h2>
+  <div class="space-y-3">
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer">¿Es un pago único o suscripción?</summary><p class="text-sm text-slate-600 mt-2">Pago único. Comprás una vez y usás ImportaPro cuando quieras, sin cargos mensuales.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2">Automáticamente por email después de la confirmación del pago, con tu link personal y código de acceso.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer">¿Incluye aranceles e impuestos de mi país?</summary><p class="text-sm text-slate-600 mt-2">El cálculo base cubre producto, envío y comisiones. Verificá siempre los aranceles aplicables en tu país antes de cerrar una operación.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer">¿Puedo usarlo en el teléfono?</summary><p class="text-sm text-slate-600 mt-2">Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.</p></details>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-16 text-center">
+  <div class="rounded-3xl p-10 text-white" style="background:var(--navy)">
+    <h2 class="text-2xl font-extrabold">Dejá de adivinar tus márgenes</h2>
+    <p class="mt-2 text-slate-300">Una cotización mal calculada cuesta más que esta herramienta.</p>
+    <a href="HREF_NOWPAYMENTS" class="btn-buy inline-block mt-6 bg-emerald-500 text-lg font-bold px-10 py-4 rounded-2xl">Comprar acceso — USD 12</a>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500 px-5">
+  <p>© 2026 PromptMagnate Lab · Herramientas para importadores</p>
+  <p class="mt-2">Soporte: <a href="/cdn-cgi/l/email-protection#6a2f272b23263539253a25383e2f" class="underline" style="color:var(--teal)">EMAIL_SOPORTE</a> · <a href="policies.html" class="underline" style="color:var(--teal)">Términos y Privacidad</a></p>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
