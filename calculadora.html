@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ImportaPro — Tap &amp; Buy Store</title>
+<title>ImportaPro — Calculadora de Costos de Importación</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -34,6 +34,7 @@ tailwind.config = {
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .bar-fill { transition: width .5s cubic-bezier(.4,0,.2,1); }
 </style>
+<base target="_blank">
 </head>
 <body class="min-h-screen bg-slate-100 dark:bg-slate-950 transition-colors duration-300">
 
@@ -46,9 +47,9 @@ tailwind.config = {
         </div>
         <div>
           <h1 class="text-lg md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-            Tap<span class="text-[#3AAFA9]">&amp;</span>Buy <span class="brand-text">ImportaPro</span>
+            Importa<span class="brand-text">Pro</span>
           </h1>
-          <p class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 -mt-0.5">Direct Global Order &amp; Secure Dispatch</p>
+          <p id="tHeaderSub" class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 -mt-0.5">Calculadora de costos de importación</p>
         </div>
       </div>
 
@@ -284,14 +285,18 @@ tailwind.config = {
 
     <!-- Footer -->
     <footer class="mt-12 text-center text-xs text-slate-400 dark:text-slate-600 space-y-2">
-      <p id="tFooterDesc">Tap &amp; Buy Store · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
+      <p id="tFooterDesc">ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
       <p>
-        <a href="policies.html" id="tFooterLink" class="text-[#3AAFA9] hover:underline font-semibold transition">Términos, Privacidad y Políticas de Tap &amp; Buy Store</a>
+        <a href="#" id="tFooterLink" class="text-[#3AAFA9] hover:underline font-semibold transition">Términos y Privacidad</a>
+        <span class="mx-1">·</span>
+        <!-- CONFIG: reemplazá EMAIL_SOPORTE antes de publicar -->
+        <a href="/cdn-cgi/l/email-protection#86c3cbc7cfcad9d5c9d6c9d4d2c3" class="text-[#3AAFA9] hover:underline font-semibold transition">Soporte</a>
       </p>
+      <p id="tFooterMother" class="pt-1 font-semibold">Un producto de PromptMagnate Lab</p>
     </footer>
   </main>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function () {
   'use strict';
 
@@ -322,8 +327,10 @@ tailwind.config = {
       labelEnvio: "Envío internacional",
       labelCom: "Comisión agente",
       labelSubtotal: "Subtotal costos",
-      footerDesc: "Tap &amp; Buy Store · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.",
-      footerLink: "Términos, Privacidad y Políticas de Tap &amp; Buy Store"
+      headerSub: "Calculadora de costos de importación",
+      footerDesc: "ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.",
+      footerLink: "Términos y Privacidad",
+      footerMother: "Un producto de PromptMagnate Lab"
     },
     en: {
       langBtn: "🇬🇧 EN",
@@ -350,8 +357,10 @@ tailwind.config = {
       labelEnvio: "International Shipping",
       labelCom: "Agent Commission",
       labelSubtotal: "Subtotal Costs",
-      footerDesc: "Tap &amp; Buy Store · Logistics estimation tool · Values are reference-only and do not replace customs advice.",
-      footerLink: "Terms, Privacy & Policies of Tap &amp; Buy Store"
+      headerSub: "Import cost calculator",
+      footerDesc: "ImportaPro · Logistics estimation tool · Values are reference-only and do not replace customs advice.",
+      footerLink: "Terms & Privacy",
+      footerMother: "A PromptMagnate Lab product"
     }
   };
 
@@ -421,7 +430,9 @@ tailwind.config = {
     $('tLabelCom').textContent = t.labelCom;
     $('tLabelSubtotal').textContent = t.labelSubtotal;
     $('tFooterDesc').innerHTML = t.footerDesc;
+    $('tHeaderSub').textContent = t.headerSub;
     $('tFooterLink').innerHTML = t.footerLink;
+    $('tFooterMother').textContent = t.footerMother;
     try { localStorage.setItem('importapro-lang', lang); } catch (e) {}
   }
 
