@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CortePro — Calculadora de Consumo de Tela</title>
+<meta name="description" content="Calcula en segundos cuánta tela necesitas por talla: consumo real, merma, tela angosta y costo estimado. En metros, yardas o pulgadas. Pago único, acceso inmediato.">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  :root { --teal:#3AAFA9; --navy:#34495E; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; }
+  .btn-buy { box-shadow:0 5px 0 #0b8a58, 0 8px 18px rgba(14,168,108,.35); transition:transform .08s, box-shadow .08s; }
+  .btn-buy:active { transform:translateY(5px); box-shadow:0 0 0 #0b8a58; }
+</style>
+<base target="_blank">
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+<header class="max-w-5xl mx-auto px-5 pt-8 flex items-center justify-between gap-3">
+  <div class="text-xl font-extrabold tracking-tight" style="color:var(--navy)">Corte<span style="color:var(--teal)">Pro</span></div>
+  <div class="flex items-center gap-2">
+    <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language"
+      class="text-xs font-semibold px-3 py-2 rounded-full border border-slate-300 hover:border-teal-500 hover:text-teal-600 transition">🇪🇸 ES</button>
+    <a href="#comprar" target="_self" class="text-sm font-semibold px-4 py-2 rounded-full border border-slate-300 hover:border-teal-500 hover:text-teal-600 transition" data-i18n="navBuy">Comprar acceso</a>
+  </div>
+</header>
+
+<section class="max-w-3xl mx-auto px-5 pt-16 pb-12 text-center">
+  <h1 class="text-4xl md:text-5xl font-extrabold leading-tight" style="color:var(--navy)" data-i18n="heroTitle">
+    ¿Cuánta tela necesitas<br class="hidden md:block"> de verdad?
+  </h1>
+  <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto" data-i18n="heroSub">
+    CortePro calcula en segundos el consumo de tela por talla — con merma, tela angosta y
+    <strong>costo estimado</strong>. En metros, yardas o pulgadas, desde el celular.
+  </p>
+  <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a id="comprar" href="https://nowpayments.io/payment/?iIc=4677389862&source=button" class="btn-buy bg-emerald-500 text-white text-lg font-bold px-10 py-4 rounded-2xl" data-i18n="buyBtn">Comprar acceso — USD 12</a>
+    <span class="text-sm text-slate-500" data-i18n="buyNote">Pago único · Acceso inmediato · Sin suscripción</span>
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 py-10 grid md:grid-cols-3 gap-6">
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">⚡</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)" data-i18n="b1t">Cálculo en vivo</h3>
+    <p class="text-slate-600 text-sm" data-i18n="b1p">Eliges la prenda, cargas cantidades por talla y todo se recalcula al instante: metros totales, merma y costo. Sin botones de "calcular".</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">📏</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)" data-i18n="b2t">Tela angosta y merma incluidas</h3>
+    <p class="text-slate-600 text-sm" data-i18n="b2p">¿El rollo mide 0.70–0.80 m? CortePro detecta la tela angosta y duplica el consumo automáticamente. El % de merma lo ajustas a tu taller.</p>
+  </div>
+  <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+    <div class="text-3xl mb-3">🌎</div>
+    <h3 class="font-bold text-lg mb-1" style="color:var(--navy)" data-i18n="b3t">Metros, yardas o pulgadas</h3>
+    <p class="text-slate-600 text-sm" data-i18n="b3p">Trabaja en la unidad de tu mercado — o de tu proveedor — y cambia cuando quieras sin perder el cálculo. Ideal para telas importadas.</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 py-12">
+  <h2 class="text-2xl font-extrabold text-center mb-8" style="color:var(--navy)" data-i18n="howTitle">Cómo funciona</h2>
+  <ol class="space-y-6">
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">1</span>
+      <div data-i18n="s1"><strong>Compra tu acceso</strong> con un pago único. Envías el comprobante y recibes tu código de acceso.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">2</span>
+      <div data-i18n="s2"><strong>Abre CortePro</strong> desde cualquier dispositivo, ingresa tu código y elige la prenda: pantalón, falda, vestido o blusa.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-9 h-9 rounded-full font-bold text-white flex items-center justify-center" style="background:var(--teal)">3</span>
+      <div data-i18n="s3"><strong>Ve los metros, el costo y el desglose por talla</strong> al instante. Llega a la tienda de telas sabiendo exactamente qué pedir — ni de más, ni de menos.</div>
+    </li>
+  </ol>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-12">
+  <h2 class="text-2xl font-extrabold text-center mb-6" style="color:var(--navy)" data-i18n="faqTitle">Preguntas frecuentes</h2>
+  <div class="space-y-3">
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer" data-i18n="q1">¿Es un pago único o suscripción?</summary><p class="text-sm text-slate-600 mt-2" data-i18n="a1">Pago único. Compras una vez y usas CortePro cuando quieras, sin cargos mensuales.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer" data-i18n="q2">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2" data-i18n="a2">Al confirmarse tu pago, envíanos el comprobante a CortePro.oficial@gmail.com y recibes tu código en minutos.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer" data-i18n="q3">¿Reemplaza el criterio de un modista o patronista?</summary><p class="text-sm text-slate-600 mt-2" data-i18n="a3">No. CortePro entrega estimaciones basadas en consumos estándar de taller. Los resultados no sustituyen el criterio profesional del patronista o diseñador.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer" data-i18n="q4">¿Puedo usarlo en el teléfono?</summary><p class="text-sm text-slate-600 mt-2" data-i18n="a4">Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.</p></details>
+    <details class="bg-white rounded-xl border border-slate-200 p-4"><summary class="font-semibold cursor-pointer" data-i18n="q5">¿En qué unidades trabaja?</summary><p class="text-sm text-slate-600 mt-2" data-i18n="a5">En metros, yardas o pulgadas — con conversión automática. Perfecta para telas locales o importadas.</p></details>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-16 text-center">
+  <div class="rounded-3xl p-10 text-white" style="background:var(--navy)">
+    <h2 class="text-2xl font-extrabold" data-i18n="ctaTitle">Deja de comprar tela a ciegas</h2>
+    <p class="mt-2 text-slate-300" data-i18n="ctaSub">Un solo cálculo errado cuesta más que esta herramienta.</p>
+    <a href="https://nowpayments.io/payment/?iIc=4677389862&source=button" class="btn-buy inline-block mt-6 bg-emerald-500 text-lg font-bold px-10 py-4 rounded-2xl" data-i18n="buyBtn2">Comprar acceso — USD 12</a>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200 py-8 text-center text-sm text-slate-500 px-5">
+  <p data-i18n="f1">© 2026 CortePro · Herramientas para diseñadores y modistas · Todos los derechos reservados</p>
+  <p class="mt-2"><span data-i18n="f2">Soporte:</span> <a href="mailto:CortePro.oficial@gmail.com" class="underline" style="color:var(--teal)">CortePro.oficial@gmail.com</a> · <a href="terminos.html" class="underline" style="color:var(--teal)" data-i18n="f3">Términos</a></p>
+</footer>
+
+<script>
+(function(){
+'use strict';
+const I18N = {
+  es: {
+    navBuy:'Comprar acceso',
+    heroTitle:'¿Cuánta tela necesitas<br class="hidden md:block"> de verdad?',
+    heroSub:'CortePro calcula en segundos el consumo de tela por talla — con merma, tela angosta y <strong>costo estimado</strong>. En metros, yardas o pulgadas, desde el celular.',
+    buyBtn:'Comprar acceso — USD 12', buyBtn2:'Comprar acceso — USD 12',
+    buyNote:'Pago único · Acceso inmediato · Sin suscripción',
+    b1t:'Cálculo en vivo', b1p:'Eliges la prenda, cargas cantidades por talla y todo se recalcula al instante: metros totales, merma y costo. Sin botones de "calcular".',
+    b2t:'Tela angosta y merma incluidas', b2p:'¿El rollo mide 0.70–0.80 m? CortePro detecta la tela angosta y duplica el consumo automáticamente. El % de merma lo ajustas a tu taller.',
+    b3t:'Metros, yardas o pulgadas', b3p:'Trabaja en la unidad de tu mercado — o de tu proveedor — y cambia cuando quieras sin perder el cálculo. Ideal para telas importadas.',
+    howTitle:'Cómo funciona',
+    s1:'<strong>Compra tu acceso</strong> con un pago único. Envías el comprobante y recibes tu código de acceso.',
+    s2:'<strong>Abre CortePro</strong> desde cualquier dispositivo, ingresa tu código y elige la prenda: pantalón, falda, vestido o blusa.',
+    s3:'<strong>Ve los metros, el costo y el desglose por talla</strong> al instante. Llega a la tienda de telas sabiendo exactamente qué pedir — ni de más, ni de menos.',
+    faqTitle:'Preguntas frecuentes',
+    q1:'¿Es un pago único o suscripción?', a1:'Pago único. Compras una vez y usas CortePro cuando quieras, sin cargos mensuales.',
+    q2:'¿Cómo recibo mi acceso?', a2:'Al confirmarse tu pago, envíanos el comprobante a CortePro.oficial@gmail.com y recibes tu código en minutos.',
+    q3:'¿Reemplaza el criterio de un modista o patronista?', a3:'No. CortePro entrega estimaciones basadas en consumos estándar de taller. Los resultados no sustituyen el criterio profesional del patronista o diseñador.',
+    q4:'¿Puedo usarlo en el teléfono?', a4:'Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.',
+    q5:'¿En qué unidades trabaja?', a5:'En metros, yardas o pulgadas — con conversión automática. Perfecta para telas locales o importadas.',
+    ctaTitle:'Deja de comprar tela a ciegas', ctaSub:'Un solo cálculo errado cuesta más que esta herramienta.',
+    f1:'© 2026 CortePro · Herramientas para diseñadores y modistas · Todos los derechos reservados',
+    f2:'Soporte:', f3:'Términos'
+  },
+  en: {
+    navBuy:'Buy access',
+    heroTitle:'How much fabric do you<br class="hidden md:block"> really need?',
+    heroSub:'CortePro instantly calculates fabric consumption per size — with waste allowance, narrow fabric detection and <strong>estimated cost</strong>. In meters, yards or inches, right from your phone.',
+    buyBtn:'Buy access — USD 12', buyBtn2:'Buy access — USD 12',
+    buyNote:'One-time payment · Instant access · No subscription',
+    b1t:'Live calculation', b1p:'Pick the garment, enter quantities per size and everything recalculates instantly: total fabric, waste and cost. No "calculate" buttons.',
+    b2t:'Narrow fabric & waste included', b2p:'Is the roll 0.70–0.80 m wide? CortePro detects narrow fabric and doubles consumption automatically. You set the waste % for your workshop.',
+    b3t:'Meters, yards or inches', b3p:'Work in your market\'s unit — or your supplier\'s — and switch anytime without losing the calculation. Ideal for imported fabrics.',
+    howTitle:'How it works',
+    s1:'<strong>Buy your access</strong> with a one-time payment. Send your receipt and receive your access code.',
+    s2:'<strong>Open CortePro</strong> from any device, enter your code and choose the garment: pants, skirt, dress or blouse.',
+    s3:'<strong>See fabric, cost and breakdown by size</strong> instantly. Walk into the fabric store knowing exactly what to ask for — not too much, not too little.',
+    faqTitle:'Frequently asked questions',
+    q1:'Is it a one-time payment or a subscription?', a1:'One-time payment. Buy once and use CortePro whenever you want, with no monthly charges.',
+    q2:'How do I receive my access?', a2:'Once your payment is confirmed, email your receipt to CortePro.oficial@gmail.com and you will receive your code within minutes.',
+    q3:'Does it replace a seamstress or pattern maker\'s judgment?', a3:'No. CortePro provides estimates based on standard workshop consumption. Results do not replace the professional judgment of a pattern maker or designer.',
+    q4:'Can I use it on my phone?', a4:'Yes, it is a web app: it works in any browser, mobile or desktop, with nothing to install.',
+    q5:'Which units does it work in?', a5:'Meters, yards or inches — with automatic conversion. Perfect for local or imported fabrics.',
+    ctaTitle:'Stop buying fabric blind', ctaSub:'One wrong calculation costs more than this tool.',
+    f1:'© 2026 CortePro · Tools for designers and sewists · All rights reserved',
+    f2:'Support:', f3:'Terms'
+  }
+};
+let lang = 'es';
+try { lang = localStorage.getItem('cortepro-venta-lang') || 'es'; } catch(e){}
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+  });
+  document.getElementById('langBtn').textContent = lang === 'es' ? '🇪🇸 ES' : '🇬🇧 EN';
+  document.documentElement.lang = lang;
+}
+window.toggleLang = function(){
+  lang = lang === 'es' ? 'en' : 'es';
+  try { localStorage.setItem('cortepro-venta-lang', lang); } catch(e){}
+  applyLang();
+};
+applyLang();
+})();
+</script>
+
+</body>
+</html>
