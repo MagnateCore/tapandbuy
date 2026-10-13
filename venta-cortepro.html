@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CortePro — Calculadora de consumo de tela</title>
+<title>CortePro — Calculadora de Consumo de Tela</title>
+<meta name="description" content="Calcula en segundos cuánta tela necesitas por talla: consumo real, merma, tela angosta y costo estimado. En metros, yardas o pulgadas. Pago único, acceso inmediato.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
-  darkMode: 'class',
   theme: { extend: {
     colors: {
       brand: { DEFAULT:'#3AAFA9', dark:'#2c8a85', light:'#5ec9c4' },
       miel:  '#E8B04B',
-      forest:{ DEFAULT:'#0f2e2b', deep:'#0a1f1d', ink:'#081614' },
       navy:  { DEFAULT:'#34495E', dark:'#24374a', light:'#4e6d8d' }
     },
     fontFamily: {
@@ -26,445 +25,177 @@ tailwind.config = {
 <style>
   body { font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
   .tnum { font-feature-settings:"tnum" 1, "cv05" 1; }
-  ::selection { background:rgba(58,175,169,.30); }
-
-  .fade-in { animation:fadeIn .5s cubic-bezier(.16,1,.3,1) both; }
-  @keyframes fadeIn { from { opacity:0; transform:translateY(10px);} to { opacity:1; transform:none;} }
-
-  .bar-fill { transition:width .7s cubic-bezier(.16,1,.3,1); }
-
-  @keyframes shake { 10%,90%{transform:translateX(-1px);} 20%,80%{transform:translateX(2px);} 30%,50%,70%{transform:translateX(-4px);} 40%,60%{transform:translateX(4px);} }
-  .shake { animation:shake .5s both; }
-
-  input[type=range] { -webkit-appearance:none; appearance:none; width:100%; height:5px; border-radius:999px; background:linear-gradient(90deg,#3AAFA9,#E8B04B); outline:none; }
-  input[type=range]::-webkit-slider-thumb { -webkit-appearance:none; appearance:none; width:22px; height:22px; border-radius:50%; background:#fff; border:5px solid #3AAFA9; box-shadow:0 2px 8px rgba(0,0,0,.35); cursor:pointer; transition:transform .15s ease; }
-  input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.15); }
-  input[type=range]::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:#fff; border:5px solid #3AAFA9; box-shadow:0 2px 8px rgba(0,0,0,.35); cursor:pointer; }
-
-  .chip { transition:border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
-  .chip:hover { border-color:rgba(58,175,169,.5); transform:translateY(-2px); box-shadow:0 8px 24px rgba(58,175,169,.10); }
-
-  .hero-glow::before { content:''; position:absolute; top:-60%; right:-20%; width:70%; height:120%; border-radius:50%; background:radial-gradient(circle, rgba(58,175,169,.25), transparent 70%); pointer-events:none; }
-  .hero-glow::after { content:''; position:absolute; bottom:-70%; left:-15%; width:60%; height:120%; border-radius:50%; background:radial-gradient(circle, rgba(232,176,75,.14), transparent 70%); pointer-events:none; }
+  ::selection { background:rgba(58,175,169,.25); }
+  .btn-buy { box-shadow:0 4px 0 #0b8a58, 0 10px 24px rgba(14,168,108,.30); transition:transform .1s, box-shadow .1s; }
+  .btn-buy:active { transform:translateY(4px); box-shadow:0 0 0 #0b8a58; }
+  .kicker { letter-spacing:.25em; }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
-<body class="bg-[#f3f5f4] dark:bg-forest-ink text-slate-800 dark:text-slate-200 min-h-screen">
+<body class="bg-[#f6f7f6] text-slate-800">
 
-<!-- ============ GATE ============ -->
-<div id="gate" class="fixed inset-0 z-50 flex items-center justify-center bg-forest-ink/95 backdrop-blur-md px-4">
-  <div id="gateCard" class="w-full max-w-sm rounded-[2rem] bg-white dark:bg-forest-deep border border-slate-200/80 dark:border-white/10 shadow-2xl shadow-black/50 p-10 text-center fade-in relative overflow-hidden">
-    <div class="absolute -top-16 -right-16 w-48 h-48 rounded-full bg-brand/15 blur-2xl pointer-events-none"></div>
-    <div class="mx-auto mb-5 w-16 h-16 rounded-2xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-lg shadow-brand/30">
-      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+<header class="max-w-5xl mx-auto px-5 pt-7 flex items-center justify-between gap-3">
+  <div class="flex items-center gap-2.5">
+    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </div>
-    <h1 class="font-display text-2xl font-bold tracking-tight text-navy dark:text-white">Corte<span class="text-brand">Pro</span></h1>
-    <p id="gateLabel" class="mt-2 mb-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Ingresá tu código de acceso</p>
-    <input id="gateCode" type="text" maxlength="11" placeholder="XXXX-XXXX"
-      class="w-full text-center tracking-[.4em] uppercase rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-4 mb-3 text-[15px] font-display font-semibold placeholder:text-slate-300 dark:placeholder:text-slate-600 placeholder:font-sans placeholder:font-normal placeholder:tracking-normal focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition" aria-label="Código de acceso">
-    <p id="gateError" class="hidden text-[13px] text-red-500 mb-3" role="alert"></p>
-    <button id="gateBtn" onclick="tryGate()" class="w-full rounded-2xl bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-widest py-4 shadow-lg shadow-brand/30 transition">ACCEDER</button>
-    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8ecde1fcfaebdefce1a0e1e8e7ede7efe2cee9e3efe7e2a0ede1e3">[email&#160;protected]</a></p>
+    <span class="font-display font-bold text-lg tracking-tight text-navy">Corte<span class="text-brand">Pro</span></span>
   </div>
-</div>
-
-<!-- ============ APP ============ -->
-<div id="app" class="hidden">
-<header class="sticky top-0 z-40 backdrop-blur bg-[#f3f5f4]/85 dark:bg-forest-ink/85 border-b border-slate-200/70 dark:border-white/5">
-  <div class="max-w-4xl mx-auto px-4 py-3.5 flex items-center justify-between gap-3">
-    <div class="flex items-center gap-2.5">
-      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-      </div>
-      <span class="font-display font-bold tracking-tight text-navy dark:text-white text-lg">Corte<span class="text-brand">Pro</span></span>
-    </div>
-    <div class="flex items-center gap-2">
-      <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language"
-        class="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full border border-slate-200 dark:border-white/10 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
-      <button id="themeBtn" onclick="toggleTheme()" aria-label="Cambiar tema / Toggle theme"
-        class="h-9 px-3.5 inline-flex items-center rounded-full border border-slate-200 dark:border-white/10 hover:border-brand/60 text-sm transition">🌙</button>
-    </div>
+  <div class="flex items-center gap-2">
+    <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language"
+      class="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
+    <a href="#comprar" target="_self" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navBuy">Comprar acceso</a>
   </div>
 </header>
 
-<main class="max-w-4xl mx-auto px-4 py-6 space-y-5">
-
-  <!-- Resultados PRIMERO: el número es la estrella -->
-  <section class="relative rounded-[2rem] p-8 sm:p-10 text-white overflow-hidden hero-glow fade-in" style="background:linear-gradient(140deg,#0f2e2b 0%,#0a1f1d 60%,#081614 100%)">
-    <div class="relative flex flex-wrap items-end justify-between gap-6">
-      <div>
-        <p id="tTotal" class="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-light mb-3">Total requerido</p>
-        <p class="font-display text-6xl sm:text-7xl font-bold tnum tracking-tight leading-none"><span id="rMetros">0.00</span><span id="rUnidad" class="text-2xl font-medium text-miel ml-2">m</span></p>
-        <p class="text-xs text-slate-400 tnum mt-3"><span id="tSinMerma">Sin merma:</span> <span id="rMetrosSin">0.00</span> <span id="rUnidad2">m</span></p>
-      </div>
-      <div class="text-left sm:text-right">
-        <p id="tCosto" class="text-[11px] font-bold uppercase tracking-[0.22em] text-brand-light mb-3">Costo estimado de tela</p>
-        <p id="rCosto" class="font-display text-5xl font-bold tnum tracking-tight text-miel leading-none">$0.00</p>
-        <p class="text-xs text-slate-400 tnum mt-3"><span id="tPromedio">Promedio por prenda:</span> <span id="rPromedio">0.00</span> <span id="rUnidad3">m</span></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Desglose -->
-  <div class="rounded-3xl border border-slate-200/80 dark:border-white/[0.07] bg-white dark:bg-forest-deep shadow-sm p-6 sm:p-7 fade-in">
-    <h3 id="tDesglose" class="text-[11px] font-bold uppercase tracking-[0.22em] text-brand mb-5">Desglose por talla</h3>
-    <div id="desglose" class="space-y-4"></div>
+<section class="max-w-3xl mx-auto px-5 pt-16 pb-14 text-center">
+  <p class="text-[11px] font-bold uppercase kicker text-brand mb-4" data-i18n="kicker">Herramienta para costura y moda</p>
+  <h1 class="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight text-navy" data-i18n="heroTitle">
+    ¿Cuánta tela necesitas<br class="hidden md:block"> de verdad?
+  </h1>
+  <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto leading-relaxed" data-i18n="heroSub">
+    CortePro calcula en segundos el consumo de tela por talla — con merma, tela angosta y
+    <strong>costo estimado</strong>. En metros, yardas o pulgadas, desde el celular.
+  </p>
+  <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
+    <a id="comprar" href="https://nowpayments.io/payment/?iIc=4677389862&source=button" class="btn-buy rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-lg font-bold px-10 py-4" data-i18n="buyBtn">Comprar acceso — USD 12</a>
+    <span class="text-sm text-slate-500" data-i18n="buyNote">Pago único · 12 meses de actualizaciones incluidas · Sin suscripción</span>
   </div>
+</section>
 
-  <!-- Configuración -->
-  <section class="rounded-3xl border border-slate-200/80 dark:border-white/[0.07] bg-white dark:bg-forest-deep shadow-sm p-6 sm:p-7 fade-in">
-    <h2 id="tForm" class="text-[11px] font-bold uppercase tracking-[0.22em] text-brand mb-6">Datos del cálculo</h2>
-
-    <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-7">
-      <div>
-        <label for="selModelo" id="lModelo" class="block text-[13px] font-medium text-slate-600 dark:text-slate-300 mb-1.5">Prenda / modelo</label>
-        <select id="selModelo" class="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-3 text-[15px] focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition"></select>
-        <p id="hintModelo" class="text-xs text-slate-400 mt-1.5 leading-relaxed">Valores base según taller — puedes editar cada talla abajo.</p>
-      </div>
-      <div>
-        <label for="selUnidad" id="lUnidad" class="block text-[13px] font-medium text-slate-600 dark:text-slate-300 mb-1.5">Unidades de medida</label>
-        <select id="selUnidad" class="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-3 text-[15px] focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition" aria-label="Unidades de medida">
-          <option value="m">Metros (m)</option>
-          <option value="yd">Yardas (yd)</option>
-          <option value="in">Pulgadas (in)</option>
-        </select>
-      </div>
-      <div>
-        <label for="anchoRollo" id="lAncho" class="block text-[13px] font-medium text-slate-600 dark:text-slate-300 mb-1.5">Ancho del rollo de tela</label>
-        <input id="anchoRollo" type="text" inputmode="decimal" value="1,50"
-          class="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-3 text-[15px] tnum focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition">
-        <p id="hintAngosta" class="hidden mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-miel bg-miel/10 px-2.5 py-1.5 rounded-full"></p>
-        <p id="hintAnchoOK" class="hidden mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-brand bg-brand/10 px-2.5 py-1.5 rounded-full"></p>
-      </div>
-    </div>
-
-    <!-- Tallas en chips -->
-    <div id="chipsTallas" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-7"></div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-      <div>
-        <label for="merma" id="lMerma" class="block text-[13px] font-medium text-slate-600 dark:text-slate-300 mb-3">% desperdicio / merma</label>
-        <div class="flex items-center gap-4">
-          <input id="mermaRange" type="range" min="0" max="30" step="1" value="5" aria-label="Porcentaje de merma">
-          <input id="merma" type="text" inputmode="decimal" value="5"
-            class="w-20 text-center rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-2 py-2.5 text-[15px] tnum focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition" aria-label="Merma en porcentaje">
-        </div>
-      </div>
-      <div>
-        <label for="precioMetro" id="lPrecio" class="block text-[13px] font-medium text-slate-600 dark:text-slate-300 mb-3">Precio por metro</label>
-        <input id="precioMetro" type="text" inputmode="decimal" value="10,00"
-          class="w-full rounded-2xl border border-slate-200 dark:border-white/10 bg-white dark:bg-white/[0.04] px-3.5 py-3 text-[15px] tnum focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition">
-      </div>
-    </div>
-
-    <div class="flex flex-wrap gap-3">
-      <button onclick="calcular(true)" class="rounded-full bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-wide px-8 py-3.5 shadow-lg shadow-brand/25 transition">Calcular</button>
-      <button onclick="resetCalc()" class="rounded-full border border-slate-200 dark:border-white/10 hover:border-brand/50 text-sm font-medium px-8 py-3.5 text-slate-600 dark:text-slate-300 transition" id="btnReset">Restablecer</button>
-    </div>
-  </section>
-</main>
-
-<footer class="border-t border-slate-200/70 dark:border-white/5 mt-10">
-  <div class="max-w-4xl mx-auto px-4 py-8 text-center text-xs text-slate-400 space-y-2.5">
-    <p id="disclaimer" class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">Resultados estimados que no sustituyen el criterio profesional del patronista o diseñador.</p>
-    <p>© 2026 CortePro · <span id="fTag">Herramientas para diseñadores y modistas · Todos los derechos reservados</span></p>
-    <p class="pt-1">
-      <a href="/cdn-cgi/l/email-protection#185b776a6c7d486a7736777e717b717974587f75797174367b7775" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
-      <span class="mx-1.5 text-slate-300 dark:text-slate-600">·</span>
-      <a href="terminos.html" id="fTerminos" class="text-brand hover:text-brand-dark font-medium transition">Términos</a>
-    </p>
+<section class="max-w-5xl mx-auto px-5 py-8 grid md:grid-cols-3 gap-5">
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center mb-4"><span class="text-2xl">⚡</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b1t">Cálculo en vivo</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b1p">Eliges la prenda, cargas cantidades por talla y todo se recalcula al instante: metros totales, merma y costo. Sin botones de "calcular".</p>
   </div>
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-miel/10 flex items-center justify-center mb-4"><span class="text-2xl">📏</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b2t">Tela angosta y merma incluidas</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b2p">¿El rollo mide 0.70–0.80 m? CortePro detecta la tela angosta y duplica el consumo automáticamente. El % de merma lo ajustas a tu taller.</p>
+  </div>
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-navy/5 flex items-center justify-center mb-4"><span class="text-2xl">🌎</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b3t">Metros, yardas o pulgadas</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b3p">Trabaja en la unidad de tu mercado — o de tu proveedor — y cambia cuando quieras sin perder el cálculo. Ideal para telas importadas.</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 py-12">
+  <h2 class="font-display text-2xl md:text-3xl font-bold text-center mb-9 text-navy" data-i18n="howTitle">Cómo funciona</h2>
+  <ol class="space-y-6">
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">1</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s1"><strong class="text-navy">Compra tu acceso</strong> con un pago único. Envías el comprobante y recibes tu código de acceso.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">2</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s2"><strong class="text-navy">Abre CortePro</strong> desde cualquier dispositivo, ingresa tu código y elige la prenda: pantalón, falda, vestido o blusa.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">3</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s3"><strong class="text-navy">Ve los metros, el costo y el desglose por talla</strong> al instante. Llega a la tienda de telas sabiendo exactamente qué pedir — ni de más, ni de menos.</div>
+    </li>
+  </ol>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-12">
+  <h2 class="font-display text-2xl md:text-3xl font-bold text-center mb-7 text-navy" data-i18n="faqTitle">Preguntas frecuentes</h2>
+  <div class="space-y-3">
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q1">¿Es un pago único o suscripción?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a1">Pago único. Compras una vez y usas CortePro cuando quieras. Incluye 12 meses de actualizaciones con nuevas prendas y mejoras; después puedes renovar con descuento si quieres seguir recibiéndolas.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q2">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a2">Al confirmarse tu pago, envíanos el comprobante a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0e4d617c7a6b5e7c61206168676d676f624e69636f6762206d6163">[email&#160;protected]</a> y recibes tu código en minutos.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q3">¿Reemplaza el criterio de un modista o patronista?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a3">No. CortePro entrega estimaciones basadas en consumos estándar de taller. Los resultados no sustituyen el criterio profesional del patronista o diseñador.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q4">¿Puedo usarlo en el teléfono?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a4">Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q5">¿En qué unidades trabaja?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a5">En metros, yardas o pulgadas — con conversión automática. Perfecta para telas locales o importadas.</p></details>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-16 text-center">
+  <div class="rounded-[2rem] p-10 md:p-12 text-white relative overflow-hidden" style="background:linear-gradient(140deg,#34495E 0%,#24374a 100%)">
+    <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-brand/20 blur-3xl pointer-events-none"></div>
+    <h2 class="font-display text-2xl md:text-3xl font-bold relative" data-i18n="ctaTitle">Deja de comprar tela a ciegas</h2>
+    <p class="mt-2.5 text-slate-300 relative" data-i18n="ctaSub">Un solo cálculo errado cuesta más que esta herramienta.</p>
+    <a href="https://nowpayments.io/payment/?iIc=4677389862&source=button" class="btn-buy inline-block relative mt-7 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-lg font-bold px-10 py-4" data-i18n="buyBtn2">Comprar acceso — USD 12</a>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
+  <p data-i18n="f1">© 2026 CortePro · Herramientas para diseñadores y modistas · Todos los derechos reservados</p>
+  <p class="mt-2.5"><span data-i18n="f2">Soporte:</span> <a href="/cdn-cgi/l/email-protection#e7a488959382b79588c988818e848e868ba7808a868e8bc984888a" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition"><span class="__cf_email__" data-cfemail="eba884999f8ebb9984c5848d8288828a87ab8c868a8287c5888486">[email&#160;protected]</span></a> · <a href="disclaimer-cortepro.html" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
 </footer>
-</div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function(){
 'use strict';
-
-/* ================= i18n ================= */
-const i18n = {
+const I18N = {
   es: {
-    gateLabel:'Ingresá tu código de acceso', gateBtn:'ACCEDER', gateErr:'Código inválido. Verificá e intentá de nuevo.',
-    gateHelp:'¿No tienes código? Escríbenos a CortePro.oficial@gmail.com',
-    tForm:'Datos del cálculo', lModelo:'Prenda / modelo', lUnidad:'Unidades de medida',
-    hintModelo:'Valores base según taller — puedes editar cada talla abajo.',
-    lAncho:'Ancho del rollo de tela', hintAngPre:'▲ Tela angosta (', hintAngPost:'): consumo ×2 automático', hintOKPre:'✓ Ancho estándar (', hintOKPost:')',
-    thTalla:'Talla', thConsumo:'Consumo', thCant:'Cantidad', thSub:'Subtotal',
-    lMerma:'% desperdicio / merma', btnReset:'Restablecer',
-    tTotal:'Total requerido', tSinMerma:'Sin merma:', tCosto:'Costo estimado de tela',
-    tPromedio:'Promedio por prenda:', tDesglose:'Desglose por talla',
-    disclaimer:'Resultados estimados que no sustituyen el criterio profesional del patronista o diseñador.',
-    fTag:'Herramientas para diseñadores y modistas · Todos los derechos reservados',
-    fSoporte:'Soporte', fTerminos:'Términos',
-    precio_m:'Precio por metro', precio_yd:'Precio por yarda', precio_in:'Precio por pulgada'
+    kicker:'Herramienta para costura y moda',
+    navBuy:'Comprar acceso',
+    heroTitle:'¿Cuánta tela necesitas<br class="hidden md:block"> de verdad?',
+    heroSub:'CortePro calcula en segundos el consumo de tela por talla — con merma, tela angosta y <strong>costo estimado</strong>. En metros, yardas o pulgadas, desde el celular.',
+    buyBtn:'Comprar acceso — USD 12', buyBtn2:'Comprar acceso — USD 12',
+    buyNote:'Pago único · 12 meses de actualizaciones incluidas · Sin suscripción',
+    b1t:'Cálculo en vivo', b1p:'Eliges la prenda, cargas cantidades por talla y todo se recalcula al instante: metros totales, merma y costo. Sin botones de "calcular".',
+    b2t:'Tela angosta y merma incluidas', b2p:'¿El rollo mide 0.70–0.80 m? CortePro detecta la tela angosta y duplica el consumo automáticamente. El % de merma lo ajustas a tu taller.',
+    b3t:'Metros, yardas o pulgadas', b3p:'Trabaja en la unidad de tu mercado — o de tu proveedor — y cambia cuando quieras sin perder el cálculo. Ideal para telas importadas.',
+    howTitle:'Cómo funciona',
+    s1:'<strong class="text-navy">Compra tu acceso</strong> con un pago único. Envías el comprobante y recibes tu código de acceso.',
+    s2:'<strong class="text-navy">Abre CortePro</strong> desde cualquier dispositivo, ingresa tu código y elige la prenda: pantalón, falda, vestido o blusa.',
+    s3:'<strong class="text-navy">Ve los metros, el costo y el desglose por talla</strong> al instante. Llega a la tienda de telas sabiendo exactamente qué pedir — ni de más, ni de menos.',
+    faqTitle:'Preguntas frecuentes',
+    q1:'¿Es un pago único o suscripción?', a1:'Pago único. Compras una vez y usas CortePro cuando quieras. Incluye 12 meses de actualizaciones con nuevas prendas y mejoras; después puedes renovar con descuento si quieres seguir recibiéndolas.',
+    q2:'¿Cómo recibo mi acceso?', a2:'Al confirmarse tu pago, envíanos el comprobante a CortePro.oficial@gmail.com y recibes tu código en minutos.',
+    q3:'¿Reemplaza el criterio de un modista o patronista?', a3:'No. CortePro entrega estimaciones basadas en consumos estándar de taller. Los resultados no sustituyen el criterio profesional del patronista o diseñador.',
+    q4:'¿Puedo usarlo en el teléfono?', a4:'Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.',
+    q5:'¿En qué unidades trabaja?', a5:'En metros, yardas o pulgadas — con conversión automática. Perfecta para telas locales o importadas.',
+    ctaTitle:'Deja de comprar tela a ciegas', ctaSub:'Un solo cálculo errado cuesta más que esta herramienta.',
+    f1:'© 2026 CortePro · Herramientas para diseñadores y modistas · Todos los derechos reservados',
+    f2:'Soporte:', f3:'Términos'
   },
   en: {
-    gateLabel:'Enter your access code', gateBtn:'UNLOCK', gateErr:'Invalid code. Please check and try again.',
-    gateHelp:'No code? Write us at CortePro.oficial@gmail.com',
-    tForm:'Calculation data', lModelo:'Garment / model', lUnidad:'Units of measure',
-    hintModelo:'Workshop base values — you can edit each size below.',
-    lAncho:'Fabric roll width', hintAngPre:'▲ Narrow fabric (', hintAngPost:'): consumption ×2 automatic', hintOKPre:'✓ Standard width (', hintOKPost:')',
-    thTalla:'Size', thConsumo:'Consumption', thCant:'Quantity', thSub:'Subtotal',
-    lMerma:'% waste allowance', btnReset:'Reset',
-    tTotal:'Total required', tSinMerma:'Without waste:', tCosto:'Estimated fabric cost',
-    tPromedio:'Average per garment:', tDesglose:'Breakdown by size',
-    disclaimer:'Estimated results that do not replace the professional judgment of the pattern maker or designer.',
-    fTag:'Tools for designers and sewists · All rights reserved',
-    fSoporte:'Support', fTerminos:'Terms',
-    precio_m:'Price per meter', precio_yd:'Price per yard', precio_in:'Price per inch'
+    kicker:'A tool for sewing and fashion',
+    navBuy:'Buy access',
+    heroTitle:'How much fabric do you<br class="hidden md:block"> really need?',
+    heroSub:'CortePro instantly calculates fabric consumption per size — with waste allowance, narrow fabric detection and <strong>estimated cost</strong>. In meters, yards or inches, right from your phone.',
+    buyBtn:'Buy access — USD 12', buyBtn2:'Buy access — USD 12',
+    buyNote:'One-time payment · 12 months of updates included · No subscription',
+    b1t:'Live calculation', b1p:'Pick the garment, enter quantities per size and everything recalculates instantly: total fabric, waste and cost. No "calculate" buttons.',
+    b2t:'Narrow fabric & waste included', b2p:'Is the roll 0.70–0.80 m wide? CortePro detects narrow fabric and doubles consumption automatically. You set the waste % for your workshop.',
+    b3t:'Meters, yards or inches', b3p:'Work in your market\'s unit — or your supplier\'s — and switch anytime without losing the calculation. Ideal for imported fabrics.',
+    howTitle:'How it works',
+    s1:'<strong class="text-navy">Buy your access</strong> with a one-time payment. Send your receipt and receive your access code.',
+    s2:'<strong class="text-navy">Open CortePro</strong> from any device, enter your code and choose the garment: pants, skirt, dress or blouse.',
+    s3:'<strong class="text-navy">See fabric, cost and breakdown by size</strong> instantly. Walk into the fabric store knowing exactly what to ask for — not too much, not too little.',
+    faqTitle:'Frequently asked questions',
+    q1:'Is it a one-time payment or a subscription?', a1:'One-time payment. Buy once and use CortePro whenever you want. Includes 12 months of updates with new garments and improvements; afterwards you can renew at a discount if you\'d like to keep receiving them.',
+    q2:'How do I receive my access?', a2:'Once your payment is confirmed, email your receipt to CortePro.oficial@gmail.com and you will receive your code within minutes.',
+    q3:'Does it replace a seamstress or pattern maker\'s judgment?', a3:'No. CortePro provides estimates based on standard workshop consumption. Results do not replace the professional judgment of a pattern maker or designer.',
+    q4:'Can I use it on my phone?', a4:'Yes, it is a web app: it works in any browser, mobile or desktop, with nothing to install.',
+    q5:'Which units does it work in?', a5:'Meters, yards or inches — with automatic conversion. Perfect for local or imported fabrics.',
+    ctaTitle:'Stop buying fabric blind', ctaSub:'One wrong calculation costs more than this tool.',
+    f1:'© 2026 CortePro · Tools for designers and sewists · All rights reserved',
+    f2:'Support:', f3:'Terms'
   }
 };
-let LANG = 'es';
-try { LANG = localStorage.getItem('cortepro-lang') || 'es'; } catch(e){}
-
-/* ================= Unidades (internamente todo se calcula en METROS) ================= */
-const UNITS = { m:{factor:1,label:'m'}, yd:{factor:0.9144,label:'yd'}, in:{factor:0.0254,label:'in'} };
-let UNIT = 'm';
-try { UNIT = localStorage.getItem('cortepro-unit') || 'm'; } catch(e){}
-const toM   = v => num(v) * UNITS[UNIT].factor;
-const fromM = m => m / UNITS[UNIT].factor;
-const fmtL  = m => fromM(m).toFixed(2);
-const dec2  = n => n.toFixed(2).replace('.', ',');
-
-/* ================= Parser numérico defensivo ================= */
-const num = v => {
-  if (typeof v === 'string') v = v.replace(',', '.');
-  const n = parseFloat(v);
-  return isFinite(n) && n >= 0 ? n : 0;
-};
-
-/* ================= Modelos base (validar con taller) ================= */
-const MODELOS = {
-  es: [
-    { id:'pantalon',   nombre:'Pantalón básico',          consumo:[1.50,1.50,1.50,1.50,1.90,3.00] },
-    { id:'falda_tubo', nombre:'Falda tubo / A moderada',  consumo:[0.60,0.60,0.65,0.70,0.75,0.80] },
-    { id:'falda_vuelo',nombre:'Falda en A con vuelo (2× largo)', consumo:[1.20,1.20,1.30,1.40,1.50,1.60] },
-    { id:'vestido_sm', nombre:'Vestido columna sin mangas', consumo:[1.60,1.60,1.60,1.60,2.00,2.50] },
-    { id:'vestido_mc', nombre:'Vestido columna manga corta', consumo:[2.00,2.00,2.00,2.00,2.40,2.90] },
-    { id:'vestido_ml', nombre:'Vestido columna manga larga', consumo:[2.25,2.25,2.25,2.25,2.65,3.15] },
-    { id:'blusa_mc',   nombre:'Blusa básica manga corta', consumo:[1.25,1.25,1.25,1.25,1.65,2.50] },
-    { id:'blusa_ml',   nombre:'Blusa básica manga larga', consumo:[1.60,1.60,1.60,1.60,2.00,2.85] }
-  ]
-};
-const NOMBRES_EN = {
-  pantalon:'Basic pants', falda_tubo:'Straight / A-line skirt', falda_vuelo:'Full A-line skirt (2× length)',
-  vestido_sm:'Column dress sleeveless', vestido_mc:'Column dress short sleeve', vestido_ml:'Column dress long sleeve',
-  blusa_mc:'Basic blouse short sleeve', blusa_ml:'Basic blouse long sleeve'
-};
-MODELOS.en = MODELOS.es.map(m => ({ id:m.id, nombre:NOMBRES_EN[m.id], consumo:m.consumo }));
-
-const TALLAS = ['XS','S','M','L','XL','XXL'];
-
-/* ================= Lógica (idéntica: validada con el taller) ================= */
-function calcular(){
-  const anchoM = toM(document.getElementById('anchoRollo').value);
-  const merma = num(document.getElementById('merma').value);
-  const precioM = num(document.getElementById('precioMetro').value) / UNITS[UNIT].factor;
-  const factorAncho = anchoM > 0 && anchoM < 1.2 ? 2 : 1;
-
-  let metros = 0, prendas = 0;
-  const filas = TALLAS.map((t,i) => {
-    const c = toM(document.getElementById('cons-'+i).value);
-    const q = num(document.getElementById('cant-'+i).value);
-    metros += c * q; prendas += q;
-    return { talla:t, c, q, sub: c*q };
-  });
-
-  const metrosSin = metros * factorAncho;
-  const metrosCon = metrosSin * (1 + merma/100);
-  const costo = metrosCon * precioM;
-  const promedio = prendas > 0 ? metrosCon / prendas : 0;
-
-  document.getElementById('rMetros').textContent = fmtL(metrosCon);
-  document.getElementById('rMetrosSin').textContent = fmtL(metrosSin);
-  document.getElementById('rPromedio').textContent = fmtL(promedio);
-  document.getElementById('rCosto').textContent =
-    new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(costo);
-
-  ['rUnidad','rUnidad2','rUnidad3'].forEach(id => document.getElementById(id).textContent = UNITS[UNIT].label);
-
-  const anchoTxt = fmtL(anchoM) + ' ' + UNITS[UNIT].label;
-  const dict = i18n[LANG];
-  document.getElementById('hintAngosta').textContent = dict.hintAngPre + anchoTxt + dict.hintAngPost;
-  document.getElementById('hintAnchoOK').textContent = dict.hintOKPre + anchoTxt + dict.hintOKPost;
-  document.getElementById('hintAngosta').classList.toggle('hidden', factorAncho === 1);
-  document.getElementById('hintAnchoOK').classList.toggle('hidden', factorAncho !== 1);
-
-  filas.forEach((f,i) => {
-    document.getElementById('sub-'+i).textContent = fmtL(f.sub * factorAncho) + ' ' + UNITS[UNIT].label;
-  });
-
-  const cont = document.getElementById('desglose');
-  cont.innerHTML = '';
-  filas.filter(f => f.q > 0).forEach(f => {
-    const m = f.sub * factorAncho * (1 + merma/100);
-    const pct = metrosCon > 0 ? (m / metrosCon) * 100 : 0;
-    const row = document.createElement('div');
-    row.innerHTML =
-      '<div class="flex justify-between text-sm mb-1.5"><span class="font-display font-bold text-[15px]">'+f.talla+
-      ' <span class="text-slate-400 font-sans font-normal">× '+f.q+'</span></span><span class="tnum text-slate-600 dark:text-slate-300">'+fmtL(m)+' '+UNITS[UNIT].label+' · '+pct.toFixed(1)+'%</span></div>'+
-      '<div class="h-2 rounded-full bg-slate-100 dark:bg-white/5 overflow-hidden">'+
-      '<div class="bar-fill h-full rounded-full bg-gradient-to-r from-brand to-miel" style="width:0%"></div></div>';
-    cont.appendChild(row);
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      row.querySelector('.bar-fill').style.width = pct+'%';
-    }));
-  });
-  if (!filas.some(f => f.q > 0)) {
-    cont.innerHTML = '<p class="text-sm text-slate-400">—</p>';
-  }
-}
-
-function resetCalc(){
-  document.getElementById('merma').value = '5';
-  document.getElementById('mermaRange').value = '5';
-  document.getElementById('precioMetro').value = dec2(10 * UNITS[UNIT].factor);
-  document.getElementById('anchoRollo').value = dec2(1.50 / UNITS[UNIT].factor);
-  cargarModelo(document.getElementById('selModelo').value);
-  TALLAS.forEach((_,i) => { document.getElementById('cant-'+i).value = i===2 ? 1 : 0; });
-  calcular();
-}
-
-function cargarModelo(id){
-  const lista = MODELOS[LANG] || MODELOS.es;
-  const m = lista.find(x => x.id === id) || lista[0];
-  m.consumo.forEach((c,i) => { document.getElementById('cons-'+i).value = dec2(c / UNITS[UNIT].factor); });
-}
-
-/* ================= UI ================= */
-function buildModelos(){
-  const sel = document.getElementById('selModelo');
-  sel.innerHTML = '';
-  (MODELOS[LANG] || MODELOS.es).forEach(m => {
-    const o = document.createElement('option');
-    o.value = m.id; o.textContent = m.nombre;
-    sel.appendChild(o);
-  });
-  cargarModelo('pantalon');
-}
-
-function buildChips(){
-  const cont = document.getElementById('chipsTallas');
-  cont.innerHTML = '';
-  TALLAS.forEach((t,i) => {
-    const div = document.createElement('div');
-    div.className = 'chip rounded-2xl border border-slate-200/80 dark:border-white/[0.07] bg-slate-50 dark:bg-white/[0.03] p-3 text-center';
-    div.innerHTML =
-      '<div class="font-display font-bold text-lg mb-2 '+(i===2?'text-brand':'text-navy dark:text-white')+'">'+t+'</div>'+
-      '<input id="cons-'+i+'" type="text" inputmode="decimal" value="1,50" aria-label="Consumo talla '+t+'" class="w-full mb-1.5 text-center rounded-xl border border-transparent bg-white dark:bg-white/[0.05] px-2 py-2 text-[14px] tnum focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition">'+
-      '<input id="cant-'+i+'" type="text" inputmode="numeric" value="'+(i===2?1:0)+'" aria-label="Cantidad talla '+t+'" class="w-full text-center rounded-xl border border-transparent bg-white dark:bg-white/[0.05] px-2 py-2 text-[14px] tnum focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand transition">'+
-      '<div id="sub-'+i+'" class="text-[11px] text-slate-400 dark:text-slate-500 tnum mt-2">0.00 '+UNITS[UNIT].label+'</div>';
-    cont.appendChild(div);
-  });
-}
-
-function bindInputs(){
-  document.querySelectorAll('#chipsTallas input').forEach(el => el.addEventListener('input', calcular));
-  ['anchoRollo','precioMetro','merma'].forEach(id => document.getElementById(id).addEventListener('input', () => {
-    if (id === 'merma') document.getElementById('mermaRange').value = Math.min(30, num(document.getElementById('merma').value));
-    calcular();
-  }));
-  document.getElementById('mermaRange').addEventListener('input', e => {
-    document.getElementById('merma').value = e.target.value;
-    calcular();
-  });
-  document.getElementById('selModelo').addEventListener('change', e => cargarModelo(e.target.value));
-  document.getElementById('selUnidad').addEventListener('change', cambiarUnidad);
-  document.getElementById('gateCode').addEventListener('keydown', e => { if (e.key === 'Enter') tryGate(); });
-}
-
-function cambiarUnidad(){
-  const nueva = document.getElementById('selUnidad').value;
-  if (nueva === UNIT) return;
-  const conv = (id) => {
-    const el = document.getElementById(id);
-    const m = num(el.value) * UNITS[UNIT].factor;
-    el.value = dec2(m / UNITS[nueva].factor);
-  };
-  conv('anchoRollo'); conv('precioMetro');
-  TALLAS.forEach((_,i) => conv('cons-'+i));
-  UNIT = nueva;
-  try { localStorage.setItem('cortepro-unit', UNIT); } catch(e){}
-  updateUnitLabels();
-  calcular();
-}
-
-function updateUnitLabels(){
-  const d = i18n[LANG];
-  document.getElementById('lPrecio').textContent = d['precio_' + UNIT];
-}
-
-/* ================= i18n / tema ================= */
+let lang = 'es';
+try { lang = localStorage.getItem('cortepro-venta-lang') || 'es'; } catch(e){}
 function applyLang(){
-  const d = i18n[LANG];
-  const set = (id,txt) => { const el = document.getElementById(id); if (el) el.textContent = txt; };
-  ['gateLabel','gateHelp','tForm','lModelo','lUnidad','hintModelo','lAncho',
-   'lMerma','lPrecio','btnReset','tTotal','tSinMerma','tCosto','tPromedio','tDesglose','disclaimer','fTag','fSoporte','fTerminos']
-    .forEach(id => set(id, d[id]));
-  document.getElementById('gateBtn').textContent = d.gateBtn;
-  document.getElementById('gateError').textContent = d.gateErr;
-  document.getElementById('langBtn').textContent = LANG === 'es' ? '🇪🇸 ES' : '🇬🇧 EN';
-  buildModelos();
-  updateUnitLabels();
-  calcular();
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+  });
+  document.getElementById('langBtn').textContent = lang === 'es' ? '🇪🇸 ES' : '🇬🇧 EN';
+  document.documentElement.lang = lang;
 }
-function toggleLang(){
-  LANG = LANG === 'es' ? 'en' : 'es';
-  try { localStorage.setItem('cortepro-lang', LANG); } catch(e){}
+window.toggleLang = function(){
+  lang = lang === 'es' ? 'en' : 'es';
+  try { localStorage.setItem('cortepro-venta-lang', lang); } catch(e){}
   applyLang();
-}
-function applyTheme(){
-  let dark = true;
-  try { const s = localStorage.getItem('cortepro-theme'); dark = s ? s === 'dark' : true; } catch(e){}
-  document.documentElement.classList.toggle('dark', dark);
-  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
-}
-function toggleTheme(){
-  const dark = !document.documentElement.classList.contains('dark');
-  document.documentElement.classList.toggle('dark', dark);
-  try { localStorage.setItem('cortepro-theme', dark ? 'dark' : 'light'); } catch(e){}
-  document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
-}
-
-/* ================= Gate ================= */
-const MASTER_CODES = ["CORTE-2026"];
-function gateUnlock(){
-  document.getElementById('gate').style.display = 'none';
-  document.getElementById('app').classList.remove('hidden');
-}
-window.tryGate = function(){
-  const v = document.getElementById('gateCode').value.trim().toUpperCase();
-  if (MASTER_CODES.indexOf(v) !== -1) {
-    try { localStorage.setItem('cortepro-unlocked','1'); } catch(e){}
-    gateUnlock();
-  } else {
-    const err = document.getElementById('gateError');
-    err.classList.remove('hidden');
-    err.textContent = i18n[LANG].gateErr;
-    const card = document.getElementById('gateCard');
-    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
-    document.getElementById('gateCode').value = '';
-    document.getElementById('gateCode').focus();
-  }
 };
-
-/* ================= Init ================= */
-window.toggleLang = toggleLang;
-window.toggleTheme = toggleTheme;
-window.calcular = calcular;
-window.resetCalc = resetCalc;
-
-buildChips();
-buildModelos();
-bindInputs();
-applyTheme();
-document.getElementById('selUnidad').value = UNIT;
 applyLang();
-
-try { if (localStorage.getItem('cortepro-unlocked') === '1') gateUnlock(); } catch(e){}
-calcular();
-
 })();
 </script>
+
 </body>
 </html>
