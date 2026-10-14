@@ -7,29 +7,51 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
-  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        brand: { DEFAULT: '#3AAFA9', dark: '#2c8a85', light: '#5ec9c4' },
-        navy: { DEFAULT: '#34495E', dark: '#1e2b37', light: '#4e6d8d' }
+        ink:   { DEFAULT: '#0f2e2a', 800: '#123a34', 700: '#1a4a42' },
+        brand: { DEFAULT: '#4fd1c5', dark: '#38b2ac', deep: '#2c8a85' },
+        gold:  { DEFAULT: '#ffd166', dark: '#e8b04b' }
       },
-      fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] }
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif']
+      }
     }
   }
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-  * { font-family: 'Inter', system-ui, sans-serif; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #0f2e2a;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(79,209,197,.12), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255,209,102,.05), transparent);
+    background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+  }
   input[type=number]::-webkit-outer-spin-button,
   input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
-  .brand-gradient { background: linear-gradient(135deg, #34495E 0%, #1e2b37 100%); }
-  .brand-text { background: linear-gradient(135deg, #3AAFA9, #5ec9c4); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .brand-text { background: linear-gradient(135deg, #4fd1c5, #38b2ac); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .card { background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08); }
   .card-glow { transition: box-shadow .3s ease, transform .3s ease; }
-  .card-glow:hover { box-shadow: 0 0 30px rgba(58,175,169,.25); transform: translateY(-2px); }
+  .card-glow:hover { box-shadow: 0 0 30px rgba(79,209,197,.15); transform: translateY(-2px); }
+  .field { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); color: #fff; }
+  .field:focus { outline: none; border-color: #4fd1c5; box-shadow: 0 0 0 2px rgba(79,209,197,.35); }
+  .field::placeholder { color: rgba(255,255,255,.25); }
+  .btn-primary {
+    background: linear-gradient(135deg, #4fd1c5, #38b2ac);
+    color: #0f2e2a;
+    box-shadow: 0 6px 20px rgba(56,178,172,.35);
+    transition: transform .1s ease, box-shadow .2s ease, filter .2s ease;
+  }
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-primary:active { transform: translateY(2px); box-shadow: 0 2px 8px rgba(56,178,172,.35); }
   .fade-in { animation: fadeIn .4s ease both; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   .bar-fill { transition: width .5s cubic-bezier(.4,0,.2,1); }
@@ -37,63 +59,53 @@ tailwind.config = {
   @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
-<body class="min-h-screen bg-slate-100 dark:bg-slate-950 transition-colors duration-300">
+<body class="min-h-screen text-white">
 
 
   <!-- ========== PANTALLA DE ACCESO ========== -->
   <!-- CONFIG: los códigos válidos se definen en MASTER_CODES, en el script de abajo -->
-  <div id="gate" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-100 dark:bg-slate-950 px-4">
-    <div id="gateCard" class="w-full max-w-sm bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xl p-8 text-center fade-in">
-      <div class="w-14 h-14 mx-auto rounded-2xl bg-navy flex items-center justify-center shadow-lg shadow-cyan-900/20 mb-4">
-        <svg class="w-7 h-7 text-[#3AAFA9]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+  <div id="gate" class="fixed inset-0 z-50 flex items-center justify-center px-4" style="background-color:#0f2e2a;">
+    <div id="gateCard" class="card w-full max-w-sm rounded-3xl shadow-2xl p-8 text-center fade-in" style="background:rgba(18,58,52,.85); backdrop-filter: blur(8px);">
+      <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-4" style="background: rgba(79,209,197,.1); border: 1px solid rgba(79,209,197,.3);">
+        <svg class="w-7 h-7 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       </div>
-      <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Importa<span class="brand-text">Pro</span></h2>
-      <p id="tGateSub" class="mt-2 text-sm text-slate-500 dark:text-slate-400">Ingresá tu código de acceso</p>
+      <h2 class="font-display text-2xl font-bold tracking-tight">Importa<span class="brand-text">Pro</span></h2>
+      <p id="tGateSub" class="mt-2 text-sm text-white/50">Ingresá tu código de acceso</p>
       <input id="gateCode" type="text" autocomplete="off" spellcheck="false"
-        class="mt-5 w-full text-center tracking-widest uppercase font-bold text-lg px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-               focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent text-slate-900 dark:text-white transition"
+        class="field mt-5 w-full text-center tracking-widest uppercase font-bold text-lg px-4 py-3.5 rounded-xl transition"
         placeholder="XXXX-XXXX">
-      <p id="gateError" class="hidden mt-3 text-sm font-semibold text-red-500">Código inválido. Verificá tu email de acceso.</p>
+      <p id="gateError" class="hidden mt-3 text-sm font-semibold text-red-400">Código inválido. Verificá tu email de acceso.</p>
       <button id="gateBtn"
-        class="mt-5 w-full bg-navy hover:bg-[#2c8a85] text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-cyan-900/20 transition text-sm tracking-wide uppercase border border-[#3AAFA9]/30">
+        class="btn-primary mt-5 w-full font-extrabold py-3.5 rounded-xl text-sm tracking-wide uppercase">
         Acceder
       </button>
-      <p id="tGateSupport" class="mt-5 text-xs text-slate-400 dark:text-slate-500">¿No tenés tu código? Conseguí tu acceso en la página de compra.</p>
+      <p id="tGateSupport" class="mt-5 text-xs text-white/35">¿No tenés tu código? Conseguí tu acceso en la página de compra.</p>
     </div>
   </div>
 
   <!-- ================= HEADER ================= -->
-  <header class="sticky top-0 z-20 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800">
+  <header class="sticky top-0 z-20 backdrop-blur-md bg-ink/80 border-b border-white/10">
     <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-navy flex items-center justify-center shadow-lg shadow-cyan-900/20">
-          <svg class="w-5 h-5 text-[#3AAFA9]" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background: rgba(79,209,197,.1); border: 1px solid rgba(79,209,197,.3);">
+          <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
         </div>
         <div>
-          <h1 class="text-lg md:text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          <h1 class="font-display text-lg md:text-xl font-bold tracking-tight">
             Importa<span class="brand-text">Pro</span>
           </h1>
-          <p id="tHeaderSub" class="text-[11px] md:text-xs text-slate-500 dark:text-slate-400 -mt-0.5">Calculadora de costos de importación</p>
+          <p id="tHeaderSub" class="text-[11px] md:text-xs text-white/45 -mt-0.5">Calculadora de costos de importación</p>
         </div>
       </div>
 
       <div class="flex items-center gap-2">
         <!-- Selector de Idioma -->
         <button id="langToggle" aria-label="Cambiar idioma"
-          class="px-3 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-[#3AAFA9]/50 text-xs font-bold text-slate-700 dark:text-slate-300 transition">
+          class="px-3 py-2 rounded-full text-xs font-bold text-white/70 transition hover:text-brand"
+          style="background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);">
           🇪🇸 ES
-        </button>
-
-        <!-- Modo oscuro toggle -->
-        <button id="themeToggle" aria-label="Cambiar tema"
-          class="flex items-center gap-2 px-3 py-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:ring-2 ring-[#3AAFA9]/50 transition">
-          <span id="themeIconSun" class="hidden dark:block text-[#3AAFA9]">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 3v2m0 14v2M5.6 5.6l1.4 1.4m10 10 1.4 1.4M3 12h2m14 0h2M5.6 18.4 7 17m10-10 1.4-1.4M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
-          </span>
-          <span id="themeIconMoon" class="dark:hidden text-slate-600">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 15.5A9.7 9.7 0 0 1 12 21.75 9 9 0 1 1 21.75 15.5Z"/></svg>
-          </span>
         </button>
       </div>
     </div>
@@ -103,10 +115,11 @@ tailwind.config = {
   <main class="max-w-6xl mx-auto px-4 py-8 md:py-12">
 
     <div class="text-center mb-10 fade-in">
-      <h2 id="tMainTitle" class="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+      <p class="text-[11px] font-bold uppercase tracking-[.25em] text-brand mb-3">Herramienta para importadores</p>
+      <h2 id="tMainTitle" class="font-display text-2xl md:text-4xl font-bold tracking-tight">
         Calcula tu <span class="brand-text">precio exacto</span> de importación
       </h2>
-      <p id="tMainSubtitle" class="mt-2 text-sm md:text-base text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
+      <p id="tMainSubtitle" class="mt-2 text-sm md:text-base text-white/50 max-w-2xl mx-auto">
         De los yuanes del proveedor al precio final sugerido. Incluye envío internacional, comisión y tu margen comercial.
       </p>
     </div>
@@ -114,8 +127,8 @@ tailwind.config = {
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
       <!-- ========== FORMULARIO ========== -->
-      <section class="lg:col-span-3 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 md:p-8 fade-in">
-        <h3 id="tSectionParams" class="text-sm font-bold uppercase tracking-widest text-[#3AAFA9] mb-6 flex items-center gap-2">
+      <section class="lg:col-span-3 card rounded-3xl p-6 md:p-8 fade-in">
+        <h3 id="tSectionParams" class="text-sm font-bold uppercase tracking-widest text-brand mb-6 flex items-center gap-2">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m-6 4h6m-6 4h3M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16l-3.5-2-3.5 2-3.5-2L5 21Z"/></svg>
           Parámetros de cálculo
         </h3>
@@ -124,113 +137,98 @@ tailwind.config = {
 
           <!-- Precio producto CNY -->
           <div class="sm:col-span-2">
-            <label id="lblPrecioCny" for="inPrecioCny" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Precio del producto <span class="text-[#3AAFA9] font-bold">¥ CNY</span>
+            <label id="lblPrecioCny" for="inPrecioCny" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Precio del producto <span class="text-brand font-bold">¥ CNY</span>
             </label>
             <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-[#3AAFA9] font-bold">¥</span>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-brand font-bold">¥</span>
               <input id="inPrecioCny" type="text" inputmode="decimal" value="45"
-                class="w-full pl-9 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field w-full pl-9 pr-4 py-3 rounded-xl font-semibold transition"
                 placeholder="Ej: 45">
             </div>
           </div>
 
           <!-- Tasa de cambio -->
           <div>
-            <label id="lblTasa" for="inTasa" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Tasa de cambio <span class="text-slate-400 font-normal">(Yuanes por 1 USD, ej: 7.20)</span>
+            <label id="lblTasa" for="inTasa" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Tasa de cambio <span class="text-white/35 font-normal">(Yuanes por 1 USD, ej: 7.20)</span>
             </label>
             <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-xs">CNY/USD</span>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35 font-bold text-xs">CNY/USD</span>
               <input id="inTasa" type="text" inputmode="decimal" value="7.2"
-                class="w-full pl-16 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field w-full pl-16 pr-4 py-3 rounded-xl font-semibold transition"
                 placeholder="7.20">
             </div>
           </div>
 
           <!-- Peso -->
           <div>
-            <label id="lblPeso" for="inPeso" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
+            <label id="lblPeso" for="inPeso" class="block text-sm font-semibold text-white/75 mb-1.5">
               Peso del producto
             </label>
             <div class="flex gap-2">
               <input id="inPeso" type="text" inputmode="decimal" value="0.5"
-                class="flex-1 min-w-0 pl-4 pr-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field flex-1 min-w-0 pl-4 pr-3 py-3 rounded-xl font-semibold transition"
                 placeholder="0.5">
               <select id="inPesoUnidad"
-                class="px-3 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] text-slate-900 dark:text-white font-semibold transition">
-                <option value="kg">Kg</option>
-                <option value="g">gr</option>
+                class="field px-3 py-3 rounded-xl font-semibold transition">
+                <option value="kg" style="background:#123a34;">Kg</option>
+                <option value="g" style="background:#123a34;">gr</option>
               </select>
             </div>
           </div>
 
           <!-- Tarifa envío -->
           <div>
-            <label id="lblTarifa" for="inTarifaKg" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Tarifa de envío intl. <span class="text-slate-400 font-normal">(USD/Kg)</span>
+            <label id="lblTarifa" for="inTarifaKg" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Tarifa de envío intl. <span class="text-white/35 font-normal">(USD/Kg)</span>
             </label>
             <div class="relative">
-              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">$</span>
+              <span class="absolute left-4 top-1/2 -translate-y-1/2 text-white/35 font-bold">$</span>
               <input id="inTarifaKg" type="text" inputmode="decimal" value="12"
-                class="w-full pl-8 pr-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field w-full pl-8 pr-4 py-3 rounded-xl font-semibold transition"
                 placeholder="12">
             </div>
           </div>
 
           <!-- Comisión -->
           <div>
-            <label id="lblComision" for="inComision" class="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              Comisión agente / pasarela <span class="text-slate-400 font-normal">(%)</span>
+            <label id="lblComision" for="inComision" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Comisión agente / pasarela <span class="text-white/35 font-normal">(%)</span>
             </label>
             <div class="relative">
               <input id="inComision" type="text" inputmode="decimal" value="5"
-                class="w-full pl-4 pr-9 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field w-full pl-4 pr-9 py-3 rounded-xl font-semibold transition"
                 placeholder="5">
-              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/35 font-bold">%</span>
             </div>
           </div>
 
           <!-- Margen -->
           <div class="sm:col-span-2">
-            <label for="inMargen" class="flex items-center justify-between text-sm font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-              <span id="lblMargen">Margen de ganancia (Markup) <span class="text-slate-400 font-normal">(%)</span></span>
-              <span id="margenBadge" class="text-xs font-bold px-2.5 py-1 rounded-full bg-[#3AAFA9]/10 text-[#3AAFA9] border border-[#3AAFA9]/30">50%</span>
+            <label for="inMargen" class="flex items-center justify-between text-sm font-semibold text-white/75 mb-1.5">
+              <span id="lblMargen">Margen de ganancia (Markup) <span class="text-white/35 font-normal">(%)</span></span>
+              <span id="margenBadge" class="text-xs font-bold px-2.5 py-1 rounded-full text-brand border border-brand/30" style="background: rgba(79,209,197,.1);">50%</span>
             </label>
             <div class="relative">
               <input id="inMargen" type="text" inputmode="decimal" value="50"
-                class="w-full pl-4 pr-9 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-[#3AAFA9] focus:border-transparent
-                       text-slate-900 dark:text-white font-semibold transition"
+                class="field w-full pl-4 pr-9 py-3 rounded-xl font-semibold transition"
                 placeholder="50">
-              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">%</span>
+              <span class="absolute right-4 top-1/2 -translate-y-1/2 text-white/35 font-bold">%</span>
             </div>
             <input id="margenSlider" type="range" min="0" max="200" step="1" value="50"
-              class="mt-3 w-full accent-[#3AAFA9] cursor-pointer">
+              class="mt-3 w-full cursor-pointer" style="accent-color:#4fd1c5;">
           </div>
         </div>
 
         <!-- Botones -->
         <div class="mt-8 flex flex-col sm:flex-row gap-3">
           <button id="btnCalcular"
-            class="flex-1 bg-navy hover:bg-[#2c8a85] text-white font-extrabold py-3.5 rounded-xl shadow-lg shadow-cyan-900/20
-                   transition text-sm tracking-wide uppercase border border-[#3AAFA9]/30">
+            class="btn-primary flex-1 font-extrabold py-3.5 rounded-xl text-sm tracking-wide uppercase">
             Calcular costos
           </button>
           <button id="btnReset"
-            class="px-6 py-3.5 rounded-xl border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400
-                   font-semibold hover:border-[#3AAFA9] hover:text-[#3AAFA9] transition text-sm">
+            class="px-6 py-3.5 rounded-xl font-semibold transition text-sm border border-white/15 text-white/50 hover:text-brand hover:border-brand/50">
             Restablecer
           </button>
         </div>
@@ -240,68 +238,68 @@ tailwind.config = {
       <section class="lg:col-span-2 flex flex-col gap-4">
 
         <!-- Precio de venta sugerido -->
-        <div class="card-glow rounded-2xl bg-navy p-6 md:p-7 text-white shadow-xl shadow-cyan-950/30 fade-in border border-[#3AAFA9]/30">
-          <p id="tResVenta" class="text-[11px] font-extrabold uppercase tracking-widest text-[#5ec9c4]">Precio de venta sugerido</p>
-          <p id="outPrecioVenta" class="mt-2 text-4xl md:text-5xl font-extrabold tracking-tight text-white">$0.00</p>
-          <p id="tResVentaSub" class="mt-1 text-xs font-semibold text-slate-300">USD · con margen aplicado</p>
+        <div class="card-glow rounded-3xl p-6 md:p-7 text-white fade-in border border-brand/25 shadow-2xl" style="background: linear-gradient(140deg,#16463f 0%,#0c2b27 100%);">
+          <p id="tResVenta" class="text-[11px] font-bold uppercase tracking-widest text-brand">Precio de venta sugerido</p>
+          <p id="outPrecioVenta" class="font-display mt-2 text-4xl md:text-5xl font-bold tracking-tight text-white">$0.00</p>
+          <p id="tResVentaSub" class="mt-1 text-xs font-semibold text-white/40">USD · con margen aplicado</p>
           <div class="mt-4 grid grid-cols-2 gap-3">
-            <div class="bg-black/20 rounded-xl px-3 py-2.5">
-              <p id="tResGanancia" class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Ganancia neta</p>
-              <p id="outGanancia" class="text-lg font-extrabold text-[#3AAFA9]">$0.00</p>
+            <div class="rounded-xl px-3 py-2.5" style="background: rgba(255,209,102,.08); border: 1px solid rgba(255,209,102,.2);">
+              <p id="tResGanancia" class="text-[10px] font-bold uppercase tracking-wider text-gold/80">Ganancia neta</p>
+              <p id="outGanancia" class="font-display text-lg font-bold text-gold">$0.00</p>
             </div>
-            <div class="bg-black/20 rounded-xl px-3 py-2.5">
-              <p id="tResMargenReal" class="text-[10px] font-bold uppercase tracking-wider text-slate-300">Margen real</p>
-              <p id="outMargenReal" class="text-lg font-extrabold text-white">0%</p>
+            <div class="rounded-xl px-3 py-2.5" style="background: rgba(0,0,0,.25);">
+              <p id="tResMargenReal" class="text-[10px] font-bold uppercase tracking-wider text-white/40">Margen real</p>
+              <p id="outMargenReal" class="font-display text-lg font-bold text-white">0%</p>
             </div>
           </div>
         </div>
 
         <!-- Costo total puesto en destino -->
-        <div class="card-glow rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm fade-in">
-          <p id="tResCostoTotal" class="text-[11px] font-extrabold uppercase tracking-widest text-slate-400">Costo total puesto en destino</p>
-          <p id="outCostoTotal" class="mt-1 text-3xl font-extrabold text-slate-900 dark:text-white">$0.00</p>
-          <p id="tResCostoSub" class="text-xs text-slate-400 mt-0.5">USD · costo real de adquisición</p>
+        <div class="card-glow card rounded-3xl p-6 fade-in">
+          <p id="tResCostoTotal" class="text-[11px] font-bold uppercase tracking-widest text-white/35">Costo total puesto en destino</p>
+          <p id="outCostoTotal" class="font-display mt-1 text-3xl font-bold text-white">$0.00</p>
+          <p id="tResCostoSub" class="text-xs text-white/35 mt-0.5">USD · costo real de adquisición</p>
         </div>
 
         <!-- Desglose -->
-        <div class="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 shadow-sm fade-in">
-          <h4 id="tSectionDesglose" class="text-[11px] font-extrabold uppercase tracking-widest text-[#3AAFA9] mb-4">Desglose de costos</h4>
+        <div class="card rounded-3xl p-6 fade-in">
+          <h4 id="tSectionDesglose" class="text-[11px] font-bold uppercase tracking-widest text-brand mb-4">Desglose de costos</h4>
 
           <div class="space-y-3.5">
             <div>
               <div class="flex justify-between text-sm mb-1">
-                <span id="tLabelProd" class="text-slate-600 dark:text-slate-400 font-medium">Producto (¥ → $)</span>
-                <span id="outCostoProducto" class="font-bold text-slate-900 dark:text-white">$0.00</span>
+                <span id="tLabelProd" class="text-white/55 font-medium">Producto (¥ → $)</span>
+                <span id="outCostoProducto" class="font-bold text-white">$0.00</span>
               </div>
-              <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                <div id="barProducto" class="bar-fill h-full rounded-full bg-[#3AAFA9]" style="width:0%"></div>
-              </div>
-            </div>
-
-            <div>
-              <div class="flex justify-between text-sm mb-1">
-                <span id="tLabelEnvio" class="text-slate-600 dark:text-slate-400 font-medium">Envío internacional</span>
-                <span id="outCostoEnvio" class="font-bold text-slate-900 dark:text-white">$0.00</span>
-              </div>
-              <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                <div id="barEnvio" class="bar-fill h-full rounded-full bg-sky-500" style="width:0%"></div>
+              <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,.07);">
+                <div id="barProducto" class="bar-fill h-full rounded-full" style="width:0%; background:#4fd1c5;"></div>
               </div>
             </div>
 
             <div>
               <div class="flex justify-between text-sm mb-1">
-                <span id="tLabelCom" class="text-slate-600 dark:text-slate-400 font-medium">Comisión agente</span>
-                <span id="outCostoComision" class="font-bold text-slate-900 dark:text-white">$0.00</span>
+                <span id="tLabelEnvio" class="text-white/55 font-medium">Envío internacional</span>
+                <span id="outCostoEnvio" class="font-bold text-white">$0.00</span>
               </div>
-              <div class="h-2 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                <div id="barComision" class="bar-fill h-full rounded-full bg-violet-500" style="width:0%"></div>
+              <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,.07);">
+                <div id="barEnvio" class="bar-fill h-full rounded-full" style="width:0%; background:#63b3ed;"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-sm mb-1">
+                <span id="tLabelCom" class="text-white/55 font-medium">Comisión agente</span>
+                <span id="outCostoComision" class="font-bold text-white">$0.00</span>
+              </div>
+              <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,.07);">
+                <div id="barComision" class="bar-fill h-full rounded-full" style="width:0%; background:#b794f6;"></div>
               </div>
             </div>
           </div>
 
-          <div class="mt-5 pt-4 border-t border-dashed border-slate-200 dark:border-slate-700 flex justify-between items-center">
-            <span id="tLabelSubtotal" class="text-sm font-semibold text-slate-500 dark:text-slate-400">Subtotal costos</span>
-            <span id="outSubtotal" class="text-lg font-extrabold text-[#3AAFA9]">$0.00</span>
+          <div class="mt-5 pt-4 border-t border-dashed border-white/10 flex justify-between items-center">
+            <span id="tLabelSubtotal" class="text-sm font-semibold text-white/45">Subtotal costos</span>
+            <span id="outSubtotal" class="font-display text-lg font-bold text-gold">$0.00</span>
           </div>
         </div>
 
@@ -309,15 +307,15 @@ tailwind.config = {
     </div>
 
     <!-- Footer -->
-    <footer class="mt-12 text-center text-xs text-slate-400 dark:text-slate-600 space-y-2">
+    <footer class="mt-12 pt-6 text-center text-xs text-white/35 space-y-2 border-t border-white/10">
       <p id="tFooterDesc">ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
       <p>
-        <a href="#" id="tFooterLink" class="text-[#3AAFA9] hover:underline font-semibold transition">Términos y Privacidad</a>
+        <a href="#" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
         <span class="mx-1">·</span>
-        <!-- CONFIG: reemplazá EMAIL_SOPORTE antes de publicar -->
-        <a href="/cdn-cgi/l/email-protection#2f46425f405d5b4e5f5d40015c405f405d5b4a6f48424e4643014c4042" class="text-[#3AAFA9] hover:underline font-semibold transition">Soporte</a>
+        <!-- CONFIG: correo de soporte oficial de ImportaPro -->
+        <a href="/cdn-cgi/l/email-protection#fc95918c938e889d8c8e93d28f938c938e8899bc9b919d9590d29f9391" class="text-brand hover:underline font-semibold transition">Soporte</a>
       </p>
-      <p id="tFooterMother" class="pt-1 font-semibold">Un producto de PromptMagnate Lab</p>
+      <p id="tFooterMother" class="pt-1 font-semibold text-white/25">Un producto de PromptMagnate Lab</p>
     </footer>
   </main>
 
@@ -329,16 +327,15 @@ tailwind.config = {
   const i18n = {
     es: {
       langBtn: "🇪🇸 ES",
-      themeLabel: "Oscuro",
       mainTitle: "Calcula tu <span class='brand-text'>precio exacto</span> de importación",
       mainSub: "De los yuanes del proveedor al precio final sugerido. Incluye envío internacional, comisión y tu margen comercial.",
       sectionParams: "Parámetros de cálculo",
-      lblPrecioCny: "Precio del producto <span class='text-[#3AAFA9] font-bold'>¥ CNY</span>",
-      lblTasa: "Tasa de cambio <span class='text-slate-400 font-normal'>(Yuanes por 1 USD, ej: 7.20)</span>",
+      lblPrecioCny: "Precio del producto <span class='text-brand font-bold'>¥ CNY</span>",
+      lblTasa: "Tasa de cambio <span class='text-white/35 font-normal'>(Yuanes por 1 USD, ej: 7.20)</span>",
       lblPeso: "Peso del producto",
-      lblTarifa: "Tarifa de envío intl. <span class='text-slate-400 font-normal'>(USD/Kg)</span>",
-      lblComision: "Comisión agente / pasarela <span class='text-slate-400 font-normal'>(%)</span>",
-      lblMargen: "Margen de ganancia (Markup) <span class='text-slate-400 font-normal'>(%)</span>",
+      lblTarifa: "Tarifa de envío intl. <span class='text-white/35 font-normal'>(USD/Kg)</span>",
+      lblComision: "Comisión agente / pasarela <span class='text-white/35 font-normal'>(%)</span>",
+      lblMargen: "Margen de ganancia (Markup) <span class='text-white/35 font-normal'>(%)</span>",
       btnCalcular: "Calcular costos",
       btnReset: "Restablecer",
       resVenta: "Precio de venta sugerido",
@@ -363,16 +360,15 @@ tailwind.config = {
     },
     en: {
       langBtn: "🇬🇧 EN",
-      themeLabel: "Dark",
       mainTitle: "Calculate your <span class='brand-text'>exact import price</span>",
       mainSub: "From supplier's yuan to the suggested final price. Includes international shipping, commission, and profit markup.",
       sectionParams: "Calculation Parameters",
-      lblPrecioCny: "Product Price <span class='text-[#3AAFA9] font-bold'>¥ CNY</span>",
-      lblTasa: "Exchange Rate <span class='text-slate-400 font-normal'>(Yuan per 1 USD, e.g., 7.20)</span>",
+      lblPrecioCny: "Product Price <span class='text-brand font-bold'>¥ CNY</span>",
+      lblTasa: "Exchange Rate <span class='text-white/35 font-normal'>(Yuan per 1 USD, e.g., 7.20)</span>",
       lblPeso: "Product Weight",
-      lblTarifa: "Intl. Shipping Rate <span class='text-slate-400 font-normal'>(USD/Kg)</span>",
-      lblComision: "Agent / Gateway Fee <span class='text-slate-400 font-normal'>(%)</span>",
-      lblMargen: "Profit Margin (Markup) <span class='text-slate-400 font-normal'>(%)</span>",
+      lblTarifa: "Intl. Shipping Rate <span class='text-white/35 font-normal'>(USD/Kg)</span>",
+      lblComision: "Agent / Gateway Fee <span class='text-white/35 font-normal'>(%)</span>",
+      lblMargen: "Profit Margin (Markup) <span class='text-white/35 font-normal'>(%)</span>",
       btnCalcular: "Calculate Costs",
       btnReset: "Reset",
       resVenta: "Suggested Selling Price",
@@ -423,17 +419,6 @@ tailwind.config = {
   };
 
   const fmtUSD = n => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(isFinite(n) ? n : 0);
-
-  // Sistema de Temas (Oscuro/Claro)
-  const root = document.documentElement;
-  function applyTheme(dark) {
-    root.classList.toggle('dark', dark);
-    try { localStorage.setItem('importapro-theme', dark ? 'dark' : 'light'); } catch (e) {}
-  }
-  let savedTheme = null;
-  try { savedTheme = localStorage.getItem('importapro-theme'); } catch (e) {}
-  applyTheme(savedTheme ? savedTheme === 'dark' : true);
-  $('themeToggle').addEventListener('click', () => applyTheme(!root.classList.contains('dark')));
 
   // Sistema de Idiomas
   function setLanguage(lang) {
@@ -524,7 +509,8 @@ tailwind.config = {
     el.addEventListener('change', calcular);
   });
 
-  $('btnCalcular').addEventListener('click', calcular);$('btnReset').addEventListener('click', () => {
+  $('btnCalcular').addEventListener('click', calcular);
+  $('btnReset').addEventListener('click', () => {
     inputs.precioCny.value = '45';
     inputs.tasa.value = '7.2';
     inputs.peso.value = '0.5';
