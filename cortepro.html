@@ -64,7 +64,7 @@ tailwind.config = {
       class="w-full text-center tracking-[.4em] uppercase rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-4 mb-3 text-[15px] font-display font-semibold placeholder:text-slate-300 dark:placeholder:text-slate-600 placeholder:font-sans placeholder:font-normal placeholder:tracking-normal focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition" aria-label="Código de acceso">
     <p id="gateError" class="hidden text-[13px] text-red-500 mb-3" role="alert"></p>
     <button id="gateBtn" class="w-full rounded-2xl bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-widest py-4 shadow-lg shadow-brand/30 transition">ACCEDER</button>
-    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection#2665495452437654490849404f454f474a66414b474f4a0845494b" class="text-brand hover:underline font-medium"><span class="__cf_email__" data-cfemail="387b574a4c5d684a5716575e515b515954785f55595154165b5755">[email&#160;protected]</span></a></p>
+    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection#3c7f534e48596c4e5312535a555f555d507c5b515d5550125f5351" class="text-brand hover:underline font-medium"><span class="__cf_email__" data-cfemail="7a3915080e1f2a081554151c1319131b163a1d171b131654191517">[email&#160;protected]</span></a></p>
   </div>
 </div>
 
@@ -168,7 +168,7 @@ tailwind.config = {
     <p id="disclaimer" class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">Resultados estimados que no sustituyen el criterio profesional del patronista o diseñador.</p>
     <p>© 2026 CortePro · <span id="fTag">Herramientas para diseñadores y modistas · Todos los derechos reservados</span></p>
     <p class="pt-1">
-      <a href="/cdn-cgi/l/email-protection#a9eac6dbddccf9dbc687c6cfc0cac0c8c5e9cec4c8c0c587cac6c4" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
+      <a href="/cdn-cgi/l/email-protection#02416d70766752706d2c6d646b616b636e42656f636b6e2c616d6f" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
       <span class="mx-1.5 text-slate-300 dark:text-slate-600">·</span>
       <a href="disclaimer-cortepro.html" id="fTerminos" class="text-brand hover:text-brand-dark font-medium transition">Términos</a>
     </p>
@@ -502,6 +502,7 @@ window.toggleLang = toggleLang;
 window.toggleTheme = toggleTheme;
 window.calcular = calcular;
 window.resetCalc = resetCalc;
+document.getElementById('gateBtn').addEventListener('click', tryGate);
 
 buildChips();
 buildModelos();
