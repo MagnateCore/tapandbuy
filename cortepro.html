@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="dark scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,6 +48,7 @@ tailwind.config = {
   .hero-glow::after { content:''; position:absolute; bottom:-70%; left:-15%; width:60%; height:120%; border-radius:50%; background:radial-gradient(circle, rgba(232,176,75,.14), transparent 70%); pointer-events:none; }
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body class="bg-[#f3f5f4] dark:bg-forest-ink text-slate-800 dark:text-slate-200 min-h-screen">
 
@@ -59,12 +60,12 @@ tailwind.config = {
       <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
     </div>
     <h1 class="font-display text-2xl font-bold tracking-tight text-navy dark:text-white">Corte<span class="text-brand">Pro</span></h1>
-    <p id="gateLabel" class="mt-2 mb-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Ingresá tu código de acceso</p>
-    <input id="gateCode" type="text" maxlength="11" placeholder="XXXX-XXXX"
+    <p id="gateLabel" class="mt-2 mb-8 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">Ingresa tu código de acceso</p>
+    <input id="gateCode" type="text" placeholder="XXXX-XXXX"
       class="w-full text-center tracking-[.4em] uppercase rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-4 mb-3 text-[15px] font-display font-semibold placeholder:text-slate-300 dark:placeholder:text-slate-600 placeholder:font-sans placeholder:font-normal placeholder:tracking-normal focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition" aria-label="Código de acceso">
     <p id="gateError" class="hidden text-[13px] text-red-500 mb-3" role="alert"></p>
-    <button id="gateBtn" onclick="tryGate()" class="w-full rounded-2xl bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-widest py-4 shadow-lg shadow-brand/30 transition">ACCEDER</button>
-    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3d7e524f49586d4f5213525b545e545c517d5a505c5451135e5250">[email&#160;protected]</a></p>
+    <button id="gateBtn" class="w-full rounded-2xl bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-widest py-4 shadow-lg shadow-brand/30 transition">ACCEDER</button>
+    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection#41022e33352411332e6f2e27282228202d01262c20282d6f222e2c" class="text-brand hover:underline font-medium"><span class="__cf_email__" data-cfemail="62210d10160732100d4c0d040b010b030e22050f030b0e4c010d0f">[email&#160;protected]</span></a></p>
   </div>
 </div>
 
@@ -168,7 +169,7 @@ tailwind.config = {
     <p id="disclaimer" class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">Resultados estimados que no sustituyen el criterio profesional del patronista o diseñador.</p>
     <p>© 2026 CortePro · <span id="fTag">Herramientas para diseñadores y modistas · Todos los derechos reservados</span></p>
     <p class="pt-1">
-      <a href="/cdn-cgi/l/email-protection#7635190402132604195819101f151f171a36111b171f1a5815191b" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
+      <a href="/cdn-cgi/l/email-protection#a3e0ccd1d7c6f3d1cc8dccc5cac0cac2cfe3c4cec2cacf8dc0ccce" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
       <span class="mx-1.5 text-slate-300 dark:text-slate-600">·</span>
       <a href="terminos.html" id="fTerminos" class="text-brand hover:text-brand-dark font-medium transition">Términos</a>
     </p>
@@ -183,7 +184,8 @@ tailwind.config = {
 /* ================= i18n ================= */
 const i18n = {
   es: {
-    gateLabel:'Ingresá tu código de acceso', gateBtn:'ACCEDER', gateErr:'Código inválido. Verificá e intentá de nuevo.',
+    gateLabel:'Ingresa tu código de acceso', gateBtn:'ACCEDER', gateErr:'Código inválido. Verifica e intenta de nuevo.',
+    gateVerifying:'Verificando…', gateNetErr:'No pudimos verificar. Revisa tu conexión e intenta de nuevo.',
     gateHelp:'¿No tienes código? Escríbenos a CortePro.oficial@gmail.com',
     tForm:'Datos del cálculo', lModelo:'Prenda / modelo', lUnidad:'Unidades de medida',
     hintModelo:'Valores base según taller — puedes editar cada talla abajo.',
@@ -199,6 +201,7 @@ const i18n = {
   },
   en: {
     gateLabel:'Enter your access code', gateBtn:'UNLOCK', gateErr:'Invalid code. Please check and try again.',
+    gateVerifying:'Verifying…', gateNetErr:'Could not verify. Check your connection and try again.',
     gateHelp:'No code? Write us at CortePro.oficial@gmail.com',
     tForm:'Calculation data', lModelo:'Garment / model', lUnidad:'Units of measure',
     hintModelo:'Workshop base values — you can edit each size below.',
@@ -421,26 +424,79 @@ function toggleTheme(){
 }
 
 /* ================= Gate ================= */
-const MASTER_CODES = ["CORTE-2026"];
+const MASTER_CODES = ["CORTE-2026"]; // códigos manuales de respaldo (soporte)
+const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln"; // VERIFICADOR-LICENCIAS (satélite)
+const PRODUCTO = "cortepro";
+
 function gateUnlock(){
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').classList.remove('hidden');
 }
-window.tryGate = function(){
-  const v = document.getElementById('gateCode').value.trim().toUpperCase();
-  if (MASTER_CODES.indexOf(v) !== -1) {
+
+function gateShowError(msg){
+  const err = document.getElementById('gateError');
+  err.classList.remove('hidden');
+  err.textContent = msg;
+  const card = document.getElementById('gateCard');
+  card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+}
+
+function verifyWithMotor(token){
+  return fetch(MOTOR_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ evento: 'verificar_licencia', token: token, producto: PRODUCTO })
+  }).then(function(r){ return r.json(); });
+}
+
+window.tryGate = async function(){
+  const err = document.getElementById('gateError');
+  err.classList.add('hidden');
+  const raw = document.getElementById('gateCode').value.trim();
+  const upper = raw.toUpperCase();
+  if (MASTER_CODES.indexOf(upper) !== -1) {
     try { localStorage.setItem('cortepro-unlocked','1'); } catch(e){}
-    gateUnlock();
-  } else {
-    const err = document.getElementById('gateError');
-    err.classList.remove('hidden');
-    err.textContent = i18n[LANG].gateErr;
-    const card = document.getElementById('gateCard');
-    card.classList.remove('shake'); void card.offsetWidth; card.classList.add('shake');
+    gateUnlock(); return;
+  }
+  if (raw.indexOf('.') !== -1) { // formato token del motor: ORDEN.FIRMA
+    const btn = document.getElementById('gateBtn');
+    btn.disabled = true;
+    btn.textContent = i18n[LANG].gateVerifying;
+    try {
+      const data = await verifyWithMotor(raw);
+      if (data && data.valido === true) {
+        try { localStorage.setItem('cortepro-license', raw); localStorage.setItem('cortepro-unlocked','1'); } catch(e){}
+        gateUnlock(); return;
+      }
+      gateShowError(i18n[LANG].gateErr);
+    } catch (e) {
+      gateShowError(i18n[LANG].gateNetErr);
+    }
+    btn.disabled = false;
+    btn.textContent = i18n[LANG].gateBtn;
     document.getElementById('gateCode').value = '';
     document.getElementById('gateCode').focus();
+    return;
   }
+  gateShowError(i18n[LANG].gateErr);
+  document.getElementById('gateCode').value = '';
+  document.getElementById('gateCode').focus();
 };
+
+// Acceso automático desde el link de licencia del correo (?license=ORDEN.FIRMA)
+(function autoLicense(){
+  try {
+    const lic = new URLSearchParams(location.search).get('license');
+    if (!lic) return;
+    try { history.replaceState(null, '', location.pathname); } catch(e){}
+    verifyWithMotor(lic).then(function(data){
+      if (data && data.valido === true) {
+        try { localStorage.setItem('cortepro-license', lic); localStorage.setItem('cortepro-unlocked','1'); } catch(e){}
+        gateUnlock();
+      }
+    }).catch(function(){});
+  } catch(e){}
+})();
 
 /* ================= Init ================= */
 window.toggleLang = toggleLang;
