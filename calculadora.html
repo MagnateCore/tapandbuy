@@ -72,16 +72,16 @@ tailwind.config = {
         <svg class="w-7 h-7 text-brand" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
       </div>
       <h2 class="font-display text-2xl font-bold tracking-tight">Importa<span class="brand-text">Pro</span></h2>
-      <p id="tGateSub" class="mt-2 text-sm text-white/50">Ingresá tu código de acceso</p>
+      <p id="tGateSub" class="mt-2 text-sm text-white/50">Ingresa tu código de acceso</p>
       <input id="gateCode" type="text" autocomplete="off" spellcheck="false"
         class="field mt-5 w-full text-center tracking-widest uppercase font-bold text-lg px-4 py-3.5 rounded-xl transition"
         placeholder="XXXX-XXXX">
-      <p id="gateError" class="hidden mt-3 text-sm font-semibold text-red-400">Código inválido. Verificá tu email de acceso.</p>
+      <p id="gateError" class="hidden mt-3 text-sm font-semibold text-red-400">Código inválido. Verifica tu email de acceso.</p>
       <button id="gateBtn"
         class="btn-primary mt-5 w-full font-extrabold py-3.5 rounded-xl text-sm tracking-wide uppercase">
         Acceder
       </button>
-      <p id="tGateSupport" class="mt-5 text-xs text-white/35">¿No tenés tu código? Conseguí tu acceso en la página de compra.</p>
+      <p id="tGateSupport" class="mt-5 text-xs text-white/35">¿No tienes tu código? Consigue tu acceso en la página de compra.</p>
     </div>
   </div>
 
@@ -176,6 +176,32 @@ tailwind.config = {
                 <option value="g" style="background:#123a34;">gr</option>
               </select>
             </div>
+          </div>
+
+          <!-- Dimensiones (peso volumétrico) -->
+          <div>
+            <label id="lLargo" for="inLargo" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Largo <span class="text-white/35 font-normal">(cm · opcional)</span>
+            </label>
+            <input id="inLargo" type="text" inputmode="decimal" value=""
+              class="field w-full pl-4 pr-4 py-3 rounded-xl font-semibold transition"
+              placeholder="0">
+          </div>
+          <div>
+            <label id="lAncho" for="inAncho" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Ancho <span class="text-white/35 font-normal">(cm · opcional)</span>
+            </label>
+            <input id="inAncho" type="text" inputmode="decimal" value=""
+              class="field w-full pl-4 pr-4 py-3 rounded-xl font-semibold transition"
+              placeholder="0">
+          </div>
+          <div>
+            <label id="lAlto" for="inAlto" class="block text-sm font-semibold text-white/75 mb-1.5">
+              Alto <span class="text-white/35 font-normal">(cm · opcional)</span>
+            </label>
+            <input id="inAlto" type="text" inputmode="decimal" value=""
+              class="field w-full pl-4 pr-4 py-3 rounded-xl font-semibold transition"
+              placeholder="0">
           </div>
 
           <!-- Tarifa envío -->
@@ -284,6 +310,7 @@ tailwind.config = {
               <div class="h-2 rounded-full overflow-hidden" style="background: rgba(255,255,255,.07);">
                 <div id="barEnvio" class="bar-fill h-full rounded-full" style="width:0%; background:#63b3ed;"></div>
               </div>
+              <p id="volNote" class="text-xs mt-1.5 hidden" style="color:#ffd166;"></p>
             </div>
 
             <div>
@@ -313,7 +340,7 @@ tailwind.config = {
         <a href="#" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
         <span class="mx-1">·</span>
         <!-- CONFIG: correo de soporte oficial de ImportaPro -->
-        <a href="/cdn-cgi/l/email-protection#fc95918c938e889d8c8e93d28f938c938e8899bc9b919d9590d29f9391" class="text-brand hover:underline font-semibold transition">Soporte</a>
+        <a href="/cdn-cgi/l/email-protection#325b5f425d40465342405d1c415d425d40465772555f535b5e1c515d5f" class="text-brand hover:underline font-semibold transition">Soporte</a>
       </p>
       <p id="tFooterMother" class="pt-1 font-semibold text-white/25">Un producto de PromptMagnate Lab</p>
     </footer>
@@ -333,6 +360,10 @@ tailwind.config = {
       lblPrecioCny: "Precio del producto <span class='text-brand font-bold'>¥ CNY</span>",
       lblTasa: "Tasa de cambio <span class='text-white/35 font-normal'>(Yuanes por 1 USD, ej: 7.20)</span>",
       lblPeso: "Peso del producto",
+      lLargo: "Largo <span class='text-white/35 font-normal'>(cm · opcional)</span>",
+      lAncho: "Ancho <span class='text-white/35 font-normal'>(cm · opcional)</span>",
+      lAlto: "Alto <span class='text-white/35 font-normal'>(cm · opcional)</span>",
+    volHint: "⚖️ Peso volumétrico aplica: {v} kg (L×A×H ÷ 6000, norma aérea)",
       lblTarifa: "Tarifa de envío intl. <span class='text-white/35 font-normal'>(USD/Kg)</span>",
       lblComision: "Comisión agente / pasarela <span class='text-white/35 font-normal'>(%)</span>",
       lblMargen: "Margen de ganancia (Markup) <span class='text-white/35 font-normal'>(%)</span>",
@@ -353,10 +384,12 @@ tailwind.config = {
       footerDesc: "ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.",
       footerLink: "Términos y Privacidad",
       footerMother: "Un producto de PromptMagnate Lab",
-      gateSub: "Ingresá tu código de acceso",
+      gateSub: "Ingresa tu código de acceso",
       gateBtn: "Acceder",
-      gateError: "Código inválido. Verificá tu email de acceso.",
-      gateSupport: "¿No tenés tu código? Conseguí tu acceso en la página de compra."
+      gateError: "Código inválido. Verifica tu email de acceso.",
+      gateSupport: "¿No tienes tu código? Consigue tu acceso en la página de compra.",
+      gateVerifying: "Verificando…",
+      gateNetErr: "No pudimos verificar. Revisa tu conexión e intenta de nuevo."
     },
     en: {
       langBtn: "🇬🇧 EN",
@@ -366,6 +399,10 @@ tailwind.config = {
       lblPrecioCny: "Product Price <span class='text-brand font-bold'>¥ CNY</span>",
       lblTasa: "Exchange Rate <span class='text-white/35 font-normal'>(Yuan per 1 USD, e.g., 7.20)</span>",
       lblPeso: "Product Weight",
+      lLargo: "Length <span class='text-white/35 font-normal'>(cm · optional)</span>",
+      lAncho: "Width <span class='text-white/35 font-normal'>(cm · optional)</span>",
+      lAlto: "Height <span class='text-white/35 font-normal'>(cm · optional)</span>",
+      volHint: "⚖️ Volumetric weight applies: {v} kg (L×W×H ÷ 6000, air standard)",
       lblTarifa: "Intl. Shipping Rate <span class='text-white/35 font-normal'>(USD/Kg)</span>",
       lblComision: "Agent / Gateway Fee <span class='text-white/35 font-normal'>(%)</span>",
       lblMargen: "Profit Margin (Markup) <span class='text-white/35 font-normal'>(%)</span>",
@@ -389,7 +426,9 @@ tailwind.config = {
       gateSub: "Enter your access code",
       gateBtn: "Unlock",
       gateError: "Invalid code. Check your access email.",
-      gateSupport: "No code? Get access on the purchase page."
+      gateSupport: "No code? Get access on the purchase page.",
+      gateVerifying: "Verifying…",
+      gateNetErr: "Could not verify. Check your connection and try again."
     }
   };
 
@@ -398,7 +437,8 @@ tailwind.config = {
   const $ = id => document.getElementById(id);
   const inputs = {
     precioCny: $('inPrecioCny'), tasa: $('inTasa'), peso:$('inPeso'),
-    pesoUnidad: $('inPesoUnidad'), tarifaKg:$('inTarifaKg'),
+    pesoUnidad: $('inPesoUnidad'), largo:$('inLargo'), ancho:$('inAncho'), alto:$('inAlto'),
+    tarifaKg:$('inTarifaKg'),
     comision: $('inComision'), margen: $('inMargen'), margenSlider:$('margenSlider')
   };
   const outs = {
@@ -431,6 +471,9 @@ tailwind.config = {
     $('lblPrecioCny').innerHTML = t.lblPrecioCny;
     $('lblTasa').innerHTML = t.lblTasa;
     $('lblPeso').textContent = t.lblPeso;
+    $('lLargo').innerHTML = t.lLargo;
+    $('lAncho').innerHTML = t.lAncho;
+    $('lAlto').innerHTML = t.lAlto;
     $('lblTarifa').innerHTML = t.lblTarifa;
     $('lblComision').innerHTML = t.lblComision;
     $('lblMargen').innerHTML = t.lblMargen;
@@ -475,8 +518,12 @@ tailwind.config = {
     const comisionPct = num(inputs.comision.value);
     const margenPct = num(inputs.margen.value);
 
+    // Peso volumétrico (norma aérea IATA: L×A×H cm ÷ 6000). El transportista cobra el mayor.
+    const volKg = (num(inputs.largo.value) * num(inputs.ancho.value) * num(inputs.alto.value)) / 6000;
+    const pesoCobrable = Math.max(pesoKg, volKg);
+
     const costoProducto = tasa > 0 ? precioCny / tasa : 0;
-    const costoEnvio = pesoKg * tarifaKg;
+    const costoEnvio = pesoCobrable * tarifaKg;
     const costoComision = costoProducto * (comisionPct / 100);
     const costoTotal = costoProducto + costoEnvio + costoComision;
 
@@ -494,6 +541,14 @@ tailwind.config = {
     outs.ganancia.textContent      = fmtUSD(ganancia);
     outs.margenReal.textContent    = margenReal.toFixed(1) + '%';
     outs.margenBadge.textContent   = margenPct + '%';
+
+    const volEl = document.getElementById('volNote');
+    if (volKg > pesoKg && volKg > 0) {
+      volEl.textContent = i18n[currentLang].volHint.replace('{v}', volKg.toFixed(2));
+      volEl.classList.remove('hidden');
+    } else {
+      volEl.classList.add('hidden');
+    }
 
     outs.barProducto.style.width = Math.min(100, (costoProducto / base) * 100) + '%';
     outs.barEnvio.style.width    = Math.min(100, (costoEnvio / base) * 100) + '%';
@@ -515,6 +570,7 @@ tailwind.config = {
     inputs.tasa.value = '7.2';
     inputs.peso.value = '0.5';
     inputs.pesoUnidad.value = 'kg';
+    inputs.largo.value = ''; inputs.ancho.value = ''; inputs.alto.value = '';
     inputs.tarifaKg.value = '12';
     inputs.comision.value = '5';
     inputs.margen.value = '50';
@@ -523,21 +579,73 @@ tailwind.config = {
   });
 
   // ===== PANTALLA DE ACCESO =====
-  const MASTER_CODES = ["IPR-2026"]; // CONFIG: códigos válidos (podés poner varios, rotá cuando quieras)
+  const MASTER_CODES = ["IPR-2026"]; // CONFIG: códigos manuales de respaldo (soporte)
+  const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln"; // VERIFICADOR-LICENCIAS (satélite)
+  const PRODUCTO = "importapro";
+
   function gateUnlock() { $('gate').style.display = 'none'; }
   try { if (localStorage.getItem('importapro-unlocked') === '1') gateUnlock(); } catch (e) {}
-  function tryGate() {
-    const v = $('gateCode').value.trim().toUpperCase();
-    if (MASTER_CODES.indexOf(v) !== -1) {
-      try { localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
-      gateUnlock();
-    } else {
-      $('gateError').classList.remove('hidden');
-      const card = $('gateCard');
-      card.classList.remove('gate-shake'); void card.offsetWidth; card.classList.add('gate-shake');
-      $('gateCode').value = ''; $('gateCode').focus();
-    }
+
+  function gateShowError(msg) {
+    $('gateError').textContent = msg;
+    $('gateError').classList.remove('hidden');
+    const card = $('gateCard');
+    card.classList.remove('gate-shake'); void card.offsetWidth; card.classList.add('gate-shake');
   }
+
+  function verifyWithMotor(token) {
+    return fetch(MOTOR_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ evento: 'verificar_licencia', token: token, producto: PRODUCTO })
+    }).then(function (r) { return r.json(); });
+  }
+
+  async function tryGate() {
+    $('gateError').classList.add('hidden');
+    const raw = $('gateCode').value.trim();
+    const upper = raw.toUpperCase();
+    if (MASTER_CODES.indexOf(upper) !== -1) {
+      try { localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
+      gateUnlock(); return;
+    }
+    if (raw.indexOf('.') !== -1) { // formato token del motor: ORDEN.FIRMA
+      const btn = $('gateBtn');
+      btn.disabled = true;
+      btn.textContent = i18n[currentLang].gateVerifying;
+      try {
+        const data = await verifyWithMotor(raw);
+        if (data && data.valido === true) {
+          try { localStorage.setItem('importapro-license', raw); localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
+          gateUnlock(); return;
+        }
+        gateShowError(i18n[currentLang].gateError);
+      } catch (e) {
+        gateShowError(i18n[currentLang].gateNetErr);
+      }
+      btn.disabled = false;
+      btn.textContent = i18n[currentLang].gateBtn;
+      $('gateCode').value = ''; $('gateCode').focus();
+      return;
+    }
+    gateShowError(i18n[currentLang].gateError);
+    $('gateCode').value = ''; $('gateCode').focus();
+  }
+
+  // Acceso automático desde el link de licencia del correo (?license=ORDEN.FIRMA)
+  (function autoLicense() {
+    try {
+      const lic = new URLSearchParams(location.search).get('license');
+      if (!lic) return;
+      try { history.replaceState(null, '', location.pathname); } catch (e) {}
+      verifyWithMotor(lic).then(function (data) {
+        if (data && data.valido === true) {
+          try { localStorage.setItem('importapro-license', lic); localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
+          gateUnlock();
+        }
+      }).catch(function () {});
+    } catch (e) {}
+  })();
   $('gateBtn').addEventListener('click', tryGate);
   $('gateCode').addEventListener('keydown', e => { if (e.key === 'Enter') tryGate(); });
 
