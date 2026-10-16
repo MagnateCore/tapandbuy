@@ -59,7 +59,6 @@ tailwind.config = {
   @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
 </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body class="min-h-screen text-white">
 
@@ -337,10 +336,10 @@ tailwind.config = {
     <footer class="mt-12 pt-6 text-center text-xs text-white/35 space-y-2 border-t border-white/10">
       <p id="tFooterDesc">ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
       <p>
-        <a href="#" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
+        <a href="policies.html" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
         <span class="mx-1">·</span>
         <!-- CONFIG: correo de soporte oficial de ImportaPro -->
-        <a href="/cdn-cgi/l/email-protection#325b5f425d40465342405d1c415d425d40465772555f535b5e1c515d5f" class="text-brand hover:underline font-semibold transition">Soporte</a>
+        <a href="/cdn-cgi/l/email-protection#21484c514e53554051534e0f524e514e53554461464c40484d0f424e4c" class="text-brand hover:underline font-semibold transition">Soporte</a>
       </p>
       <p id="tFooterMother" class="pt-1 font-semibold text-white/25">Un producto de PromptMagnate Lab</p>
     </footer>
@@ -614,8 +613,12 @@ tailwind.config = {
       btn.disabled = true;
       btn.textContent = i18n[currentLang].gateVerifying;
       try {
-        const data = await verifyWithMotor(raw);
-        if (data && data.valido === true) {
+        let data = await verifyWithMotor(raw);
+        if (typeof data === 'string') { try { data = JSON.parse(data); } catch (e) {} }
+        const v = (data && (data.valido === true || data.valido === 'true')) ||
+                  (data && data.body && (data.body.valido === true || data.body.valido === 'true')) ||
+                  (data && data.data && (data.data.valido === true || data.data.valido === 'true'));
+        if (v) {
           try { localStorage.setItem('importapro-license', raw); localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
           gateUnlock(); return;
         }
