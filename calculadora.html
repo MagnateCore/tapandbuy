@@ -339,7 +339,7 @@ tailwind.config = {
         <a href="policies.html" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
         <span class="mx-1">·</span>
         <!-- CONFIG: correo de soporte oficial de ImportaPro -->
-        <a href="/cdn-cgi/l/email-protection#21484c514e53554051534e0f524e514e53554461464c40484d0f424e4c" class="text-brand hover:underline font-semibold transition">Soporte</a>
+        <a href="/cdn-cgi/l/email-protection#d7bebaa7b8a5a3b6a7a5b8f9a4b8a7b8a5a3b297b0bab6bebbf9b4b8ba" class="text-brand hover:underline font-semibold transition">Soporte</a>
       </p>
       <p id="tFooterMother" class="pt-1 font-semibold text-white/25">Un producto de PromptMagnate Lab</p>
     </footer>
@@ -579,7 +579,7 @@ tailwind.config = {
 
   // ===== PANTALLA DE ACCESO =====
   const MASTER_CODES = ["IPR-2026"]; // CONFIG: códigos manuales de respaldo (soporte)
-  const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln"; // VERIFICADOR-LICENCIAS (satélite)
+  const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln/sync"; // VERIFICADOR-LICENCIAS — /sync hace que el webhook ESPERE el veredicto y lo entregue
   const PRODUCTO = "importapro";
 
   function gateUnlock() { $('gate').style.display = 'none'; }
