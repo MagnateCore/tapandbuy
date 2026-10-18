@@ -64,7 +64,7 @@ tailwind.config = {
       class="w-full text-center tracking-[.4em] uppercase rounded-2xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/[0.04] px-4 py-4 mb-3 text-[15px] font-display font-semibold placeholder:text-slate-300 dark:placeholder:text-slate-600 placeholder:font-sans placeholder:font-normal placeholder:tracking-normal focus:outline-none focus:ring-2 focus:ring-brand/40 focus:border-brand transition" aria-label="Código de acceso">
     <p id="gateError" class="hidden text-[13px] text-red-500 mb-3" role="alert"></p>
     <button id="gateBtn" class="w-full rounded-2xl bg-gradient-to-r from-brand to-brand-dark hover:opacity-95 active:scale-[0.98] text-white text-sm font-bold tracking-widest py-4 shadow-lg shadow-brand/30 transition">ACCEDER</button>
-    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a href="/cdn-cgi/l/email-protection#10537f62647540627f3e7f76797379717c50777d71797c3e737f7d" class="text-brand hover:underline font-medium"><span class="__cf_email__" data-cfemail="34775b46405164465b1a5b525d575d5558745359555d581a575b59">[email&#160;protected]</span></a></p>
+    <p id="gateHelp" class="text-xs text-slate-400 mt-6 leading-relaxed">¿No tienes código? Escríbenos a <a class="mp" data-u="CortePro.oficial" data-d="gmail.com"  class="text-brand hover:underline font-medium">CortePro.oficial&#64;gmail.com</a></p>
   </div>
 </div>
 
@@ -168,7 +168,7 @@ tailwind.config = {
     <p id="disclaimer" class="text-slate-500 dark:text-slate-400 leading-relaxed max-w-xl mx-auto">Resultados estimados que no sustituyen el criterio profesional del patronista o diseñador.</p>
     <p>© 2026 CortePro · <span id="fTag">Herramientas para diseñadores y modistas · Todos los derechos reservados</span></p>
     <p class="pt-1">
-      <a href="/cdn-cgi/l/email-protection#9ddef2efe9f8cdeff2b3f2fbf4fef4fcf1ddfaf0fcf4f1b3fef2f0" id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
+      <a class="mp" data-u="CortePro.oficial" data-d="gmail.com"  id="fSoporte" class="text-brand hover:text-brand-dark font-medium transition">Soporte</a>
       <span class="mx-1.5 text-slate-300 dark:text-slate-600">·</span>
       <a href="disclaimer-cortepro.html" id="fTerminos" class="text-brand hover:text-brand-dark font-medium transition">Términos</a>
     </p>
@@ -176,7 +176,7 @@ tailwind.config = {
 </footer>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 (function(){
 'use strict';
 
@@ -185,7 +185,7 @@ const i18n = {
   es: {
     gateLabel:'Ingresa tu código de acceso', gateBtn:'ACCEDER', gateErr:'Código inválido. Verifica e intenta de nuevo.',
     gateVerifying:'Verificando…', gateNetErr:'No pudimos verificar. Revisa tu conexión e intenta de nuevo.',
-    gateHelp:'¿No tienes código? Escríbenos a CortePro.oficial@gmail.com',
+    gateHelp:'¿No tienes código? Escríbenos a CortePro.oficial' + '@' + 'gmail.com',
     tForm:'Datos del cálculo', lModelo:'Prenda / modelo', lUnidad:'Unidades de medida',
     hintModelo:'Valores base según taller — puedes editar cada talla abajo.',
     lAncho:'Ancho del rollo de tela', hintAngosta:'▲ Tela angosta ({a}): consumo ×2 automático', hintAnchoOK:'✓ Ancho estándar ({a})',
@@ -201,7 +201,7 @@ const i18n = {
   en: {
     gateLabel:'Enter your access code', gateBtn:'UNLOCK', gateErr:'Invalid code. Please check and try again.',
     gateVerifying:'Verifying…', gateNetErr:'Could not verify. Check your connection and try again.',
-    gateHelp:'No code? Write us at CortePro.oficial@gmail.com',
+    gateHelp:'No code? Write us at CortePro.oficial' + '@' + 'gmail.com',
     tForm:'Calculation data', lModelo:'Garment / model', lUnidad:'Units of measure',
     hintModelo:'Workshop base values — you can edit each size below.',
     lAncho:'Fabric roll width', hintAngosta:'▲ Narrow fabric: consumption ×2 automatic',
@@ -520,5 +520,6 @@ calcular();
 
 })();
 </script>
+<script>document.querySelectorAll("a.mp").forEach(function(a){a.href="mailto:"+a.dataset.u+"@"+a.dataset.d;if(a.textContent.indexOf("@")===-1)a.textContent=a.dataset.u+"@"+a.dataset.d;});</script>
 </body>
 </html>
