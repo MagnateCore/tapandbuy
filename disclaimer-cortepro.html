@@ -68,11 +68,12 @@
 
   <div class="contact">
     <strong>Privacidad y contacto:</strong> para cualquier consulta sobre estos términos o el tratamiento de datos, escríbenos a
-    <a href="/cdn-cgi/l/email-protection#da99b5a8aebf8aa8b5f4b5bcb3b9b3bbb6fcf9eceee1bdb7bbb3b6f4b9b5b7">CortePro.oficial&#64;gmail.com</a>.
+    <a class="mp" data-u="CortePro.oficial" data-d="gmail.com" >CortePro.oficial&#64;gmail.com</a>.
   </div>
 
   <a class="back" href="cortepro.html">← Volver a CortePro</a>
   <p class="foot">© 2026 CortePro · Todos los derechos reservados</p>
 </div>
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+<script>document.querySelectorAll("a.mp").forEach(function(a){a.href="mailto:"+a.dataset.u+"@"+a.dataset.d;if(a.textContent.indexOf("@")===-1)a.textContent=a.dataset.u+"@"+a.dataset.d;});</script>
+</body>
 </html>
