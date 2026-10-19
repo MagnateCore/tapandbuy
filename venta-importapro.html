@@ -29,7 +29,6 @@ tailwind.config = {
   .kicker { letter-spacing:.25em; }
 </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body class="bg-[#f6f7f6] text-slate-800">
 
@@ -57,7 +56,7 @@ tailwind.config = {
     <strong>margen real</strong> — no el markup que imaginas. En español y en inglés, desde el celular.
   </p>
   <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
-    <a id="comprar" href="https://nowpayments.io/payment/?iid=4572517185" class="btn-buy rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-lg font-bold px-10 py-4" data-i18n="buyBtn">Comprar acceso — USD 15</a>
+    <a id="comprar" href="https://nowpayments.io/payment/?iid=4572517185" target="_blank" class="btn-buy rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-lg font-bold px-10 py-4" data-i18n="buyBtn">Comprar acceso — USD 15</a>
     <span class="text-sm text-slate-500" data-i18n="buyNote">USD 15 al año · Sin suscripción · Renuevas solo si quieres</span>
   </div>
 </section>
@@ -102,7 +101,7 @@ tailwind.config = {
   <h2 class="font-display text-2xl md:text-3xl font-bold text-center mb-7 text-navy" data-i18n="faqTitle">Preguntas frecuentes</h2>
   <div class="space-y-3">
     <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q1">¿Es un pago único o suscripción?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a1">Pago anual único: USD 15 por 12 meses de uso completo, sin cargos automáticos. Pasado el año, renuevas solo si quieres — con descuento para clientes existentes.</p></details>
-    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q2">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a2">Al confirmarse tu pago, recibes tu código de acceso <strong>automáticamente</strong> en el correo que usaste al pagar, normalmente en menos de 15 minutos. Si pasan más de 30 minutos, escríbenos a <a class="mp" data-u="importapro.soporte" data-d="gmail.com"  target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">importapro.soporte&#64;gmail.com</a> con tu comprobante.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q2">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a2">Al confirmarse tu pago, recibes tu código de acceso <strong>automáticamente</strong> en el correo que usaste al pagar, normalmente en menos de 15 minutos. Si pasan más de 30 minutos, escríbenos a <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="importapro.soporte" data-d="gmail.com"  target="_self">importapro.soporte&#64;gmail.com</a> con tu comprobante.</p></details>
     <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q3">¿Incluye aranceles e impuestos de mi país?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a3">El cálculo base cubre producto, envío y comisiones. Verifica siempre los aranceles aplicables en tu país antes de cerrar una operación.</p></details>
     <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q4">¿Puedo usarlo en el teléfono?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a4">Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.</p></details>
   </div>
@@ -113,13 +112,13 @@ tailwind.config = {
     <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-brand/20 blur-3xl pointer-events-none"></div>
     <h2 class="font-display text-2xl md:text-3xl font-bold relative" data-i18n="ctaTitle">Deja de adivinar tus márgenes</h2>
     <p class="mt-2.5 text-slate-300 relative" data-i18n="ctaSub">Una cotización mal calculada cuesta más que esta herramienta.</p>
-    <a href="https://nowpayments.io/payment/?iid=4572517185" class="btn-buy inline-block relative mt-7 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-lg font-bold px-10 py-4" data-i18n="buyBtn2">Comprar acceso — USD 15</a>
+    <a href="https://nowpayments.io/payment/?iid=4572517185" target="_blank" class="btn-buy inline-block relative mt-7 rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-lg font-bold px-10 py-4" data-i18n="buyBtn2">Comprar acceso — USD 15</a>
   </div>
 </section>
 
 <footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
   <p data-i18n="f1">© 2026 ImportaPro · Herramientas para importadores · Todos los derechos reservados</p>
-  <p class="mt-2.5"><span data-i18n="f2">Soporte:</span> <a class="mp" data-u="importapro.soporte" data-d="gmail.com"  target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">importapro.soporte&#64;gmail.com</a> · <a href="policies.html" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
+  <p class="mt-2.5"><span data-i18n="f2">Soporte:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="importapro.soporte" data-d="gmail.com"  target="_self">importapro.soporte&#64;gmail.com</a> · <a href="policies.html" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
 </footer>
 
 <script>
@@ -142,7 +141,7 @@ const I18N = {
     s3:'<strong class="text-navy">Ves tu costo total y precio de venta sugerido</strong> con margen real. Decide si el producto vale la pena antes de pagarle a nadie.',
     faqTitle:'Preguntas frecuentes',
     q1:'¿Es un pago único o suscripción?', a1:'Pago anual único: USD 15 por 12 meses de uso completo, sin cargos automáticos. Pasado el año, renuevas solo si quieres — con descuento para clientes existentes.',
-    q2:'¿Cómo recibo mi acceso?', a2:'Al confirmarse tu pago, recibes tu código de acceso <strong>automáticamente</strong> en el correo que usaste al pagar, normalmente en menos de 15 minutos. Si pasan más de 30 minutos, escríbenos a <a class="mp" data-u="importapro.soporte" data-d="gmail.com"  target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">importapro.soporte&#64;gmail.com</a> con tu comprobante.',
+    q2:'¿Cómo recibo mi acceso?', a2:'Al confirmarse tu pago, recibes tu código de acceso <strong>automáticamente</strong> en el correo que usaste al pagar, normalmente en menos de 15 minutos. Si pasan más de 30 minutos, escríbenos a <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="importapro.soporte" data-d="gmail.com"  target="_self">importapro.soporte&#64;gmail.com</a> con tu comprobante.',
     q3:'¿Incluye aranceles e impuestos de mi país?', a3:'El cálculo base cubre producto, envío y comisiones. Verifica siempre los aranceles aplicables en tu país antes de cerrar una operación.',
     q4:'¿Puedo usarlo en el teléfono?', a4:'Sí, es una web app: funciona en cualquier navegador, móvil o escritorio, sin instalar nada.',
     ctaTitle:'Deja de adivinar tus márgenes', ctaSub:'Una cotización mal calculada cuesta más que esta herramienta.',
@@ -165,7 +164,7 @@ const I18N = {
     s3:'<strong class="text-navy">See your total cost and suggested sale price</strong> with real margin. Decide if the product is worth it before paying anyone.',
     faqTitle:'Frequently asked questions',
     q1:'Is it a one-time payment or a subscription?', a1:'A single annual payment: USD 15 for 12 full months, with no automatic charges. After the year, renew only if you want — existing customers get a discount.',
-    q2:'How do I receive my access?', a2:'Once your payment is confirmed, you receive your access code <strong>automatically</strong> at the email used for payment, usually in under 15 minutes. If more than 30 minutes pass, email <a class="mp" data-u="importapro.soporte" data-d="gmail.com"  target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">importapro.soporte&#64;gmail.com</a> with your receipt.',
+    q2:'How do I receive my access?', a2:'Once your payment is confirmed, you receive your access code <strong>automatically</strong> at the email used for payment, usually in under 15 minutes. If more than 30 minutes pass, email <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="importapro.soporte" data-d="gmail.com"  target="_self">importapro.soporte&#64;gmail.com</a> with your receipt.',
     q3:'Does it include my country\'s duties and taxes?', a3:'The base calculation covers product, shipping and fees. Always verify the applicable duties in your country before closing a deal.',
     q4:'Can I use it on my phone?', a4:'Yes, it is a web app: it works in any browser, mobile or desktop, with nothing to install.',
     ctaTitle:'Stop guessing your margins', ctaSub:'One bad quote costs more than this tool.',
