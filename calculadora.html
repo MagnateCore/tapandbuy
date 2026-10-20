@@ -64,7 +64,6 @@ tailwind.config = {
 
 
   <!-- ========== PANTALLA DE ACCESO ========== -->
-  <!-- CONFIG: los códigos válidos se definen en MASTER_CODES, en el script de abajo -->
   <div id="gate" class="fixed inset-0 z-50 flex items-center justify-center px-4" style="background-color:#0f2e2a;">
     <div id="gateCard" class="card w-full max-w-sm rounded-3xl shadow-2xl p-8 text-center fade-in" style="background:rgba(18,58,52,.85); backdrop-filter: blur(8px);">
       <div class="w-14 h-14 mx-auto rounded-2xl flex items-center justify-center mb-4" style="background: rgba(79,209,197,.1); border: 1px solid rgba(79,209,197,.3);">
@@ -606,12 +605,20 @@ tailwind.config = {
   });
 
   // ===== PANTALLA DE ACCESO =====
-  const MASTER_CODES = ["IPR-2026"]; // CONFIG: códigos manuales de respaldo (soporte)
   const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln/sync"; // VERIFICADOR-LICENCIAS — /sync hace que el webhook ESPERE el veredicto y lo entregue
   const PRODUCTO = "importapro";
 
   function gateUnlock() { $('gate').style.display = 'none'; }
-  try { if (localStorage.getItem('importapro-unlocked') === '1') gateUnlock(); } catch (e) {}
+  // Re-verificación al abrir: licencia con expiración anual (token v2)
+(function initGate(){
+  let lic = null;
+  try { lic = localStorage.getItem('importapro-license'); } catch (e) {}
+  if (!lic) return;
+  verifyWithMotor(lic).then(function(data){
+    if (data && (data.valido === true || data.valido === 'true')) { gateUnlock(); }
+    else { try { localStorage.removeItem('importapro-unlocked'); } catch (e) {} }
+  }).catch(function(){ /* sin red: se queda en la puerta */ });
+})();
 
   function gateShowError(msg) {
     $('gateError').textContent = msg;
@@ -631,11 +638,6 @@ tailwind.config = {
   async function tryGate() {
     $('gateError').classList.add('hidden');
     const raw = $('gateCode').value.trim();
-    const upper = raw.toUpperCase();
-    if (MASTER_CODES.indexOf(upper) !== -1) {
-      try { localStorage.setItem('importapro-unlocked', '1'); } catch (e) {}
-      gateUnlock(); return;
-    }
     if (raw.indexOf('.') !== -1) { // formato token del motor: ORDEN.FIRMA
       const btn = $('gateBtn');
       btn.disabled = true;
