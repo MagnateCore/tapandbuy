@@ -123,6 +123,18 @@ tailwind.config = {
       </p>
     </div>
 
+    <details class="rounded-3xl border border-white/10 bg-white/[0.03] p-5 mb-6">
+      <summary id="howTitle" class="cursor-pointer text-sm font-semibold text-brand select-none">¿Cómo funciona?</summary>
+      <ol class="mt-4 space-y-2.5 text-sm text-white/55 list-decimal list-inside">
+        <li id="how1"></li>
+        <li id="how2"></li>
+        <li id="how3"></li>
+        <li id="how4"></li>
+        <li id="how5"></li>
+        <li id="how6"></li>
+      </ol>
+    </details>
+
     <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
       <!-- ========== FORMULARIO ========== -->
@@ -336,7 +348,7 @@ tailwind.config = {
     <footer class="mt-12 pt-6 text-center text-xs text-white/35 space-y-2 border-t border-white/10">
       <p id="tFooterDesc">ImportaPro · Herramienta de estimación logística · Los valores son referenciales y no sustituyen asesoría aduanera.</p>
       <p>
-        <a href="policies.html" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
+        <a href="disclaimer-importapro.html" id="tFooterLink" class="text-brand hover:underline font-semibold transition">Términos y Privacidad</a>
         <span class="mx-1">·</span>
         <!-- CONFIG: correo de soporte oficial de ImportaPro -->
         <a class="mp" data-u="importapro.soporte" data-d="gmail.com"  class="text-brand hover:underline font-semibold transition">Soporte</a>
@@ -363,6 +375,13 @@ tailwind.config = {
       lAncho: "Ancho <span class='text-white/35 font-normal'>(cm · opcional)</span>",
       lAlto: "Alto <span class='text-white/35 font-normal'>(cm · opcional)</span>",
     volHint: "⚖️ Peso volumétrico aplica: {v} kg (L×A×H ÷ 6000, norma aérea)",
+    howTitle: "¿Cómo funciona?",
+    how1: "Ingresa el precio del producto en yuanes (el de la cotización de tu proveedor).",
+    how2: "Pon la tasa de cambio: cuántos yuanes vale 1 dólar hoy.",
+    how3: "Ingresa el peso y, si tienes la caja, sus dimensiones — la app calcula el peso volumétrico por ti.",
+    how4: "Añade la tarifa de envío por kilo de tu courier y el % de comisión de tu agente o pasarela.",
+    how5: "Ajusta tu margen de ganancia con el deslizador.",
+    how6: "Lee tu resultado: costo total puesto en destino, precio de venta sugerido, ganancia neta y margen real.",
       lblTarifa: "Tarifa de envío intl. <span class='text-white/35 font-normal'>(USD/Kg)</span>",
       lblComision: "Comisión agente / pasarela <span class='text-white/35 font-normal'>(%)</span>",
       lblMargen: "Margen de ganancia (Markup) <span class='text-white/35 font-normal'>(%)</span>",
@@ -402,6 +421,13 @@ tailwind.config = {
       lAncho: "Width <span class='text-white/35 font-normal'>(cm · optional)</span>",
       lAlto: "Height <span class='text-white/35 font-normal'>(cm · optional)</span>",
       volHint: "⚖️ Volumetric weight applies: {v} kg (L×W×H ÷ 6000, air standard)",
+      howTitle: "How it works",
+      how1: "Enter the product price in yuan (from your supplier's quote).",
+      how2: "Enter the exchange rate: how many yuan per 1 USD today.",
+      how3: "Enter the weight and, if you have the box, its dimensions — the app calculates volumetric weight for you.",
+      how4: "Add your courier's shipping rate per kg and your agent or gateway fee %.",
+      how5: "Adjust your profit margin with the slider.",
+      how6: "Read your result: total cost delivered, suggested sale price, net profit and real margin.",
       lblTarifa: "Intl. Shipping Rate <span class='text-white/35 font-normal'>(USD/Kg)</span>",
       lblComision: "Agent / Gateway Fee <span class='text-white/35 font-normal'>(%)</span>",
       lblMargen: "Profit Margin (Markup) <span class='text-white/35 font-normal'>(%)</span>",
@@ -471,6 +497,8 @@ tailwind.config = {
     $('lblTasa').innerHTML = t.lblTasa;
     $('lblPeso').textContent = t.lblPeso;
     $('lLargo').innerHTML = t.lLargo;
+    $('howTitle').textContent = t.howTitle;
+    ['how1','how2','how3','how4','how5','how6'].forEach(function(k){ $(k).textContent = t[k]; });
     $('lAncho').innerHTML = t.lAncho;
     $('lAlto').innerHTML = t.lAlto;
     $('lblTarifa').innerHTML = t.lblTarifa;
