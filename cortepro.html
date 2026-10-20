@@ -423,7 +423,6 @@ function toggleTheme(){
 }
 
 /* ================= Gate ================= */
-const MASTER_CODES = ["CORTE-2026"]; // códigos manuales de respaldo (soporte)
 const MOTOR_URL = "https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln/sync"; // VERIFICADOR-LICENCIAS — /sync hace que el webhook ESPERE el veredicto y lo entregue
 const PRODUCTO = "cortepro";
 
@@ -452,11 +451,6 @@ window.tryGate = async function(){
   const err = document.getElementById('gateError');
   err.classList.add('hidden');
   const raw = document.getElementById('gateCode').value.trim();
-  const upper = raw.toUpperCase();
-  if (MASTER_CODES.indexOf(upper) !== -1) {
-    try { localStorage.setItem('cortepro-unlocked','1'); } catch(e){}
-    gateUnlock(); return;
-  }
   if (raw.indexOf('.') !== -1) { // formato token del motor: ORDEN.FIRMA
     const btn = document.getElementById('gateBtn');
     btn.disabled = true;
@@ -515,7 +509,16 @@ applyTheme();
 document.getElementById('selUnidad').value = UNIT;
 applyLang();
 
-try { if (localStorage.getItem('cortepro-unlocked') === '1') gateUnlock(); } catch(e){}
+// Re-verificación al abrir: licencia con expiración anual (token v2)
+(function initGate(){
+  let lic = null;
+  try { lic = localStorage.getItem('cortepro-license'); } catch(e){}
+  if (!lic) return;
+  verifyWithMotor(lic).then(function(data){
+    if (data && (data.valido === true || data.valido === 'true')) { gateUnlock(); }
+    else { try { localStorage.removeItem('cortepro-unlocked'); } catch(e){} }
+  }).catch(function(){ /* sin red: se queda en la puerta */ });
+})();
 calcular();
 
 })();
