@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobradorPro — Aviso Legal y Privacidad</title>
+<style>
+  body { margin:0; background:#f6f7f6; font-family:'Inter',system-ui,sans-serif; color:#34495E; }
+  .wrap { max-width:42rem; margin:0 auto; padding:2.5rem 1.25rem 3rem; }
+  .brand { display:flex; align-items:center; gap:.6rem; margin-bottom:1.5rem; }
+  .brand .logo { width:2rem; height:2rem; border-radius:.5rem; background:linear-gradient(135deg,#3AAFA9,#2c8a85); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; font-size:.85rem; }
+  .brand span { font-weight:800; letter-spacing:-.02em; font-size:1.1rem; }
+  .langbtn { float:right; margin-top:.2rem; padding:.45rem .9rem; border-radius:999px; border:1px solid #cbd5e1; background:#fff; color:#2c8a85; font-weight:700; font-size:.8rem; cursor:pointer; }
+  h1 { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; border-bottom:2px solid #3AAFA9; padding-bottom:.75rem; margin:0 0 1.75rem; clear:both; }
+  ol.items { list-style:none; counter-reset:item; padding:0; margin:0; display:flex; flex-direction:column; gap:1.4rem; }
+  ol.items li { counter-increment:item; display:flex; gap:1rem; background:#fff; border:1px solid #e2e8f0; border-radius:.9rem; padding:1rem 1.1rem; }
+  ol.items li.privacy { background:#f0faf9; border-color:#3AAFA955; }
+  .num { flex-shrink:0; width:2rem; height:2rem; border-radius:.5rem; background:#34495E; color:#3AAFA9; font-weight:800; font-size:.85rem; display:flex; align-items:center; justify-content:center; }
+  .privacy .num { background:#3AAFA9; color:#fff; }
+  h3 { font-weight:700; font-size:.95rem; margin:0 0 .35rem; }
+  p { margin:0; font-size:.85rem; line-height:1.65; color:#64748b; }
+  .contact { margin-top:2rem; font-size:.85rem; color:#475569; background:#fff; border:1px dashed #cbd5e1; border-radius:.9rem; padding:1rem 1.1rem; }
+  .contact a { color:#2c8a85; font-weight:600; }
+  .back { display:inline-block; margin-top:1.5rem; font-size:.85rem; color:#2c8a85; font-weight:600; text-decoration:none; }
+  .foot { margin-top:2rem; font-size:.75rem; color:#94a3b8; text-align:center; }
+</style>
+<base target="_blank">
+</head>
+<body>
+<div class="wrap">
+  <button class="langbtn" id="langBtn" onclick="toggleLang()">EN</button>
+  <div class="brand"><div class="logo">&#9889;</div><span>Cobrador<span style="color:#3AAFA9">Pro</span></span></div>
 
+  <!-- ══════ ESPAÑOL ══════ -->
+  <div id="lang-es">
+  <h1>Aviso Legal, Privacidad y Descargo de Responsabilidad</h1>
+  <ol class="items">
+    <li><span class="num">01</span><div><h3>Naturaleza de la herramienta</h3><p>CobradorPro es una herramienta personal de organización de deudas y recordatorios de cobro. No es una pasarela de pagos ni un servicio de cobranza.</p></div></li>
+    <li><span class="num">02</span><div><h3>Sin comisiones ni intermediación</h3><p>CobradorPro <strong>nunca cobra comisión por tus cobros</strong>, no procesa ni transfiere dinero, y no participa en ninguna negociación entre tú y tus deudores.</p></div></li>
+    <li><span class="num">03</span><div><h3>Comunicaciones del usuario</h3><p>Los mensajes de recordatorio son plantillas cordiales generadas como apoyo. El usuario es el único responsable del contenido final y de su envío a través de sus propias cuentas de mensajería (WhatsApp, Telegram, SMS, etc.).</p></div></li>
+    <li><span class="num">04</span><div><h3>No sustituye asesoría legal</h3><p>Para cobros con intereses, reclamaciones formales o montos significativos, consulta la normativa aplicable en tu país o a un profesional. CobradorPro no emite documentos legales.</p></div></li>
+    <li><span class="num">05</span><div><h3>Limitación de responsabilidad</h3><p>CobradorPro no se hace responsable por pérdidas, acuerdos incumplidos o decisiones derivadas del uso de esta herramienta ni de las comunicaciones enviadas por el usuario.</p></div></li>
+    <li class="privacy"><span class="num">06</span><div><h3>Protección de datos personales</h3><p>CobradorPro <strong>no recopila, almacena ni procesa tus deudas ni contactos</strong> en servidores propios. La aplicación funciona íntegramente en el navegador del usuario.</p></div></li>
+    <li class="privacy"><span class="num">07</span><div><h3>No comercialización de datos</h3><p><strong>No vendemos, alquilamos ni compartimos</strong> información de ningún tipo con terceros con fines publicitarios o comerciales. No existen perfiles de usuario ni bases de datos de clientes en esta aplicación.</p></div></li>
+    <li class="privacy"><span class="num">08</span><div><h3>Almacenamiento local</h3><p>Únicamente se guardan tus deudas, preferencias técnicas (idioma y estado de acceso) en el propio dispositivo del usuario, mediante el almacenamiento del navegador. Estos datos no salen del dispositivo, pueden borrarse en cualquier momento desde la configuración del navegador y no permiten identificar a ninguna persona.</p></div></li>
+  </ol>
+  <div class="contact"><strong>Privacidad y contacto:</strong> para cualquier consulta sobre estos términos o el tratamiento de datos, escríbenos a <a class="mp" data-u="promptmagnate.app+cobradorpro" data-d="gmail.com">promptmagnate.app+cobradorpro<!--@-->gmail.com</a>.</div>
+  <a class="back" href="cobradorpro.html">&larr; Volver a CobradorPro</a>
+  <p class="foot">© 2026 CobradorPro · Todos los derechos reservados</p>
+  </div>
+
+  <!-- ══════ ENGLISH ══════ -->
+  <div id="lang-en" style="display:none">
+  <h1>Legal Notice, Privacy and Disclaimer</h1>
+  <ol class="items">
+    <li><span class="num">01</span><div><h3>Nature of the tool</h3><p>CobradorPro is a personal debt organization and collection reminder tool. It is not a payment gateway nor a collection agency.</p></div></li>
+    <li><span class="num">02</span><div><h3>No commissions or intermediation</h3><p>CobradorPro <strong>never charges a commission on what you collect</strong>, does not process or transfer money, and does not take part in any negotiation between you and your debtors.</p></div></li>
+    <li><span class="num">03</span><div><h3>User communications</h3><p>Reminder messages are friendly templates generated as a support tool. The user is solely responsible for the final content and for sending it through their own messaging accounts (WhatsApp, Telegram, SMS, etc.).</p></div></li>
+    <li><span class="num">04</span><div><h3>Does not replace legal advice</h3><p>For collections with interest, formal claims or significant amounts, consult the regulations applicable in your country or a professional. CobradorPro does not issue legal documents.</p></div></li>
+    <li><span class="num">05</span><div><h3>Limitation of liability</h3><p>CobradorPro is not liable for losses, unfulfilled agreements or decisions derived from the use of this tool or from messages sent by the user.</p></div></li>
+    <li class="privacy"><span class="num">06</span><div><h3>Personal data protection</h3><p>CobradorPro <strong>does not collect, store or process your debts or contacts</strong> on any server. The application runs entirely in the user's browser.</p></div></li>
+    <li class="privacy"><span class="num">07</span><div><h3>No data commercialization</h3><p><strong>We do not sell, rent or share</strong> any information with third parties for advertising or commercial purposes. There are no user profiles or customer databases in this application.</p></div></li>
+    <li class="privacy"><span class="num">08</span><div><h3>Local storage only</h3><p>Only your debts and technical preferences (language and access status) are saved on the user's own device via the browser's storage. These data never leave the device, can be erased at any time from the browser settings, and cannot identify any person.</p></div></li>
+  </ol>
+  <div class="contact"><strong>Privacy and contact:</strong> for any question about these terms or data handling, email us at <a class="mp" data-u="promptmagnate.app+cobradorpro" data-d="gmail.com">promptmagnate.app+cobradorpro<!--@-->gmail.com</a>.</div>
+  <a class="back" href="cobradorpro.html">&larr; Back to CobradorPro</a>
+  <p class="foot">© 2026 CobradorPro · All rights reserved</p>
+  </div>
+</div>
+<script>
+document.querySelectorAll("a.mp").forEach(function(a){a.href="mailto:"+a.dataset.u+"@"+a.dataset.d;if(a.textContent.indexOf("@")===-1)a.textContent=a.dataset.u+"@"+a.dataset.d;});
+function toggleLang(){
+  var es=document.getElementById('lang-es'), en=document.getElementById('lang-en'), b=document.getElementById('langBtn');
+  if(es.style.display==='none'){es.style.display='block';en.style.display='none';b.textContent='EN';document.title='CobradorPro — Aviso Legal y Privacidad';}
+  else{es.style.display='none';en.style.display='block';b.textContent='ES';document.title='CobradorPro — Legal Notice and Privacy';}
+}
+</script>
+</body>
+</html>
