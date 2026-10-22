@@ -48,7 +48,7 @@ var h=decodeURIComponent(escape(atob(d.html)));
 document.getElementById('f').srcdoc=h;
 document.getElementById('f').style.display='block';
 document.getElementById('g').style.display='none';
-}else{er(d&&(d.razon==='licencia_vencida'||d.razon==='expirado')?'Tu licencia venció. Renueva desde tu correo de compra para seguir usando CobradorPro.':'Token no válido. Revisa tu correo de compra.');}
+}else{var rz=d&&d.razon?String(d.razon):'';er(rz==='licencia_vencida'||rz==='expirado'?'Tu licencia venció. Renueva desde tu correo de compra para seguir usando CobradorPro.':(rz?'No válido ('+rz+'). Revisa tu correo de compra.':'Token no válido. Revisa tu correo de compra.'));}
 }catch(x){er('No se pudo contactar el servidor de licencias. Revisa tu conexión a internet.');}
 document.getElementById('b').textContent='Activar licencia';}
 document.getElementById('b').addEventListener('click',go);
