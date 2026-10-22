@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobradorPro — Gestor de Deudas y Recordatorios de Cobro</title>
+<meta name="description" content="Organiza tus deudas, recuerda a quién cobrarle hoy y copia el mensaje amable ya redactado. USD 15 cada 3 meses o USD 45/año. Acceso inmediato.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      brand: { DEFAULT:'#3AAFA9', dark:'#2c8a85', light:'#5ec9c4' },
+      miel:  '#E8B04B',
+      navy:  { DEFAULT:'#34495E', dark:'#24374a', light:'#4e6d8d' }
+    },
+    fontFamily: {
+      sans: ['Inter','system-ui','sans-serif'],
+      display: ['"Space Grotesk"','Inter','system-ui','sans-serif']
+    }
+  }}
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .btn-buy { box-shadow:0 5px 0 #0b8a58, 0 8px 18px rgba(14,168,108,.35); transition:transform .08s, box-shadow .08s; }
+  .btn-buy:active { transform:translateY(5px); box-shadow:0 0 0 #0b8a58; }
+  .kicker { letter-spacing:.25em; }
+</style>
+<!-- Un solo <base>: todos los enlaces externos (NowPayments, mailto) se abren en pestaña nueva;
+     los internos usan target="_self" explícito. -->
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="bg-[#f6f7f6] text-slate-800">
+
+<header class="max-w-5xl mx-auto px-5 pt-7 flex items-center justify-between gap-3">
+  <div class="flex items-center gap-2.5">
+    <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    </div>
+    <span class="font-display font-bold text-lg tracking-tight text-navy">Cobrador<span class="text-brand">Pro</span></span>
+  </div>
+  <div class="flex items-center gap-2">
+    <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language"
+      class="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
+    <a href="#comprar" target="_self" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navBuy">Comprar ahora</a>
+  </div>
+</header>
+
+<section class="max-w-3xl mx-auto px-5 pt-16 pb-10 text-center">
+  <p class="text-[11px] font-bold uppercase kicker text-brand mb-4" data-i18n="kicker">DISPONIBLE AHORA · ACCESO INMEDIATO</p>
+  <h1 class="font-display text-4xl md:text-6xl font-bold leading-[1.05] tracking-tight text-navy" data-i18n="heroTitle">
+    ¿Tienes clientes que te deben<br class="hidden md:block"> y te da pena cobrarles?
+  </h1>
+  <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto leading-relaxed" data-i18n="heroSub">
+    CobradorPro organiza tus deudas, te recuerda <strong>a quién cobrarle hoy</strong> y redacta el mensaje amable por ti. Tú solo lo copias y lo envías desde tu app de mensajería preferida (WhatsApp, Telegram, SMS, etc.). Sin incomodidades.
+  </p>
+  <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
+    <!-- NOWPAYMENTS: trimestral $15 (iid=4312017921) y anual $45 (iid=5508770770). -->
+    <a id="comprar" href="https://nowpayments.io/payment/?iid=4312017921" target="_blank" class="btn-buy rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-base font-bold px-8 py-4" data-i18n="buyMonthly">3 meses — USD 15</a>
+    <a href="https://nowpayments.io/payment/?iid=5508770770" target="_blank" class="rounded-full border-2 border-navy text-navy text-base font-bold px-8 py-4 hover:bg-navy hover:text-white transition" data-i18n="buyAnnual">Anual — USD 45/año</a>
+    <span class="text-sm text-slate-500 w-full sm:w-auto text-center" data-i18n="buyNote">El anual equivale a $3.75/mes · Ahorra $15</span>
+  </div>
+</section>
+
+<!-- AVISO: CERO COMISIONES · DATOS LOCALES -->
+<section class="max-w-3xl mx-auto px-5 pb-6">
+  <div class="rounded-3xl border-2 border-brand bg-teal-50 p-7 md:p-8 shadow-sm">
+    <p class="text-[11px] font-bold uppercase kicker text-brand-dark mb-2">⚡ <span data-i18n="preTitle">Cero comisiones · datos 100% locales</span></p>
+    <p class="text-slate-700 leading-relaxed" data-i18n="preText">
+      Paga ahora y recibe tu token de licencia <strong>automáticamente en tu correo en minutos</strong>. CobradorPro <strong>nunca cobra comisión por tus cobros</strong> ni participa en tus negociaciones. Tus datos se guardan solo en tu dispositivo, y puedes exportarlos a una hoja de cálculo o respaldarlos cuando quieras.
+    </p>
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 py-8 grid md:grid-cols-3 gap-5">
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center mb-4"><span class="text-2xl">📅</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b1t">A quién cobrarle hoy</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b1p">Registras cada deuda con su fecha y CobradorPro te arma la lista diaria de cobros pendientes. Se acabó el “se me olvidó que me debía”.</p>
+  </div>
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-miel/10 flex items-center justify-center mb-4"><span class="text-2xl">💬</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b2t">El mensaje ya redactado</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b2p">Para cada deudor, un recordatorio cordial y editable. Listo para copiar y enviar a través de cualquier servicio de mensajería instantánea.</p>
+  </div>
+  <div class="rounded-3xl bg-white p-7 border border-slate-200/70 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition">
+    <div class="w-11 h-11 rounded-2xl bg-navy/5 flex items-center justify-center mb-4"><span class="text-2xl">📊</span></div>
+    <h3 class="font-display font-bold text-lg mb-1.5 text-navy" data-i18n="b3t">Tus números claros</h3>
+    <p class="text-slate-600 text-sm leading-relaxed" data-i18n="b3p">Total adeudado, cartera vencida y lo cobrado esta semana y este mes. Controla pagos parciales y saldos al día.</p>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 py-12">
+  <h2 class="font-display text-2xl md:text-3xl font-bold text-center mb-9 text-navy" data-i18n="howTitle">Cómo funciona</h2>
+  <ol class="space-y-6">
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">1</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s1"><strong class="text-navy">Registras a quien te debe</strong> — nombre, monto y fecha. Opcional: contacto y notas.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">2</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s2"><strong class="text-navy">Configuras cuándo recordarle</strong> y el estado de cada deuda: pendiente, recordado, pago parcial o pagado.</div>
+    </li>
+    <li class="flex gap-4 items-start">
+      <span class="flex-shrink-0 w-10 h-10 rounded-full font-display font-bold text-white flex items-center justify-center bg-gradient-to-br from-brand to-brand-dark shadow-md shadow-brand/25">3</span>
+      <div class="pt-1.5 text-slate-600" data-i18n="s3"><strong class="text-navy">Cada día sabes a quién cobrarle</strong> y copias el mensaje amable ya redactado. Tú lo envías desde tu mensajería preferida.</div>
+    </li>
+  </ol>
+</section>
+<section class="max-w-3xl mx-auto px-5 pb-12">
+  <h2 class="font-display text-2xl md:text-3xl font-bold text-center mb-7 text-navy" data-i18n="faqTitle">Preguntas frecuentes</h2>
+  <div class="space-y-3">
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q1">¿Puedo usarlo en más de un dispositivo?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a1">Tu token de licencia es personal. Cada dispositivo guarda sus propios datos (en el navegador de ese equipo): para llevar tus deudas a otro dispositivo, exporta tu respaldo 💾 y restáuralo con ↩️ en el equipo nuevo.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q2">¿Los mensajes se envían automáticamente?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a2">No, y preferimos decírtelo claro: en esta primera versión CobradorPro <strong>organiza tus deudas, te alerta a quién cobrarle cada día y redacta el mensaje amable listo para copiar</strong>. Tú lo envías desde tu mensajería preferida. La automatización total está en desarrollo para una próxima versión.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q3">¿Cómo recibo mi acceso?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a3">Al confirmarse tu pago recibes tu token de licencia <strong>automáticamente</strong> en el correo que usaste, normalmente en menos de 5 minutos. Lo pegas en la app y empiezas a usar CobradorPro. Si pasan más de 30 minutos sin recibirlo, escríbenos a <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+cobradorpro" data-d="gmail.com" target="_self">promptmagnate.app+cobradorpro&#64;gmail.com</a> con tu comprobante.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q4">¿Dónde se guardan mis datos?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a4">En tu propio dispositivo (almacenamiento local del navegador). No hay base de datos externa: tus deudas y contactos no salen de tu equipo.</p></details>
+    <details class="rounded-2xl bg-white border border-slate-200/70 p-5 open:shadow-md transition"><summary class="font-semibold cursor-pointer text-navy" data-i18n="q5">¿Puedo cancelar cuando quiera?</summary><p class="text-sm text-slate-600 mt-2.5 leading-relaxed" data-i18n="a5">Sí. El plan trimestral son USD 15 cada 3 meses, sin permanencia: cancela cuando quieras y tu acceso vence al final del período pagado. El plan anual son USD 45 pagados de una vez (te ahorras $15, un trimestre completo). En ambos casos, tus datos siguen guardados en tu dispositivo.</p></details>
+  </div>
+</section>
+
+<section class="max-w-3xl mx-auto px-5 pb-16 text-center">
+  <div class="rounded-[2rem] p-10 md:p-12 text-white relative overflow-hidden" style="background:linear-gradient(140deg,#34495E 0%,#24374a 100%)">
+    <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-brand/20 blur-3xl pointer-events-none"></div>
+    <h2 class="font-display text-2xl md:text-3xl font-bold relative" data-i18n="ctaTitle">Recupera lo que te deben</h2>
+    <p class="mt-2.5 text-slate-300 relative" data-i18n="ctaSub">Una sola deuda recuperada paga esta herramienta muchas veces.</p>
+    <div class="relative mt-7 flex flex-col sm:flex-row items-center justify-center gap-3">
+      <a href="https://nowpayments.io/payment/?iid=4312017921" target="_blank" class="btn-buy inline-block rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-base font-bold px-8 py-4" data-i18n="buyMonthly">3 meses — USD 15</a>
+      <a href="https://nowpayments.io/payment/?iid=5508770770" target="_blank" class="inline-block rounded-full border-2 border-white/70 text-white text-base font-bold px-8 py-4 hover:bg-white hover:text-navy transition" data-i18n="buyAnnual">Anual — USD 45/año</a>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
+  <p data-i18n="f1">© 2026 CobradorPro · Herramientas para cobrar sin incomodidades · Todos los derechos reservados</p>
+  <p class="mt-2.5"><span data-i18n="f2">Soporte:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+cobradorpro" data-d="gmail.com" target="_self">promptmagnate.app+cobradorpro&#64;gmail.com</a> · <a href="disclaimer-cobradorpro.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a> · <a href="cobradorpro.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f5">Acceso a la app</a></p>
+  <p class="mt-3 text-[11px] text-slate-400 max-w-xl mx-auto leading-relaxed" data-i18n="f4">En caso de inconformidad técnica comprobada dentro de los primeros 7 días posteriores a la suscripción, se procederá a la devolución del pago.</p>
+</footer>
+
+<script>
+(function(){
+'use strict';
+const I18N = {
+  es: {
+  "kicker": "DISPONIBLE AHORA · ACCESO INMEDIATO",
+  "navBuy": "Comprar ahora",
+  "heroTitle": "¿Tienes clientes que te deben<br class=\"hidden md:block\"> y te da pena cobrarles?",
+  "heroSub": "CobradorPro organiza tus deudas, te recuerda <strong>a quién cobrarle hoy</strong> y redacta el mensaje amable por ti. Tú solo lo copias y lo envías desde tu app de mensajería preferida (WhatsApp, Telegram, SMS, etc.). Sin incomodidades.",
+  "buyMonthly": "3 meses — USD 15",
+  "buyAnnual": "Anual — USD 45/año",
+  "buyNote": "El anual equivale a $3.75/mes · Ahorra $15",
+  "preTitle": "Cero comisiones · datos 100% locales",
+  "preText": "Paga ahora y recibe tu token de licencia <strong>automáticamente en tu correo en minutos</strong>. CobradorPro <strong>nunca cobra comisión por tus cobros</strong> ni participa en tus negociaciones. Tus datos se guardan solo en tu dispositivo, y puedes exportarlos a una hoja de cálculo o respaldarlos cuando quieras.",
+  "b1t": "A quién cobrarle hoy",
+  "b1p": "Registras cada deuda con su fecha y CobradorPro te arma la lista diaria de cobros pendientes. Se acabó el “se me olvidó que me debía”.",
+  "b2t": "El mensaje ya redactado",
+  "b2p": "Para cada deudor, un recordatorio cordial y editable. Listo para copiar y enviar a través de cualquier servicio de mensajería instantánea.",
+  "b3t": "Tus números claros",
+  "b3p": "Total adeudado, cartera vencida y lo cobrado esta semana y este mes. Controla pagos parciales y saldos al día.",
+  "howTitle": "Cómo funciona",
+  "s1": "<strong class=\"text-navy\">Registras a quien te debe</strong> — nombre, monto y fecha. Opcional: contacto y notas.",
+  "s2": "<strong class=\"text-navy\">Configuras cuándo recordarle</strong> y el estado de cada deuda: pendiente, recordado, pago parcial o pagado.",
+  "s3": "<strong class=\"text-navy\">Cada día sabes a quién cobrarle</strong> y copias el mensaje amable ya redactado. Tú lo envías desde tu mensajería preferida.",
+  "faqTitle": "Preguntas frecuentes",
+  "q1": "¿Puedo usarlo en más de un dispositivo?",
+  "a1": "Tu token de licencia es personal. Cada dispositivo guarda sus propios datos (en el navegador de ese equipo): para llevar tus deudas a otro dispositivo, exporta tu respaldo 💾 y restáuralo con ↩️ en el equipo nuevo.",
+  "q2": "¿Los mensajes se envían automáticamente?",
+  "a2": "No, y preferimos decírtelo claro: en esta primera versión CobradorPro <strong>organiza tus deudas, te alerta a quién cobrarle cada día y redacta el mensaje amable listo para copiar</strong>. Tú lo envías desde tu mensajería preferida. La automatización total está en desarrollo para una próxima versión.",
+  "q3": "¿Cómo recibo mi acceso?",
+  "a3": "Al confirmarse tu pago recibes tu token de licencia <strong>automáticamente</strong> en el correo que usaste, normalmente en menos de 5 minutos. Lo pegas en la app y empiezas a usar CobradorPro. Si pasan más de 30 minutos sin recibirlo, escríbenos a <a class=\"mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\" data-u=\"promptmagnate.app+cobradorpro\" data-d=\"gmail.com\" target=\"_self\">promptmagnate.app+cobradorpro&#64;gmail.com</a> con tu comprobante.",
+  "q4": "¿Dónde se guardan mis datos?",
+  "a4": "En tu propio dispositivo (almacenamiento local del navegador). No hay base de datos externa: tus deudas y contactos no salen de tu equipo.",
+  "q5": "¿Puedo cancelar cuando quiera?",
+  "a5": "Sí. El plan trimestral son USD 15 cada 3 meses, sin permanencia: cancela cuando quieras y tu acceso vence al final del período pagado. El plan anual son USD 45 pagados de una vez (te ahorras $15, un trimestre completo). En ambos casos, tus datos siguen guardados en tu dispositivo.",
+  "ctaTitle": "Recupera lo que te deben",
+  "ctaSub": "Una sola deuda recuperada paga esta herramienta muchas veces.",
+  "f1": "© 2026 CobradorPro · Herramientas para cobrar sin incomodidades · Todos los derechos reservados",
+  "f2": "Soporte:",
+  "f3": "Términos",
+  "f5": "Acceso a la app",
+  "f4": "En caso de inconformidad técnica comprobada dentro de los primeros 7 días posteriores a la suscripción, se procederá a la devolución del pago."
+},
+  en: {
+  "kicker": "AVAILABLE NOW · INSTANT ACCESS",
+  "navBuy": "Buy now",
+  "heroTitle": "Got clients who owe you money<br class=\"hidden md:block\"> but chasing them feels awkward?",
+  "heroSub": "CobradorPro organizes your debts, reminds you <strong>who to collect from today</strong> and writes the polite message for you. You just copy and send it from your favorite messaging app (WhatsApp, Telegram, SMS, etc.). No awkwardness.",
+  "buyMonthly": "3 months — USD 15",
+  "buyAnnual": "Yearly — USD 45/yr",
+  "buyNote": "Yearly equals $3.75/mo · Save $15",
+  "preTitle": "Zero commissions · 100% local data",
+  "preText": "Pay now and receive your license token <strong>automatically in your email within minutes</strong>. CobradorPro <strong>never charges a commission on what you collect</strong> and never mediates your deals. Your data stays only on your device, and you can export it to a spreadsheet or back it up anytime.",
+  "b1t": "Who to collect from today",
+  "b1p": "Log every debt with its date and CobradorPro builds your daily collection list. No more \"I forgot they owed me\".",
+  "b2t": "The message, already written",
+  "b2p": "For each debtor, a polite, editable reminder. Ready to copy and send through any instant messaging service.",
+  "b3t": "Your numbers at a glance",
+  "b3p": "Total owed, overdue balance and what you collected this week and this month. Track partial payments and up-to-date balances.",
+  "howTitle": "How it works",
+  "s1": "<strong class=\"text-navy\">Log who owes you</strong> — name, amount and date. Optional: contact and notes.",
+  "s2": "<strong class=\"text-navy\">Set when to remind them</strong> and each debt status: pending, reminded, partial payment or paid.",
+  "s3": "<strong class=\"text-navy\">Every day you know who to collect from</strong> and you copy the polite message, already written. You send it from your favorite messaging app.",
+  "faqTitle": "Frequently asked questions",
+  "q1": "Can I use it on more than one device?",
+  "a1": "Your license token is personal. Each device keeps its own data (in that device's browser): to move your debts to another device, export your backup 💾 and restore it with ↩️ on the new one.",
+  "q2": "Are the messages sent automatically?",
+  "a2": "No, and we would rather be upfront: in this first version CobradorPro <strong>organizes your debts, alerts you who to collect from each day and writes the polite message ready to copy</strong>. You send it from your favorite messaging app. Full automation is in development for a future version.",
+  "q3": "How do I receive my access?",
+  "a3": "Once your payment is confirmed you receive your license token <strong>automatically</strong> at the email you used, usually in under 5 minutes. Paste it in the app and start using CobradorPro. If more than 30 minutes pass without receiving it, write to <a class=\"mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\" data-u=\"promptmagnate.app+cobradorpro\" data-d=\"gmail.com\" target=\"_self\">promptmagnate.app+cobradorpro&#64;gmail.com</a> with your receipt.",
+  "q4": "Where is my data stored?",
+  "a4": "On your own device (your browser's local storage). There is no external database: your debts and contacts never leave your device.",
+  "q5": "Can I cancel anytime?",
+  "a5": "Yes. The quarterly plan is USD 15 every 3 months, no commitment: cancel anytime and your access expires at the end of the paid period. The yearly plan is USD 45 paid once (you save $15, a full quarter). Either way, your data stays on your device.",
+  "ctaTitle": "Collect what you are owed",
+  "ctaSub": "A single recovered debt pays for this tool many times over.",
+  "f1": "© 2026 CobradorPro · Tools for collecting without awkwardness · All rights reserved",
+  "f2": "Support:",
+  "f3": "Terms",
+  "f5": "App access",
+  "f4": "In the event of a proven technical issue reported within the first 7 days after subscription, the payment will be refunded."
+}
+};
+let lang = 'es';
+try { lang = localStorage.getItem('cobradorpro-venta-lang') || 'es'; } catch(e){}
+
+/* Reconstruye el href de los correos ofuscados (data-u/data-d) DESPUÉS de cada
+   cambio de idioma: applyLang() reescribe el innerHTML y los enlaces pierden el
+   href que el script inicial les había puesto. */
+function fixEmails(){
+  document.querySelectorAll("a.mp").forEach(function(a){
+    a.href = "mailto:" + a.dataset.u + "@" + a.dataset.d;
+  });
+}
+
+function applyLang(){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
+  });
+  document.getElementById('langBtn').textContent = lang === 'es' ? '🇪🇸 ES' : '🇬🇧 EN';
+  document.documentElement.lang = lang;
+  fixEmails();
+}
+window.toggleLang = function(){
+  lang = lang === 'es' ? 'en' : 'es';
+  try { localStorage.setItem('cobradorpro-venta-lang', lang); } catch(e){}
+  applyLang();
+};
+applyLang();
+})();
+</script>
+
+</body>
+</html>
