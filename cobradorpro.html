@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobradorPro</title>
+<style>
+*{margin:0;box-sizing:border-box}
+body{font-family:Inter,system-ui,sans-serif;background:#f6f7f6;color:#334155;-webkit-font-smoothing:antialiased}
+#g{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.c{width:100%;max-width:360px;text-align:center}
+.lg{width:64px;height:64px;margin:0 auto 16px;border-radius:16px;background:linear-gradient(135deg,#3AAFA9,#2c8a85);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(58,175,169,.35)}
+h1{font-size:24px;color:#34495E;letter-spacing:-.5px}
+p.s{font-size:14px;color:#64748b;margin:6px 0 24px}
+.bx{background:#fff;border:1px solid #e2e8f0;border-radius:24px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+input{width:100%;height:48px;border:1px solid #e2e8f0;border-radius:12px;padding:0 14px;font-size:13px;text-align:center;margin-bottom:12px;outline:none}
+input:focus{border-color:#3AAFA9;box-shadow:0 0 0 3px rgba(58,175,169,.18)}
+button{width:100%;height:48px;border:0;border-radius:12px;background:#34495E;color:#fff;font-size:15px;font-weight:600;cursor:pointer}
+button:active{background:#24374a}
+.er{display:none;font-size:13px;color:#dc2626;font-weight:500;margin-bottom:10px}
+.hp{font-size:11px;color:#94a3b8;margin-top:16px;line-height:1.5}
+#f{display:none;width:100vw;height:100vh;border:0}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div id="g"><div class="c">
+<div class="lg"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+<h1>Cobrador<span style="color:#3AAFA9">Pro</span></h1>
+<p class="s">Pega tu token de licencia</p>
+<div class="bx">
+<input id="t" type="text" autocomplete="off" placeholder="El token largo que recibiste por correo">
+<p id="e" class="er"></p>
+<button id="b">Activar licencia</button>
+<p class="hp">¿Problemas con tu licencia?<br>promptmagnate.app+cobradorpro&#64;gmail.com</p>
+</div></div></div>
+<iframe id="f" title="CobradorPro"></iframe>
+<script>
+(function(){var W='https://cloud.activepieces.com/api/v1/webhooks/https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln/sync';
+function er(m){var e=document.getElementById('e');e.textContent=m;e.style.display='block';}
+async function go(){var t=document.getElementById('t').value.trim();if(!t)return;
+document.getElementById('b').textContent='Verificando…';
+var dv=localStorage.cpDv;if(!dv){dv=Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.cpDv=dv;}
+try{var r=await fetch(W,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({token:t,dispositivo:dv,producto:'cobradorpro'})});
+var d=await r.json();
+if(d&&d.valido&&d.html){
+var h=decodeURIComponent(escape(atob(d.html)));
+document.getElementById('f').srcdoc=h;
+document.getElementById('f').style.display='block';
+document.getElementById('g').style.display='none';
+}else{er(d&&(d.razon==='licencia_vencida'||d.razon==='expirado')?'Tu licencia venció. Renueva desde tu correo de compra para seguir usando CobradorPro.':'Token no válido. Revisa tu correo de compra.');}
+}catch(x){er('No se pudo contactar el servidor de licencias. Revisa tu conexión a internet.');}
+document.getElementById('b').textContent='Activar licencia';}
+document.getElementById('b').addEventListener('click',go);
+document.getElementById('t').addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+})();
+</script>
+</body>
+</html>
