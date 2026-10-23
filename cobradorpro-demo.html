@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><script>window.__cp={t:"SIM-GUSTAVO-001.2026-11-23.869ea1c39e3c917459a7c612792c6610",x:"2026-11-23"};</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CobradorPro — Tu gestor de cobros diarios</title>
+<meta name="description" content="Registra deudas, sabe a quién cobrarle hoy y envía el recordatorio por tu mensajería preferida en segundos.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      brand: { DEFAULT:'#3AAFA9', dark:'#2c8a85', light:'#5ec9c4' },
+      miel:  '#E8B04B',
+      navy:  { DEFAULT:'#34495E', dark:'#24374a', light:'#4e6d8d' }
+    },
+    fontFamily: {
+      sans: ['Inter','system-ui','sans-serif'],
+      display: ['"Space Grotesk"','Inter','system-ui','sans-serif']
+    }
+  }}
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { font-family:'Inter',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .card { transition:transform .12s ease, box-shadow .12s ease; }
+  .card:hover { transform:translateY(-2px); box-shadow:0 10px 24px rgba(52,73,94,.12); }
+  .chip { transition:all .12s ease; }
+  .chip.on { background:#34495E; color:#fff; border-color:#34495E; }
+  .modal-bg { background:rgba(36,55,74,.55); backdrop-filter:blur(3px); }
+  .fab { box-shadow:0 6px 0 #2c8a85, 0 10px 20px rgba(58,175,169,.35); transition:transform .08s, box-shadow .08s; }
+  .fab:active { transform:translateY(6px); box-shadow:0 0 0 #2c8a85; }
+  .tone.on { background:#3AAFA9; color:#fff; border-color:#3AAFA9; }
+  ::-webkit-scrollbar { width:8px; } ::-webkit-scrollbar-thumb { background:#cbd5e1; border-radius:8px; }
+</style>
+<base target="_blank">
+</head>
+<body class="bg-[#f6f7f6] text-slate-800 min-h-screen">
+<div id="app" class="hidden max-w-3xl mx-auto px-5 pb-32">
+
+  <header class="pt-7 pb-5 flex items-center justify-between gap-3">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+      </div>
+      <div>
+        <span class="font-display font-bold text-lg tracking-tight text-navy leading-none">Cobrador<span class="text-brand">Pro</span></span>
+        <p id="todayLabel" class="text-[11px] text-slate-400 capitalize"></p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="exportCSV()" class="h-9 px-3.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition" data-i18n="btnExport">📊 CSV</button>
+      <button onclick="exportBackup()" title="Backup" class="h-9 px-3 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition" data-i18n="btnBackup">💾</button>
+      <button onclick="document.getElementById('restoreFile').click()" title="Restore" class="h-9 px-3 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition" data-i18n="btnRestore">↩️</button>
+      <input type="file" id="restoreFile" accept="application/json,.json" class="hidden" onchange="restoreBackup(event)">
+      <button id="langBtn" onclick="toggleLang()" class="h-9 px-3.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
+      <button onclick="logout()" class="h-9 px-4 rounded-full border border-slate-200 hover:border-red-300 hover:text-red-600 text-xs font-medium text-slate-500 transition" data-i18n="btnLogout">Salir</button>
+    </div>
+  </header>
+
+  
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+    <button onclick="setFilter('todas')" class="card text-left rounded-2xl bg-white border border-slate-200/80 p-4">
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400" data-i18n="mTotalL">Por cobrar</p>
+      <p id="mTotal" class="font-display font-bold text-xl text-navy mt-1">—</p>
+    </button>
+    <button onclick="setFilter('vencidas')" class="card text-left rounded-2xl bg-white border border-slate-200/80 p-4">
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400" data-i18n="mVencidoL">Vencido</p>
+      <p id="mVencido" class="font-display font-bold text-xl text-red-500 mt-1">—</p>
+    </button>
+    <button onclick="setFilter('parciales')" class="card text-left rounded-2xl bg-white border border-slate-200/80 p-4">
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-400" data-i18n="mCobradoL">Cobrado (mes)</p>
+      <p id="mCobrado" class="font-display font-bold text-xl text-emerald-600 mt-1">—</p>
+    </button>
+    <button onclick="setFilter('hoy')" class="card text-left rounded-2xl bg-navy text-white p-4">
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-slate-300" data-i18n="mHoyL">Cobros de hoy</p>
+      <p id="mHoy" class="font-display font-bold text-xl mt-1">—</p>
+    </button>
+  </section>
+
+  
+  <section class="flex flex-wrap gap-2 mb-5">
+    <button data-f="hoy" onclick="setFilter('hoy')" class="chip on px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="fHoy">🔔 Cobrar hoy</button>
+    <button data-f="vencidas" onclick="setFilter('vencidas')" class="chip px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="fVenc">⚠️ Vencidas</button>
+    <button data-f="todas" onclick="setFilter('todas')" class="chip px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="fTodas">📋 Todas</button>
+    <button data-f="parciales" onclick="setFilter('parciales')" class="chip px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="fParc">💰 Parciales</button>
+    <button data-f="pagadas" onclick="setFilter('pagadas')" class="chip px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="fPag">✅ Pagadas</button>
+  </section>
+
+  <p class="text-[11px] text-slate-400 mb-5" data-i18n="dataNotice">🔒 Tus datos viven solo en este dispositivo. Usa 💾 para respaldar y ↩️ para restaurar en otro equipo.</p>
+
+  
+  <section id="debtList" class="space-y-3"></section>
+  <div id="emptyState" class="hidden text-center py-16">
+    <p class="text-4xl mb-3">🎉</p>
+    <p class="font-display font-bold text-lg text-navy" data-i18n="emptyT">Nada que cobrar aquí</p>
+    <p class="text-sm text-slate-500 mt-1" data-i18n="emptyS">Agrega tu primera deuda con el botón verde.</p>
+  </div>
+</div>
+<button onclick="openDebtForm()" class="fab hidden fixed bottom-6 right-5 md:right-[max(1.25rem,calc(50%-24rem))] w-16 h-16 rounded-full bg-brand text-white text-3xl font-light flex items-center justify-center" id="fabAdd" aria-label="Agregar deuda">+</button>
+<div id="debtModal" class="hidden fixed inset-0 z-40 modal-bg flex items-end md:items-center justify-center p-0 md:p-5">
+  <div class="w-full max-w-lg bg-white rounded-t-3xl md:rounded-3xl p-7 max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-5">
+      <h2 id="debtModalTitle" class="font-display font-bold text-xl text-navy" data-i18n="formNew">Nueva deuda</h2>
+      <button onclick="closeModal('debtModal')" class="w-9 h-9 rounded-full hover:bg-slate-100 text-slate-400 text-xl leading-none">×</button>
+    </div>
+    <form id="debtForm" class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lNombre">Nombre *</label>
+        <input id="fNombre" required class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand" data-i18n-ph="phNombre" placeholder="¿Quién te debe?">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lMonto">Monto *</label>
+          <input id="fMonto" required type="number" min="0.01" step="0.01" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand" placeholder="0.00">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lMoneda">Moneda</label>
+          <select id="fMoneda" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-3 bg-white focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand">
+            <option value="$">$ — Dólar / Peso</option>
+            <option value="€">€ — Euro</option>
+            <option value="Bs">Bs — Bolívares</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lFecha">Fecha de la deuda</label>
+          <input id="fFecha" type="date" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-3 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lProx">Recordarle el</label>
+          <input id="fProx" type="date" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-3 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lTel">Teléfono (WhatsApp)</label>
+        <input id="fTel" type="tel" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand" data-i18n-ph="phTel" placeholder="Con código de país, solo números: 584121234567">
+        <p class="text-[11px] text-slate-400 mt-1" data-i18n="telHint">Sin +, sin espacios. Así el botón de WhatsApp abre el chat directo.</p>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="lNotas">Notas</label>
+        <textarea id="fNotas" rows="2" class="mt-1 w-full rounded-xl border border-slate-200 px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand" data-i18n-ph="phNotas" placeholder="Detalle, acuerdos, referencia..."></textarea>
+      </div>
+      <div class="flex gap-3 pt-2">
+        <button type="submit" class="flex-1 h-12 rounded-xl bg-navy hover:bg-navy-dark text-white font-semibold transition" data-i18n="btnGuardar">Guardar</button>
+        <button type="button" id="btnDeleteDebt" onclick="deleteDebt()" class="hidden h-12 px-5 rounded-xl border border-red-200 text-red-600 font-semibold hover:bg-red-50 transition" data-i18n="btnBorrar">Borrar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div id="abonoModal" class="hidden fixed inset-0 z-40 modal-bg flex items-end md:items-center justify-center p-0 md:p-5">
+  <div class="w-full max-w-md bg-white rounded-t-3xl md:rounded-3xl p-7 max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-1">
+      <h2 class="font-display font-bold text-xl text-navy" data-i18n="abTitle">Registrar abono</h2>
+      <button onclick="closeModal('abonoModal')" class="w-9 h-9 rounded-full hover:bg-slate-100 text-slate-400 text-xl leading-none">×</button>
+    </div>
+    <p id="abonoSaldoInfo" class="text-sm text-slate-500 mb-4"></p>
+    <form id="abonoForm" class="space-y-4">
+      <div>
+        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="abMontoL">Monto del abono *</label>
+        <input id="fAbono" required type="number" min="0.01" step="0.01" class="mt-1 w-full h-11 rounded-xl border border-slate-200 px-4 focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand" placeholder="0.00">
+      </div>
+      <div id="abonoHistory" class="space-y-1.5"></div>
+      <button type="submit" class="w-full h-12 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition" data-i18n="abBtn">Registrar abono</button>
+    </form>
+  </div>
+</div>
+<div id="msgModal" class="hidden fixed inset-0 z-40 modal-bg flex items-end md:items-center justify-center p-0 md:p-5">
+  <div class="w-full max-w-lg bg-white rounded-t-3xl md:rounded-3xl p-7 max-h-[92vh] overflow-y-auto">
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="font-display font-bold text-xl text-navy" data-i18n="msgTitle">Recordatorio</h2>
+      <button onclick="closeModal('msgModal')" class="w-9 h-9 rounded-full hover:bg-slate-100 text-slate-400 text-xl leading-none">×</button>
+    </div>
+    <p id="msgWho" class="text-sm text-slate-500 mb-3"></p>
+    <div class="flex gap-2 mb-4 flex-wrap">
+      <button data-tone="amable" onclick="setTone('amable')" class="tone on px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="toneAmable">😊 Amable</button>
+      <button data-tone="formal" onclick="setTone('formal')" class="tone px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="toneFormal">🎩 Formal</button>
+      <button data-tone="vencida" onclick="setTone('vencida')" class="tone px-4 h-9 rounded-full border border-slate-200 bg-white text-sm font-medium" data-i18n="toneVencida">⚠️ Vencida</button>
+    </div>
+    <textarea id="msgText" rows="6" class="w-full rounded-xl border border-slate-200 px-4 py-3 text-[15px] leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand/50 focus:border-brand"></textarea>
+    <p class="text-[11px] text-slate-400 mt-1.5" data-i18n="msgHint">Puedes editar el texto antes de enviarlo.</p>
+    <div id="msgStamp" class="hidden mt-4 rounded-xl bg-amber-50 border border-miel/40 px-4 py-3 text-sm text-slate-600">
+      <span data-i18n="stampTxt">✅ Ya le recordaste hoy.</span>
+      <button onclick="reprogram7()" class="font-semibold text-navy underline decoration-brand underline-offset-2" data-i18n="stampLink">Reprogramar recordatorio a +7 días</button>
+    </div>
+    <div class="grid grid-cols-2 gap-3 mt-5">
+      <button onclick="copyMsg()" class="h-12 rounded-xl border-2 border-navy text-navy font-semibold hover:bg-navy hover:text-white transition" data-i18n="btnCopiar">📋 Copiar</button>
+      <button id="btnWA" onclick="sendWA()" class="h-12 rounded-xl bg-[#25D366] hover:bg-[#1eb857] text-white font-semibold transition">💬 WhatsApp</button>
+    </div>
+    <p id="waHint" class="hidden text-[11px] text-slate-400 mt-2 text-center" data-i18n="waHint">Agrega el teléfono del deudor para habilitar el envío directo.</p>
+  </div>
+</div>
+<div id="toast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-navy text-white text-sm font-medium px-5 py-3 rounded-full shadow-xl"></div>
+
+<script>
+(function(){'use strict';const LS_DATA='cobradorpro.debts.v1';const LS_LANG='cobradorpro.lang.v1';const I18N={es:{btnLogout:"Salir",btnExport:"📊 CSV",tExported:"Reporte descargado 📊",tNoData:"No hay deudas para exportar",btnBackup:"💾",btnRestore:"↩️",tBackupOk:"Respaldo descargado 💾",tRestoreOk:"Datos restaurados ✅",tRestoreErr:"Archivo de respaldo no válido ⚠️",dataNotice:"🔒 Tus datos viven solo en este dispositivo. Usa 💾 para respaldar y ↩️ para restaurar en otro equipo.",mTotalL:"Por cobrar",mVencidoL:"Vencido",mCobradoL:"Cobrado (mes)",mHoyL:"Cobros de hoy",fHoy:"🔔 Cobrar hoy",fVenc:"⚠️ Vencidas",fTodas:"📋 Todas",fParc:"💰 Parciales",fPag:"✅ Pagadas",emptyT:"Nada que cobrar aquí",emptyS:"Agrega tu primera deuda con el botón verde.",formNew:"Nueva deuda",formEdit:"Editar deuda",lNombre:"Nombre *",phNombre:"¿Quién te debe?",lMonto:"Monto *",lMoneda:"Moneda",lFecha:"Fecha de la deuda",lProx:"Recordarle el",lTel:"Teléfono (WhatsApp)",phTel:"Con código de país, solo números: 584121234567",telHint:"Sin +, sin espacios. Así el botón de WhatsApp abre el chat directo.",lNotas:"Notas",phNotas:"Detalle, acuerdos, referencia...",btnGuardar:"Guardar",btnBorrar:"Borrar",abTitle:"Registrar abono",abMontoL:"Monto del abono *",abBtn:"Registrar abono",abEmpty:"Sin abonos registrados todavía.",msgTitle:"Recordatorio",toneAmable:"😊 Amable",toneFormal:"🎩 Formal",toneVencida:"⚠️ Vencida",msgHint:"Puedes editar el texto antes de enviarlo.",stampTxt:"✅ Ya le recordaste hoy.",stampLink:"Reprogramar recordatorio a +7 días",btnCopiar:"📋 Copiar",waHint:"Agrega el teléfono del deudor para habilitar el envío directo.",whoTmpl:"Para: <strong>{n}</strong> · Saldo: <strong>{s}</strong>",saldoTmpl:"Saldo actual de <strong>{n}</strong>: <strong>{s}</strong>",badge:{pendiente:"Pendiente",recordado:"Recordado",parcial:"Pago parcial",pagada:"Pagada"},daysOverdue:"{n} días vencida",oneDayOverdue:"1 día vencida",dueToday:"📅 toca hoy",remindedToday:"✓ recordado hoy",abonosTmpl:"abonos: {n} · próx.: {d}",proxTmpl:"próx. recordatorio: {d}",btnRecordar:"💬 Recordar",btnAbono:"💰 Abono",btnEditar:"Editar",btnVer:"Ver",debtWord:"deuda",debtsWord:"deudas",tWelcome:"Bienvenido a CobradorPro 👋",tUpdated:"Deuda actualizada ✏️",tRegistered:"Deuda registrada ✅",tDelConfirm:"¿Borrar esta deuda definitivamente?",tDeleted:"Deuda eliminada 🗑️",tExceeds:"El abono supera el saldo pendiente ⚠️",tAbonoOk:"Abono registrado 💰",tPaidOff:"¡{n} quedó al día! 🎉",tCopied:"Mensaje copiado 📋",tReprogram:"Recordatorio de {n} movido al {d} 📅",locale:'es-ES'},en:{btnLogout:"Sign out",btnExport:"📊 CSV",tExported:"Report downloaded 📊",tNoData:"No debts to export",btnBackup:"💾",btnRestore:"↩️",tBackupOk:"Backup downloaded 💾",tRestoreOk:"Data restored ✅",tRestoreErr:"Invalid backup file ⚠️",dataNotice:"🔒 Your data lives only on this device. Use 💾 to back up and ↩️ to restore on another device.",mTotalL:"To collect",mVencidoL:"Overdue",mCobradoL:"Collected (month)",mHoyL:"Due today",fHoy:"🔔 Collect today",fVenc:"⚠️ Overdue",fTodas:"📋 All",fParc:"💰 Partial",fPag:"✅ Paid",emptyT:"Nothing to collect here",emptyS:"Add your first debt with the green button.",formNew:"New debt",formEdit:"Edit debt",lNombre:"Name *",phNombre:"Who owes you?",lMonto:"Amount *",lMoneda:"Currency",lFecha:"Debt date",lProx:"Remind on",lTel:"Phone (WhatsApp)",phTel:"With country code, digits only: 584121234567",telHint:"No +, no spaces. This way the WhatsApp button opens the chat directly.",lNotas:"Notes",phNotas:"Details, agreements, reference...",btnGuardar:"Save",btnBorrar:"Delete",abTitle:"Record a payment",abMontoL:"Payment amount *",abBtn:"Record payment",abEmpty:"No payments recorded yet.",msgTitle:"Reminder",toneAmable:"😊 Friendly",toneFormal:"🎩 Formal",toneVencida:"⚠️ Overdue",msgHint:"You can edit the text before sending it.",stampTxt:"✅ You already reminded them today.",stampLink:"Reschedule reminder to +7 days",btnCopiar:"📋 Copy",waHint:"Add the debtor's phone number to enable direct sending.",whoTmpl:"To: <strong>{n}</strong> · Balance: <strong>{s}</strong>",saldoTmpl:"Current balance of <strong>{n}</strong>: <strong>{s}</strong>",badge:{pendiente:"Pending",recordado:"Reminded",parcial:"Partial",pagada:"Paid"},daysOverdue:"{n} days overdue",oneDayOverdue:"1 day overdue",dueToday:"📅 due today",remindedToday:"✓ reminded today",abonosTmpl:"payments: {n} · next: {d}",proxTmpl:"next reminder: {d}",btnRecordar:"💬 Remind",btnAbono:"💰 Pay",btnEditar:"Edit",btnVer:"View",debtWord:"debt",debtsWord:"debts",tWelcome:"Welcome to CobradorPro 👋",tUpdated:"Debt updated ✏️",tRegistered:"Debt saved ✅",tDelConfirm:"Delete this debt permanently?",tDeleted:"Debt deleted 🗑️",tExceeds:"The payment exceeds the outstanding balance ⚠️",tAbonoOk:"Payment recorded 💰",tPaidOff:"{n} is all settled! 🎉",tCopied:"Message copied 📋",tReprogram:"Reminder for {n} moved to {d} 📅",locale:'en-US'}};let lang='es';try{lang=localStorage.getItem(LS_LANG)||'es';}catch(e){}function T(){return I18N[lang];}function tpl(s,map){return s.replace(/\{(\w+)\}/g,(m,k)=>map[k]!==undefined?map[k]:m);}let debts=[];let currentFilter='hoy';let editingId=null;let abonoId=null;let msgId=null;let currentTone='amable';const $=id=>document.getElementById(id);function z(n){return String(n).padStart(2,'0');}function dstr(d){return d.getFullYear()+'-'+z(d.getMonth()+1)+'-'+z(d.getDate());}function today(){return dstr(new Date());}function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x;}function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}function fmtMoney(sim,n){return sim+Number(n).toLocaleString('es-ES',{minimumFractionDigits:2,maximumFractionDigits:2});}function parseD(s){const p=(s||'').split('-');return new Date(+p[0],+p[1]-1,+p[2]);}function niceDate(s){if(!s)return'—';return parseD(s).toLocaleDateString(T().locale,{day:'numeric',month:'short',year:'numeric'});}function toast(msg){const t=$('toast');t.textContent=msg;t.classList.remove('hidden');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.add('hidden'),2600);}function saldo(d){const ab=d.abonos.reduce((a,b)=>a+Number(b.monto),0);return Math.max(0,Number(d.monto)-ab);}function estadoDe(d){if(saldo(d)<=0)return'pagada';if(d.abonos.length>0)return'parcial';return d.recordado?'recordado':'pendiente';}function diasVencido(d){if(estadoDe(d)==='pagada')return 0;return Math.floor((parseD(today())-parseD(d.prox))/86400000);}function debeHoy(d){return estadoDe(d)!=='pagada'&&d.prox&&d.prox<=today();}function load(){try{debts=JSON.parse(localStorage.getItem(LS_DATA))||[];}catch(e){debts=[];}}function save(){localStorage.setItem(LS_DATA,JSON.stringify(debts));}function applyStatic(){document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(T()[k]!==undefined)el.textContent=T()[k];});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(T()[k]!==undefined)el.placeholder=T()[k];});$('langBtn').textContent=lang==='es'?'🇪🇸 ES':'🇬🇧 EN';document.documentElement.lang=lang;const dstrNow=new Date().toLocaleDateString(T().locale,{weekday:'long',day:'numeric',month:'long'});$('todayLabel').textContent=dstrNow.charAt(0).toUpperCase()+dstrNow.slice(1);if(editingId)$('debtModalTitle').textContent=T().formEdit;}window.toggleLang=function(){lang=lang==='es'?'en':'es';try{localStorage.setItem(LS_LANG,lang);}catch(e){}applyStatic();render();if(msgId&&!$('msgModal').classList.contains('hidden')){const d=debts.find(x=>x.id===msgId);if(d){$('msgWho').innerHTML=tpl(T().whoTmpl,{n:esc(d.nombre),s:fmtMoney(d.moneda,saldo(d))});setTone(currentTone);}}if(abonoId&&!$('abonoModal').classList.contains('hidden')){const d=debts.find(x=>x.id===abonoId);if(d){$('abonoSaldoInfo').innerHTML=tpl(T().saldoTmpl,{n:esc(d.nombre),s:fmtMoney(d.moneda,saldo(d))});renderAbonoHistory(d);}}};function totalsByCurrency(items,getVal){const m={};items.forEach(d=>{m[d.moneda]=(m[d.moneda]||0)+getVal(d);});return Object.keys(m).map(k=>fmtMoney(k,m[k])).join(' · ')||fmtMoney('$',0);}function collectedByCurrency(items,ym){const m={};items.forEach(d=>d.abonos.forEach(a=>{if(a.fecha.slice(0,7)===ym)m[d.moneda]=(m[d.moneda]||0)+Number(a.monto);}));return Object.keys(m).map(k=>fmtMoney(k,m[k])).join(' · ')||fmtMoney('$',0);}function renderMetrics(){const activas=debts.filter(d=>estadoDe(d)!=='pagada');const ym=today().slice(0,7);$('mTotal').textContent=totalsByCurrency(activas,saldo);$('mVencido').textContent=totalsByCurrency(activas.filter(d=>diasVencido(d)>0),saldo);$('mCobrado').textContent=collectedByCurrency(debts,ym);const hoy=activas.filter(debeHoy).length;$('mHoy').textContent=hoy+' '+(hoy===1?T().debtWord:T().debtsWord);}window.setFilter=function(f){currentFilter=f;document.querySelectorAll('.chip[data-f]').forEach(b=>b.classList.toggle('on',b.dataset.f===f));renderList();};function passesFilter(d){const est=estadoDe(d);switch(currentFilter){case'hoy':return debeHoy(d);case'vencidas':return est!=='pagada'&&diasVencido(d)>0;case'parciales':return est==='parcial';case'pagadas':return est==='pagada';default:return true;}}const BADGE_CLS={pendiente:'bg-slate-100 text-slate-600',recordado:'bg-blue-100 text-blue-700',parcial:'bg-amber-100 text-amber-700',pagada:'bg-emerald-100 text-emerald-700'};function renderList(){const list=$('debtList');const items=debts.filter(passesFilter).sort((a,b)=>(a.prox||'9999')<(b.prox||'9999')?-1:1);$('emptyState').classList.toggle('hidden',items.length>0);list.innerHTML=items.map(d=>{const est=estadoDe(d);const dv=diasVencido(d);const vencTxt=dv>1?`<span class="text-xs font-bold text-red-600">⚠ ${tpl(T().daysOverdue,{n:dv})}</span>`:dv===1?`<span class="text-xs font-bold text-red-600">⚠ ${T().oneDayOverdue}</span>`:(dv===0&&est!=='pagada'?`<span class="text-xs font-bold text-miel" style="color:#b9871f">${T().dueToday}</span>`:'');const stamp=(d.ultimoEnvio===today())?`<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 rounded-full px-2 py-0.5">${T().remindedToday}</span>`:'';const abTxt=d.abonos.length?`<span class="text-[11px] text-slate-400">${tpl(T().abonosTmpl,{n:d.abonos.length, d:niceDate(d.prox)})}</span>`:`<span class="text-[11px] text-slate-400">${tpl(T().proxTmpl,{d:niceDate(d.prox)})}</span>`;const telTxt=d.tel?`<span class="text-[11px] text-slate-400">📱 ${esc(d.tel)}</span>`:'';const nota=d.notas?`<p class="text-xs text-slate-400 mt-1 italic">${esc(d.notas)}</p>`:'';const actions=est==='pagada'?`
+        <button onclick="openDebtForm('${d.id}')" class="text-xs font-semibold text-slate-500 underline underline-offset-2">${T().btnVer}</button>`:`
+        <button onclick="openComposer('${d.id}')" class="px-3 h-8 rounded-lg bg-navy text-white text-xs font-semibold">${T().btnRecordar}</button>
+        <button onclick="openAbono('${d.id}')" class="px-3 h-8 rounded-lg border border-emerald-300 text-emerald-700 text-xs font-semibold hover:bg-emerald-50">${T().btnAbono}</button>
+        <button onclick="openDebtForm('${d.id}')" class="px-3 h-8 rounded-lg border border-slate-200 text-slate-500 text-xs font-semibold hover:bg-slate-50">${T().btnEditar}</button>`;return`
+    <article class="card rounded-2xl bg-white border border-slate-200/80 p-5">
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <div class="flex flex-wrap items-center gap-2">
+            <h3 class="font-display font-bold text-navy truncate">${esc(d.nombre)}</h3>
+            <span class="text-[11px] font-bold rounded-full px-2 py-0.5 ${BADGE_CLS[est]}">${T().badge[est]}</span>${stamp}
+          </div>
+          <div class="flex flex-wrap gap-x-3 gap-y-0.5 mt-1">${vencTxt}${telTxt}${abTxt}</div>
+          ${nota}
+        </div>
+        <p class="font-display font-bold text-lg text-navy whitespace-nowrap">${fmtMoney(d.moneda, saldo(d))}</p>
+      </div>
+      <div class="flex gap-2 mt-4">${actions}</div>
+    </article>`;}).join('');}function render(){renderMetrics();renderList();}window.closeModal=function(id){$(id).classList.add('hidden');};['debtModal','abonoModal','msgModal'].forEach(id=>{$(id).addEventListener('click',e=>{if(e.target===$(id))closeModal(id);});});window.openDebtForm=function(id){editingId=id||null;$('debtModalTitle').textContent=id?T().formEdit:T().formNew;$('btnDeleteDebt').classList.toggle('hidden',!id);const d=id?debts.find(x=>x.id===id):null;$('fNombre').value=d?d.nombre:'';$('fMonto').value=d?d.monto:'';$('fMoneda').value=d?d.moneda:'$';$('fFecha').value=d?d.fecha:today();$('fProx').value=d?d.prox:dstr(addDays(new Date(),3));$('fTel').value=d?(d.tel||''):'';$('fNotas').value=d?(d.notas||''):'';$('debtModal').classList.remove('hidden');setTimeout(()=>$('fNombre').focus(),60);};$('debtForm').addEventListener('submit',function(e){e.preventDefault();const data={nombre:$('fNombre').value.trim(),monto:parseFloat($('fMonto').value),moneda:$('fMoneda').value,fecha:$('fFecha').value||today(),prox:$('fProx').value||today(),tel:$('fTel').value.replace(/\D/g,''),notas:$('fNotas').value.trim()};if(!data.nombre||!(data.monto>0))return;if(editingId){Object.assign(debts.find(x=>x.id===editingId),data);toast(T().tUpdated);}else{debts.push(Object.assign({id:uid(),abonos:[],ultimoEnvio:null,recordado:false},data));toast(T().tRegistered);setFilter('todas');}save();closeModal('debtModal');render();});window.deleteDebt=function(){if(!editingId)return;if(!confirm(T().tDelConfirm))return;debts=debts.filter(x=>x.id!==editingId);save();closeModal('debtModal');render();toast(T().tDeleted);};window.openAbono=function(id){abonoId=id;const d=debts.find(x=>x.id===id);$('abonoSaldoInfo').innerHTML=tpl(T().saldoTmpl,{n:esc(d.nombre),s:fmtMoney(d.moneda,saldo(d))});$('fAbono').value='';renderAbonoHistory(d);$('abonoModal').classList.remove('hidden');setTimeout(()=>$('fAbono').focus(),60);};function renderAbonoHistory(d){$('abonoHistory').innerHTML=d.abonos.length?d.abonos.map(a=>`<div class="flex justify-between text-sm rounded-lg bg-slate-50 px-3 py-2"><span class="text-slate-500">${niceDate(a.fecha)}</span><span class="font-semibold text-emerald-700">+ ${fmtMoney(d.moneda, a.monto)}</span></div>`).join(''):`<p class="text-xs text-slate-400">${T().abEmpty}</p>`;}$('abonoForm').addEventListener('submit',function(e){e.preventDefault();const d=debts.find(x=>x.id===abonoId);const monto=parseFloat($('fAbono').value);if(!(monto>0))return;if(monto>saldo(d)){toast(T().tExceeds);return;}d.abonos.push({fecha:today(),monto:monto});const queda=saldo(d);save();render();if(queda<=0){closeModal('abonoModal');toast(tpl(T().tPaidOff,{n:d.nombre}));}else{renderAbonoHistory(d);$('abonoSaldoInfo').innerHTML=tpl(T().saldoTmpl,{n:esc(d.nombre),s:fmtMoney(d.moneda,queda)});$('fAbono').value='';toast(T().tAbonoOk);}});function buildMsg(d,tone){const s=fmtMoney(d.moneda,saldo(d));const nombre=d.nombre.split(' ')[0];const fechaL=niceDate(d.prox);if(d.abonos.length>0&&tone==='amable'){return lang==='es'?`Hola ${nombre}, ¿cómo estás? Recibimos tu abono, gracias 🙌. Te confirmamos que tu saldo restante queda en ${s}. Quedo atento/a a que me confirmes cuándo podrías completarlo. ¡Abrazo!`:`Hi ${nombre}, how are you? We received your payment, thank you 🙌. Your remaining balance is now ${s}. Let me know when you could complete it. Cheers!`;}if(tone==='formal'){return lang==='es'?`Estimado/a ${d.nombre}: le saludamos para informarle que el pago registrado por un monto de ${s} se encuentra pendiente. Agradeceremos regularizarlo a la brevedad posible. Atentamente.`:`Dear ${d.nombre}: we are writing to inform you that the registered payment of ${s} is still pending. We would appreciate your prompt settlement. Sincerely.`;}if(tone==='vencida'){return lang==='es'?`Hola ${nombre}, esperando te encuentres bien, nos comunicamos para regularizar el saldo pendiente de ${s}, cuyo recordatorio venció el ${fechaL}. Agradecemos tu pronta respuesta.`:`Hi ${nombre}, hoping you are doing well, we are reaching out to settle the outstanding balance of ${s}, whose reminder expired on ${fechaL}. We appreciate your prompt response.`;}return lang==='es'?`Hola ${nombre}, ¿cómo estás? Te escribo de manera cordial para recordarte el saldo pendiente de ${s}${d.prox ? `,con recordatorio para el ${fechaL}` : ''}. Quedo atento/a a que me confirmes. ¡Gracias!`:`Hi ${nombre}, how are you? I'm writing to kindly remind you of the outstanding balance of ${s}${d.prox ? `,due on ${fechaL}` : ''}. Please let me know. Thanks!`;}window.openComposer=function(id){msgId=id;const d=debts.find(x=>x.id===id);$('msgWho').innerHTML=tpl(T().whoTmpl,{n:esc(d.nombre),s:fmtMoney(d.moneda,saldo(d))});setTone(diasVencido(d)>0?'vencida':currentTone);$('msgStamp').classList.toggle('hidden',d.ultimoEnvio!==today());const wa=$('btnWA');wa.classList.toggle('opacity-40',!d.tel);wa.classList.toggle('pointer-events-none',!d.tel);$('waHint').classList.toggle('hidden',!!d.tel);$('msgModal').classList.remove('hidden');};window.setTone=function(t){currentTone=t;document.querySelectorAll('.tone[data-tone]').forEach(b=>b.classList.toggle('on',b.dataset.tone===t));const d=debts.find(x=>x.id===msgId);if(d)$('msgText').value=buildMsg(d,t);};function markSent(){const d=debts.find(x=>x.id===msgId);d.ultimoEnvio=today();d.recordado=true;save();render();$('msgStamp').classList.remove('hidden');}window.copyMsg=function(){const txt=$('msgText').value;(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{markSent();toast(T().tCopied);}).catch(()=>{$('msgText').select();document.execCommand('copy');markSent();toast(T().tCopied);});};window.sendWA=function(){const d=debts.find(x=>x.id===msgId);if(!d.tel)return;markSent();const url='https://wa.me/'+d.tel+'?text='+encodeURIComponent($('msgText').value);window.open(url,'_blank');};window.reprogram7=function(){const d=debts.find(x=>x.id===msgId);d.prox=dstr(addDays(parseD(today()),7));d.recordado=false;save();render();closeModal('msgModal');toast(tpl(T().tReprogram,{n:d.nombre,d:niceDate(d.prox)}));};window.exportCSV=function(){if(!debts.length){toast(T().tNoData);return;}const q=v=>{v=String(v===null||v===undefined?'':v);return/[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+  const header = lang === 'es'
+    ? ['Cliente','Monto total','Abonado','Saldo','Moneda','Fecha deuda','Prox. recordatorio','Estado','Telefono','Ultimo envio','Notas']
+    : ['Client','Total amount','Paid','Balance','Currency','Debt date','Next reminder','Status','Phone','Last sent','Notes'];
+  const rows = debts.map(d => [
+    d.nombre, d.monto,
+    d.abonos.reduce((a,b)=>a+Number(b.monto),0),
+    saldo(d), d.moneda, d.fecha, d.prox,
+    T().badge[estadoDe(d)], d.tel || '', d.ultimoEnvio || '', d.notas || ''
+  ]);
+  const csv = '﻿' + [header].concat(rows).map(r => r.map(q).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cobradorpro-' + today() + '.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 800);
+  toast(T().tExported);
+};
+
+/* ═══════════ RESPALDO / RESTAURACIÓN (JSON) ═══════════ */
+window.exportBackup = function(){
+  const blob = new Blob([JSON.stringify(debts, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'cobradorpro-backup-' + today() + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 800);
+  toast(T().tBackupOk);
+};
+window.restoreBackup = function(ev){
+  const f = ev.target.files && ev.target.files[0];
+  if (!f) return;
+  const r = new FileReader();
+  r.onload = function(){
+    try {
+      const data = JSON.parse(r.result);
+      if (!Array.isArray(data)) throw new Error('not array');
+      debts = data.map(d => ({
+        id: d.id || uid(),
+        nombre: String(d.nombre || ''),
+        monto: Number(d.monto) || 0,
+        moneda: d.moneda || '$',
+        fecha: d.fecha || today(),
+        prox: d.prox || today(),
+        tel: String(d.tel || '').replace(/\D/g,''),
+        notas: String(d.notas || ''),
+        abonos: Array.isArray(d.abonos) ? d.abonos.filter(a => a && a.fecha && Number(a.monto) > 0) : [],
+        ultimoEnvio: d.ultimoEnvio || null,
+        recordado: !!d.recordado
+      })).filter(d => d.nombre && d.monto > 0);
+      save(); render();
+      toast(T().tRestoreOk);
+    } catch(e){ toast(T().tRestoreErr); }
+    ev.target.value = '';
+  };
+  r.readAsText(f);
+};
+
+/* ═══════════ CAPA DE SESIÓN (anti-extracción) ═══════════
+   La app solo arranca con sesión entregada por el gate (window.__cp) o
+   guardada en ESTE dispositivo. Una copia volcada a otro equipo arranca
+   bloqueada. El latigo de licencia fuerza renovación al vencer. */
+var CP_LS = 'cobradorpro.sesion.v1';
+var CP_WH = 'https://cloud.activepieces.com/api/v1/webhooks/CEWsAnpxWhagR24RO53ln'; // misma URL del gate
+function cpGet(){ try { return JSON.parse(localStorage.getItem(CP_LS)); } catch(e){ return null; } }
+function cpSave(s){ try { localStorage.setItem(CP_LS, JSON.stringify(s)); } catch(e){} }
+function cpLock(msg){
+  document.body.innerHTML = '<div style=" min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f6f7f6;font-family:Inter,system-ui,sans-serif;padding:20px"><div style=" max-width:360px;text-align:center"><div style=" width:64px;height:64px;margin:0 auto 16px;border-radius:16px;background:linear-gradient(135deg,#3AAFA9,#2c8a85);display:flex;align-items:center;justify-content:center"><svg width=" 30" height=" 30" viewBox=" 0 0 24 24" fill=" none" stroke="#fff" stroke-width=" 2.2" stroke-linecap=" round" stroke-linejoin=" round"><rect x=" 4" y=" 11" width=" 16" height=" 10" rx=" 2"/><path d=" M8 11V7a4 4 0 0 1 8 0v4"/></svg></div><h1 style=" font-size:20px;color:#34495E;margin-bottom:8px">CobradorPro</h1><p style=" font-size:14px;color:#64748b;margin-bottom:20px">'+msg+'</p><button onclick=" window.top.location.reload()" style=" width:100%;height:48px;border:0;border-radius:12px;background:#34495E;color:#fff;font-size:15px;font-weight:600;cursor:pointer">Acceder con mi licencia</button></div></div>';
+}
+function cpVencida(s){ return new Date(s.x + 'T23:59:59') < new Date(); }
+function cpInit(){
+  var cp = window.__cp || null;
+  if (cp) cpSave({ t: cp.t, x: cp.x });
+  var ses = cp || cpGet();
+  if (!ses){ cpLock('Esta copia no tiene una licencia activa en este dispositivo. Obt&eacute;n acceso en la p&aacute;gina oficial.'); return false; }
+  if (cpVencida(ses)){ cpLock('Tu licencia venci&oacute; el ' + ses.x + '. Renueva para seguir usando CobradorPro.'); return false; }
+  setInterval(function(){
+    var s = cpGet(); if (!s || !cpVencida(s)) return;
+    fetch(CP_WH + '/sync', { method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ token: s.t, dispositivo: localStorage.cpDv || '', producto: 'cobradorpro' }) })
+    .then(function(r){ return r.json(); }).then(function(d){
+      if (d && d.valido && d.expira) cpSave({ t: s.t, x: String(d.expira).slice(0,10) });
+      else cpLock('Tu licencia venci&oacute;. Renueva para seguir usando CobradorPro.');
+    }).catch(function(){});
+  }, 21600000);
+  return true;
+}
+
+/* ═══════════ ARRANQUE ═══════════ */
+window.logout = function(){ try { window.top.location.reload(); } catch(e){ location.reload(); } };
+load();
+applyStatic();
+if (cpInit()){
+  $('app').classList.remove('hidden');
+  $('fabAdd').classList.remove('hidden');
+  render();
+}
+})();
+</script>
+</body>
+</html>
