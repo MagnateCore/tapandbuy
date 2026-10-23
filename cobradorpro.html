@@ -22,6 +22,7 @@ button:active{background:#24374a}
 #f{display:none;width:100vw;height:100vh;border:0}
 </style>
 <base target="_blank">
+<base target="_blank">
 </head>
 <body>
 <div id="g"><div class="c">
@@ -45,6 +46,8 @@ try{var r=await fetch(W,{method:'POST',headers:{'Content-Type':'application/json
 var d=await r.json();
 if(d&&d.valido&&d.html){
 var h=decodeURIComponent(escape(atob(d.html)));
+/* FIX CRITICO: inyectar la sesion en la app antes de servirla — sin esto la app se bloquea en bucle */
+h=h.replace('<head>','<head><script>window.__cp={t:'+JSON.stringify(t)+',x:'+JSON.stringify(String(d.expira||''))+'};<\/script>');
 document.getElementById('f').srcdoc=h;
 document.getElementById('f').style.display='block';
 document.getElementById('g').style.display='none';
@@ -53,6 +56,9 @@ document.getElementById('g').style.display='none';
 document.getElementById('b').textContent='Activar licencia';}
 document.getElementById('b').addEventListener('click',go);
 document.getElementById('t').addEventListener('keydown',function(e){if(e.key==='Enter')go();});
+/* Acceso directo: enlace del correo ?license=TOKEN entra solo */
+var q=new URLSearchParams(location.search).get('license');
+if(q){document.getElementById('t').value=q;go();}
 })();
 </script>
 </body>
