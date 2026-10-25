@@ -19,8 +19,6 @@ tailwind.config = { theme: { extend: {
   @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(52,73,94,.14)}}
   .kicker{letter-spacing:.25em}
 </style>
-<base target="_blank">
-<base target="_blank">
 </head>
 <body class="bg-[#f6f7f6] text-slate-800">
 
@@ -36,7 +34,7 @@ tailwind.config = { theme: { extend: {
   </div>
   <div class="flex items-center gap-2">
     <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language" class="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
-    <a href="#ser-creador" target="_self" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navCreator">¿Eres creador?</a>
+    <a href="#ser-creador" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navCreator">¿Eres creador?</a>
   </div>
 </header>
 
@@ -65,8 +63,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">CobradorPro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descCob">¿Tienes clientes que te deben y te da pena cobrarles? Organiza tus deudas, te dice a quién cobrarle hoy y redacta el recordatorio amable por ti.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / 3 meses · USD 45 / año</span>
-        <a href="venta-cobradorpro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
+        <a href="index.html" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
       </div>
     </div>
 
@@ -79,8 +77,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">CortePro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descCor">¿Cortas tela y pierdes plata calculando a ojo? Calcula materiales exactos para tus prendas y cotiza con margen real en segundos.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
-        <a href="venta-cortepro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
+        <span class="text-xs text-slate-400 font-medium italic">Próximamente</span>
       </div>
     </div>
 
@@ -93,8 +91,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">ImportaPro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descImp">¿Importas de China y no sabes tu costo real? De los yuanes del proveedor al precio final sugerido, con envío, comisión y tu margen real.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
-        <a href="venta-importapro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
+        <span class="text-xs text-slate-400 font-medium italic">Próximamente</span>
       </div>
     </div>
 
@@ -130,14 +128,14 @@ tailwind.config = { theme: { extend: {
       ProPlaza abrirá sus puestos a <strong>creadores seleccionados</strong>: los que construyen herramientas pequeñas y honestas, cobran por membresía fija (sin comisiones por tus ventas) y mantienen el control total de su dinero. Si tu app encaja en la plaza, escríbenos.
     </p>
     <p class="mt-4 text-sm"><span class="font-semibold text-slate-600" data-i18n="creatorLabel">Postula tu app:</span>
-      <a class="mp underline decoration-brand underline-offset-2 font-semibold text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com" target="_self">promptmagnate.app+proplaza&#64;gmail.com</a>
+      <a class="mp underline decoration-brand underline-offset-2 font-semibold text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com">promptmagnate.app+proplaza&#64;gmail.com</a>
     </p>
   </div>
 </section>
 
 <footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
   <p data-i18n="f1">© 2026 ProPlaza · La vitrina de Magnate Core · Un producto de PromptMagnate Lab</p>
-  <p class="mt-2.5"><span data-i18n="f2">Contacto:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com" target="_self">promptmagnate.app+proplaza&#64;gmail.com</a> · <a href="policies.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
+  <p class="mt-2.5"><span data-i18n="f2">Contacto:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com">promptmagnate.app+proplaza&#64;gmail.com</a> · <a href="policies.html" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
 </footer>
 
 <script>
