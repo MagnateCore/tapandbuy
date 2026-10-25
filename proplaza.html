@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ProPlaza — Apps Pro para emprendedores de nicho</title>
+<meta name="description" content="Vitrina curada de micro apps que resuelven problemas reales: cobrar deudas sin pena, calcular tela, costos de importación de China y agenda de citas. Sin comisiones por venta: cada creador cobra directo.">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { brand:{DEFAULT:'#3AAFA9',dark:'#2c8a85',light:'#5ec9c4'}, miel:'#E8B04B', navy:{DEFAULT:'#34495E',dark:'#24374a',light:'#4e6d8d'} },
+  fontFamily: { sans:['Inter','system-ui','sans-serif'], display:['"Space Grotesk"','Inter','system-ui','sans-serif'] }
+}}}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  .card{transition:transform .12s ease,box-shadow .12s ease}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(52,73,94,.14)}
+  .kicker{letter-spacing:.25em}
+</style>
+<base target="_blank">
+<base target="_blank">
+</head>
+<body class="bg-[#f6f7f6] text-slate-800">
+
+<header class="max-w-5xl mx-auto px-5 pt-7 flex items-center justify-between gap-3">
+  <div class="flex items-center gap-2.5">
+    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
+      <!-- glifo: puesto de plaza (toldo + base) -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M4 9a2.5 2.5 0 005 0 2.5 2.5 0 005 0 2.5 2.5 0 005 0"/><path d="M9.5 20v-6h5v6"/></svg>
+    </div>
+    <div>
+      <span class="font-display font-bold text-xl tracking-tight text-navy leading-none">Pro<span class="text-brand">Plaza</span></span>
+      <p class="text-[10px] text-slate-400 uppercase tracking-widest mt-0.5">Apps de nicho · sin intermediarios</p>
+    </div>
+  </div>
+  <a href="#ser-creador" target="_self" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition">¿Eres creador?</a>
+</header>
+
+<section class="max-w-3xl mx-auto px-5 pt-14 pb-8 text-center">
+  <p class="text-[11px] font-bold uppercase kicker text-brand mb-4">LA VITRINA CURADA DE MICRO APPS</p>
+  <h1 class="font-display text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-navy">
+    La plaza donde las apps <span class="text-brand">Pro</span> resuelven problemas reales
+  </h1>
+  <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto leading-relaxed">
+    Herramientas pequeñas, precisas y en tu idioma — cada una diseñada para <strong>un solo problema de un solo nicho</strong>. Sin comisiones por venta: cada creador cobra directo a su nombre.
+  </p>
+</section>
+
+<!-- ══════ LOS PUESTOS: organizados por problema (el SEO vive aquí) ══════ -->
+<section class="max-w-4xl mx-auto px-5 py-8">
+  <h2 class="font-display text-2xl font-bold text-center mb-2 text-navy">¿Qué problema tienes hoy?</h2>
+  <p class="text-center text-sm text-slate-500 mb-8">Toca tu dolor y ve directo a su solución.</p>
+
+  <div class="grid md:grid-cols-2 gap-5">
+
+    <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
+      <div class="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AAFA9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-8.5 8.5 8.5 8.5 0 01-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 118.6-3.8"/></svg>
+      </div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1">Cobranza</p>
+      <h3 class="font-display font-bold text-xl text-navy mb-1.5">CobradorPro</h3>
+      <p class="text-slate-600 text-sm leading-relaxed flex-1">¿Tienes clientes que te deben y te da pena cobrarles? Organiza tus deudas, te dice a quién cobrarle hoy y redacta el recordatorio amable por ti.</p>
+      <div class="mt-5 flex items-center justify-between gap-3">
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / 3 meses · USD 45 / año</span>
+        <a href="venta-cobradorpro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition">Ver app →</a>
+      </div>
+    </div>
+
+    <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
+      <div class="w-11 h-11 rounded-2xl bg-miel/10 flex items-center justify-center mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5L20 20M8.5 15.5L20 4"/></svg>
+      </div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1">Confección y talleres</p>
+      <h3 class="font-display font-bold text-xl text-navy mb-1.5">CortePro</h3>
+      <p class="text-slate-600 text-sm leading-relaxed flex-1">¿Cortas tela y pierdes plata calculando a ojo? Calcula materiales exactos para tus prendas y cotiza con margen real en segundos.</p>
+      <div class="mt-5 flex items-center justify-between gap-3">
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
+        <!-- VERIFICAR: si venta-cortepro.html no existe en el repo, apuntar a la landing real de CortePro -->
+        <a href="venta-cortepro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition">Ver app →</a>
+      </div>
+    </div>
+
+    <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
+      <div class="w-11 h-11 rounded-2xl bg-navy/5 flex items-center justify-center mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34495E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg>
+      </div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1">Importación</p>
+      <h3 class="font-display font-bold text-xl text-navy mb-1.5">ImportaPro</h3>
+      <p class="text-slate-600 text-sm leading-relaxed flex-1">¿Importas de China y no sabes tu costo real? De los yuanes del proveedor al precio final sugerido, con envío, comisión y tu margen real.</p>
+      <div class="mt-5 flex items-center justify-between gap-3">
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
+        <a href="venta-importapro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition">Ver app →</a>
+      </div>
+    </div>
+
+    <div class="card rounded-3xl bg-white border-2 border-dashed border-brand/50 p-7 flex flex-col relative overflow-hidden">
+      <span class="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-widest text-brand-dark bg-brand/10 rounded-full px-3 py-1">Próximamente</span>
+      <div class="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center mb-4">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AAFA9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      </div>
+      <p class="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-1">Citas y servicios</p>
+      <h3 class="font-display font-bold text-xl text-navy mb-1.5">TurnoPro</h3>
+      <p class="text-slate-600 text-sm leading-relaxed flex-1">¿Tus clientes te dejan plantado? Agenda simple con recordatorio automático para que tu silla nunca más esté vacía.</p>
+      <div class="mt-5 flex items-center justify-between gap-3">
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 18 / 3 meses</span>
+        <span class="shrink-0 rounded-full border border-slate-300 text-slate-400 text-sm font-semibold px-5 py-2.5">Muy pronto</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════ LA DOCTRINA (cartas sobre la mesa) ══════ -->
+<section class="max-w-5xl mx-auto px-5 py-10">
+  <div class="rounded-[2rem] p-10 md:p-12 text-white relative overflow-hidden" style="background:linear-gradient(140deg,#34495E 0%,#24374a 100%)">
+    <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-brand/20 blur-3xl pointer-events-none"></div>
+    <h2 class="font-display text-2xl md:text-3xl font-bold relative mb-8 text-center">Las reglas de la plaza</h2>
+    <div class="grid md:grid-cols-3 gap-6 relative">
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+        <p class="font-display font-bold text-brand-light mb-1.5">Curada, no saturada</p>
+        <p class="text-sm text-slate-300 leading-relaxed">Cada app entra por resolver un problema real de un nicho real. Nada de catálogos infinitos donde lo bueno se ahoga.</p>
+      </div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+        <p class="font-display font-bold text-brand-light mb-1.5">Soberanía total</p>
+        <p class="text-sm text-slate-300 leading-relaxed">Cero comisiones por venta y cero cajero central: cada creador cobra directo con su propia pasarela. Tu dinero nunca pasa por manos ajenas.</p>
+      </div>
+      <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
+        <p class="font-display font-bold text-brand-light mb-1.5">Precio de barrio</p>
+        <p class="text-sm text-slate-300 leading-relaxed">Herramientas pensadas para el bolsillo del emprendedor latino: una sola función, hecha perfecta, a precio justo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SEMILLA: el puesto para creadores ══════ -->
+<section id="ser-creador" class="max-w-3xl mx-auto px-5 pb-14">
+  <div class="rounded-3xl border-2 border-miel bg-amber-50 p-8 md:p-9 shadow-sm">
+    <p class="text-[11px] font-bold uppercase kicker mb-2" style="color:#b9871f">¿ERES CREADOR?</p>
+    <h3 class="font-display font-bold text-xl text-navy mb-2">¿Tienes una micro app que resuelve un problema de nicho?</h3>
+    <p class="text-slate-700 leading-relaxed text-[15px]">
+      ProPlaza abrirá sus puestos a <strong>creadores seleccionados</strong>: los que construyen herramientas pequeñas y honestas, cobran por membresía fija (sin comisiones por tus ventas) y mantienen el control total de su dinero. Si tu app encaja en la plaza, escríbenos.
+    </p>
+    <p class="mt-4 text-sm"><span class="font-semibold text-slate-600">Postula tu app:</span>
+      <a class="mp underline decoration-brand underline-offset-2 font-semibold text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com" target="_self">promptmagnate.app+proplaza&#64;gmail.com</a>
+    </p>
+  </div>
+</section>
+
+<footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
+  <p>© 2026 ProPlaza · La vitrina de Magnate Core · Un producto de PromptMagnate Lab</p>
+  <p class="mt-2.5">Contacto: <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com" target="_self">promptmagnate.app+proplaza&#64;gmail.com</a> · <a href="policies.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">Términos</a></p>
+</footer>
+
+<script>document.querySelectorAll("a.mp").forEach(function(a){a.href="mailto:"+a.dataset.u+"@"+a.dataset.d;if(a.textContent.indexOf("@")===-1)a.textContent=a.dataset.u+"@"+a.dataset.d;});</script>
+</body>
+</html>
