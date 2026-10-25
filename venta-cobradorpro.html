@@ -28,8 +28,6 @@ tailwind.config = {
   .btn-buy:active { transform:translateY(5px); box-shadow:0 0 0 #0b8a58; }
   .kicker { letter-spacing:.25em; }
 </style>
-<!-- Un solo <base>: todos los enlaces externos (NowPayments, mailto) se abren en pestaña nueva;
-     los internos usan target="_self" explícito. -->
 <base target="_blank">
 <base target="_blank">
 </head>
@@ -57,7 +55,11 @@ tailwind.config = {
   <p class="mt-5 text-lg text-slate-600 max-w-xl mx-auto leading-relaxed" data-i18n="heroSub">
     CobradorPro organiza tus deudas, te recuerda <strong>a quién cobrarle hoy</strong> y redacta el mensaje amable por ti. Tú solo lo copias y lo envías desde tu app de mensajería preferida (WhatsApp, Telegram, SMS, etc.). Sin incomodidades.
   </p>
-  <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
+  <label class="mt-7 flex items-start justify-center gap-3 text-left max-w-md mx-auto cursor-pointer select-none">
+    <input type="checkbox" id="consent" class="mt-1 w-5 h-5 accent-[#3AAFA9]">
+    <span class="text-[13px] text-slate-600 leading-snug" data-i18n="consentTxt">He leído y acepto los <a href="disclaimer-cobradorpro.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">Términos y la Política de Privacidad</a> *</span>
+  </label>
+  <div class="mt-5 flex flex-col sm:flex-row items-center justify-center gap-3 flex-wrap">
     <!-- NOWPAYMENTS: trimestral $15 (iid=4312017921) y anual $45 (iid=5508770770). -->
     <a id="comprar" href="https://nowpayments.io/payment/?iid=4312017921" target="_blank" class="btn-buy rounded-full bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-base font-bold px-8 py-4" data-i18n="buyMonthly">3 meses — USD 15</a>
     <a href="https://nowpayments.io/payment/?iid=5508770770" target="_blank" class="rounded-full border-2 border-navy text-navy text-base font-bold px-8 py-4 hover:bg-navy hover:text-white transition" data-i18n="buyAnnual">Anual — USD 45/año</a>
@@ -148,6 +150,7 @@ const I18N = {
   "navBuy": "Comprar ahora",
   "heroTitle": "¿Tienes clientes que te deben<br class=\"hidden md:block\"> y te da pena cobrarles?",
   "heroSub": "CobradorPro organiza tus deudas, te recuerda <strong>a quién cobrarle hoy</strong> y redacta el mensaje amable por ti. Tú solo lo copias y lo envías desde tu app de mensajería preferida (WhatsApp, Telegram, SMS, etc.). Sin incomodidades.",
+  "consentTxt": "He leído y acepto los <a href=\"disclaimer-cobradorpro.html\" target=\"_self\" class=\"underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\">Términos y la Política de Privacidad</a> *",
   "buyMonthly": "3 meses — USD 15",
   "buyAnnual": "Anual — USD 45/año",
   "buyNote": "El anual equivale a $3.75/mes · Ahorra $15",
@@ -187,6 +190,7 @@ const I18N = {
   "navBuy": "Buy now",
   "heroTitle": "Got clients who owe you money<br class=\"hidden md:block\"> but chasing them feels awkward?",
   "heroSub": "CobradorPro organizes your debts, reminds you <strong>who to collect from today</strong> and writes the polite message for you. You just copy and send it from your favorite messaging app (WhatsApp, Telegram, SMS, etc.). No awkwardness.",
+  "consentTxt": "I have read and accept the <a href=\"disclaimer-cobradorpro.html\" target=\"_self\" class=\"underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\">Terms and Privacy Policy</a> *",
   "buyMonthly": "3 months — USD 15",
   "buyAnnual": "Yearly — USD 45/yr",
   "buyNote": "Yearly equals $3.75/mo · Save $15",
@@ -225,9 +229,6 @@ const I18N = {
 let lang = 'es';
 try { lang = localStorage.getItem('cobradorpro-venta-lang') || 'es'; } catch(e){}
 
-/* Reconstruye el href de los correos ofuscados (data-u/data-d) DESPUÉS de cada
-   cambio de idioma: applyLang() reescribe el innerHTML y los enlaces pierden el
-   href que el script inicial les había puesto. */
 function fixEmails(){
   document.querySelectorAll("a.mp").forEach(function(a){
     a.href = "mailto:" + a.dataset.u + "@" + a.dataset.d;
@@ -243,12 +244,26 @@ function applyLang(){
   document.documentElement.lang = lang;
   fixEmails();
 }
+function gateBuys(){
+  var ok = false;
+  var cb = document.getElementById('consent');
+  if (cb) ok = cb.checked;
+  document.querySelectorAll('a[href*="nowpayments.io"]').forEach(function(a){
+    a.classList.toggle('opacity-40', !ok);
+    a.classList.toggle('pointer-events-none', !ok);
+    a.title = ok ? '' : (lang === 'es' ? 'Acepta los términos para continuar' : 'Accept the terms to continue');
+  });
+}
 window.toggleLang = function(){
   lang = lang === 'es' ? 'en' : 'es';
   try { localStorage.setItem('cobradorpro-venta-lang', lang); } catch(e){}
   applyLang();
+  gateBuys();
 };
+var consentBox = document.getElementById('consent');
+if (consentBox) consentBox.addEventListener('change', gateBuys);
 applyLang();
+gateBuys();
 })();
 </script>
 
