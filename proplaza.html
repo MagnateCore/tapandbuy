@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ProPlaza — Apps Pro para emprendedores de nicho</title>
-<meta name="description" content="Micro apps para problemas reales: cobrar deudas sin pena, calcular tela, costos de importación de China y agenda de citas. Sin comisiones por venta: cada creador cobra directo.">
+<meta name="description" content="Vitrina curada de micro apps que resuelven problemas reales: cobrar deudas sin pena, calcular tela y costos de importación de China. Sin comisiones por venta: cada creador cobra directo.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: {
@@ -18,11 +18,15 @@ tailwind.config = { theme: { extend: {
   .card{transition:transform .12s ease,box-shadow .12s ease}
   @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(52,73,94,.14)}}
   .kicker{letter-spacing:.25em}
+  input,textarea{width:100%;border:1px solid #e2e8f0;border-radius:14px;padding:12px 16px;font-size:15px;outline:none;background:#fff}
+  input:focus,textarea:focus{border-color:#3AAFA9;box-shadow:0 0 0 3px rgba(58,175,169,.18)}
 </style>
+<base target="_blank">
+<base target="_blank">
 </head>
 <body class="bg-[#f6f7f6] text-slate-800">
 
-<header class="max-w-5xl mx-auto px-5 pt-7 flex items-center justify-between gap-3">
+<header class="max-w-5xl mx-auto px-5 pt-7 pb-2 flex items-center justify-between gap-3">
   <div class="flex items-center gap-2.5">
     <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-brand to-brand-dark flex items-center justify-center shadow-md shadow-brand/25">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9"/><path d="M4 9a2.5 2.5 0 005 0 2.5 2.5 0 005 0 2.5 2.5 0 005 0"/><path d="M9.5 20v-6h5v6"/></svg>
@@ -33,12 +37,17 @@ tailwind.config = { theme: { extend: {
     </div>
   </div>
   <div class="flex items-center gap-2">
+    <nav class="hidden md:flex items-center gap-4 text-sm font-medium text-slate-500 mr-1">
+      <a href="#apps" target="_self" class="hover:text-brand transition" data-i18n="navApps">Apps</a>
+      <a href="#creadores" target="_self" class="hover:text-brand transition" data-i18n="navCreators">Para creadores</a>
+      <a href="terminos-anunciante-proplaza.html" target="_self" class="hover:text-brand transition" data-i18n="navTerms">Términos</a>
+    </nav>
     <button id="langBtn" onclick="toggleLang()" aria-label="Cambiar idioma / Switch language" class="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full border border-slate-200 hover:border-brand/60 text-xs font-medium transition">🇪🇸 ES</button>
-    <a href="#ser-creador" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navCreator">¿Eres creador?</a>
+    <a href="#creadores" target="_self" class="h-9 px-4 inline-flex items-center rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold transition" data-i18n="navCreator">¿Eres creador?</a>
   </div>
 </header>
 
-<section class="max-w-3xl mx-auto px-5 pt-14 pb-8 text-center">
+<section class="max-w-3xl mx-auto px-5 pt-12 pb-8 text-center">
   <p class="text-[11px] font-bold uppercase kicker text-brand mb-4" data-i18n="kicker">MICRO APPS PARA PROBLEMAS REALES</p>
   <h1 class="font-display text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-navy" data-i18n="heroTitle">
     La plaza donde las apps <span class="text-brand">Pro</span> resuelven problemas reales
@@ -48,7 +57,7 @@ tailwind.config = { theme: { extend: {
   </p>
 </section>
 
-<section class="max-w-4xl mx-auto px-5 py-8">
+<section id="apps" class="max-w-4xl mx-auto px-5 py-8">
   <h2 class="font-display text-2xl font-bold text-center mb-2 text-navy" data-i18n="secTitle">Identifica tu cuello de botella</h2>
   <p class="text-center text-sm text-slate-500 mb-8" data-i18n="secSub">Herramientas de software diseñadas para resolver problemas específicos sin fricción.</p>
 
@@ -63,8 +72,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">CobradorPro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descCob">¿Tienes clientes que te deben y te da pena cobrarles? Organiza tus deudas, te dice a quién cobrarle hoy y redacta el recordatorio amable por ti.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
-        <a href="index.html" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / 3 meses · USD 45 / año</span>
+        <a href="venta-cobradorpro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
       </div>
     </div>
 
@@ -77,8 +86,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">CortePro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descCor">¿Cortas tela y pierdes plata calculando a ojo? Calcula materiales exactos para tus prendas y cotiza con margen real en segundos.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
-        <span class="text-xs text-slate-400 font-medium italic">Próximamente</span>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
+        <a href="venta-cortepro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
       </div>
     </div>
 
@@ -91,8 +100,8 @@ tailwind.config = { theme: { extend: {
       <h3 class="font-display font-bold text-xl text-navy mb-1.5">ImportaPro</h3>
       <p class="text-slate-600 text-sm leading-relaxed flex-1" data-i18n="descImp">¿Importas de China y no sabes tu costo real? De los yuanes del proveedor al precio final sugerido, con envío, comisión y tu margen real.</p>
       <div class="mt-5 flex items-center justify-between gap-3">
-        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / trimestre</span>
-        <span class="text-xs text-slate-400 font-medium italic">Próximamente</span>
+        <span class="text-xs font-semibold text-navy bg-slate-100 rounded-full px-3 py-1.5">USD 15 / año</span>
+        <a href="venta-importapro.html" target="_self" class="shrink-0 rounded-full bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-5 py-2.5 transition" data-i18n="cta">Ver app →</a>
       </div>
     </div>
 
@@ -120,30 +129,92 @@ tailwind.config = { theme: { extend: {
   </div>
 </section>
 
-<section id="ser-creador" class="max-w-3xl mx-auto px-5 pb-14">
-  <div class="rounded-3xl border-2 border-miel bg-amber-50 p-8 md:p-9 shadow-sm">
-    <p class="text-[11px] font-bold uppercase kicker mb-2" style="color:#b9871f" data-i18n="creatorK">¿ERES CREADOR?</p>
-    <h3 class="font-display font-bold text-xl text-navy mb-2" data-i18n="creatorT">¿Tienes una micro app que resuelve un problema de nicho?</h3>
-    <p class="text-slate-700 leading-relaxed text-[15px]" data-i18n="creatorP">
-      ProPlaza abrirá sus puestos a <strong>creadores seleccionados</strong>: los que construyen herramientas pequeñas y honestas, cobran por membresía fija (sin comisiones por tus ventas) y mantienen el control total de su dinero. Si tu app encaja en la plaza, escríbenos.
-    </p>
-    <p class="mt-4 text-sm"><span class="font-semibold text-slate-600" data-i18n="creatorLabel">Postula tu app:</span>
-      <a class="mp underline decoration-brand underline-offset-2 font-semibold text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com">promptmagnate.app+proplaza&#64;gmail.com</a>
-    </p>
+<!-- ══════ PARA CREADORES: el puesto + postulación ══════ -->
+<section id="creadores" class="max-w-4xl mx-auto px-5 pb-14">
+  <div class="text-center mb-8">
+    <p class="text-[11px] font-bold uppercase kicker text-brand mb-2" data-i18n="crKicker">EL PUESTO EN LA PLAZA</p>
+    <h2 class="font-display text-3xl font-bold text-navy" data-i18n="crTitle">¿Eres creador de una micro app?</h2>
+    <p class="mt-3 text-slate-600 max-w-xl mx-auto leading-relaxed" data-i18n="crSub">Si tu app resuelve un problema real de un nicho real, la plaza te abre sus puertas. Postula — revisamos cada aplicación en menos de 48 horas.</p>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-5 mb-8">
+    <div class="rounded-3xl bg-white border border-slate-200/70 p-7">
+      <p class="font-display font-bold text-navy mb-4" data-i18n="crIncludes">El puesto incluye</p>
+      <ul class="space-y-3 text-sm text-slate-600">
+        <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span><span data-i18n="crInc1">Puesto destacado en la vitrina, organizado por nicho y problema</span></li>
+        <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span><span data-i18n="crInc2">Enlace directo a tu landing: cobras con tu propia pasarela, cero comisiones nuestras</span></li>
+        <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span><span data-i18n="crInc3">Visibilidad ante emprendedores latinos que buscan soluciones reales</span></li>
+        <li class="flex gap-2.5"><span class="text-brand font-bold">✓</span><span data-i18n="crInc4">Ficha bilingüe (ES/EN) con tu marca y tu precio</span></li>
+      </ul>
+    </div>
+    <div class="rounded-3xl bg-white border border-slate-200/70 p-7">
+      <p class="font-display font-bold text-navy mb-4" data-i18n="crHow">Cómo funciona</p>
+      <ol class="space-y-3 text-sm text-slate-600">
+        <li class="flex gap-2.5"><span class="shrink-0 w-6 h-6 rounded-full bg-brand text-white text-xs font-bold flex items-center justify-center">1</span><span data-i18n="crHow1">Postulas tu app con el formulario de abajo.</span></li>
+        <li class="flex gap-2.5"><span class="shrink-0 w-6 h-6 rounded-full bg-brand text-white text-xs font-bold flex items-center justify-center">2</span><span data-i18n="crHow2">Verificamos que funcione y que encaje en la plaza (máx. 48 h).</span></li>
+        <li class="flex gap-2.5"><span class="shrink-0 w-6 h-6 rounded-full bg-brand text-white text-xs font-bold flex items-center justify-center">3</span><span data-i18n="crHow3">Si entras, activas tu puesto pagando la membresía mensual. Listo.</span></li>
+      </ol>
+      <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 px-5 py-4 flex items-center justify-between gap-3">
+        <span class="text-sm text-slate-500" data-i18n="crPriceL">Membresía del puesto</span>
+        <span class="font-display font-bold text-navy text-lg" data-i18n="crPrice">USD 30 / mes · USD 75 / trimestre</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORMULARIO DE POSTULACIÓN -->
+  <div class="rounded-3xl border-2 border-miel bg-amber-50 p-7 md:p-9 shadow-sm">
+    <p class="text-[11px] font-bold uppercase kicker mb-2" style="color:#b9871f" data-i18n="formKicker">POSTULA TU APP</p>
+    <h3 class="font-display font-bold text-xl text-navy mb-5" data-i18n="formTitle">Cuéntanos de tu micro app</h3>
+    <form id="postForm" class="space-y-4">
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="fNombre">Tu nombre *</label>
+          <input id="pNombre" required class="mt-1" data-i18n-ph="phNombre" placeholder="¿Quién eres?">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="fEmail">Tu correo *</label>
+          <input id="pEmail" required type="email" placeholder="donde@contactarte.com">
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="fApp">Nombre de tu app *</label>
+          <input id="pApp" required placeholder="MiMicroApp">
+        </div>
+        <div>
+          <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="fDemo">Link de demo (opcional)</label>
+          <input id="pDemo" type="url" placeholder="https://…">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold text-slate-500 uppercase tracking-wide" data-i18n="fProblema">¿Qué problema resuelve? *</label>
+        <textarea id="pProblema" required rows="3" data-i18n-ph="phProblema" placeholder="Describe el problema y tu solución en 2-3 líneas…"></textarea>
+      </div>
+      <label class="flex items-start gap-3 cursor-pointer select-none">
+        <input type="checkbox" id="pConsent" required class="mt-0.5 w-5 h-5 accent-[#3AAFA9]">
+        <span class="text-[13px] text-slate-600 leading-snug" data-i18n="fConsent">Acepto los <a href="terminos-anunciante-proplaza.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition">Términos del anunciante</a> *</span>
+      </label>
+      <p id="formStatus" class="hidden text-sm font-semibold"></p>
+      <button type="submit" id="pSend" class="w-full h-12 rounded-2xl bg-navy hover:bg-navy-dark text-white font-semibold transition" data-i18n="fSend">Enviar postulación</button>
+    </form>
   </div>
 </section>
 
 <footer class="border-t border-slate-200/70 py-9 text-center text-sm text-slate-500 px-5">
   <p data-i18n="f1">© 2026 ProPlaza · La vitrina de Magnate Core · Un producto de PromptMagnate Lab</p>
-  <p class="mt-2.5"><span data-i18n="f2">Contacto:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com">promptmagnate.app+proplaza&#64;gmail.com</a> · <a href="policies.html" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a></p>
+  <p class="mt-2.5"><span data-i18n="f2">Contacto:</span> <a class="mp underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-u="promptmagnate.app+proplaza" data-d="gmail.com" target="_self">promptmagnate.app+proplaza&#64;gmail.com</a> · <a href="terminos-anunciante-proplaza.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f3">Términos</a> · <a href="policies.html" target="_self" class="underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition" data-i18n="f4">Privacidad</a></p>
+  <p class="mt-4 text-[11px] text-slate-400 max-w-xl mx-auto leading-relaxed" data-i18n="fDisc">ProPlaza es un directorio publicitario independiente: las apps de terceros son operadas y facturadas por sus creadores. La plaza no procesa sus pagos ni custodia fondos.</p>
 </footer>
 
 <script>
 (function(){
 'use strict';
+// REEMPLAZO ÚNICO: pegar aquí la URL del webhook del flujo "ProPlaza — Postulaciones" (termina en /sync)
+var W='PONER_WEBHOOK_POSTULACION';
 const I18N = {
   es: {
   "tagline": "Apps de nicho · sin intermediarios",
+  "navApps": "Apps", "navCreators": "Para creadores", "navTerms": "Términos",
   "navCreator": "¿Eres creador?",
   "kicker": "MICRO APPS PARA PROBLEMAS REALES",
   "heroTitle": "La plaza donde las apps <span class=\"text-brand\">Pro</span> resuelven problemas reales",
@@ -164,16 +235,42 @@ const I18N = {
   "rule2p": "Cero comisiones por venta y cero cajero central: cada creador cobra directo con su propia pasarela. Tu dinero nunca pasa por manos ajenas.",
   "rule3t": "Precio de barrio",
   "rule3p": "Herramientas pensadas para el bolsillo del emprendedor latino: una sola función, hecha perfecta, a precio justo.",
-  "creatorK": "¿ERES CREADOR?",
-  "creatorT": "¿Tienes una micro app que resuelve un problema de nicho?",
-  "creatorP": "ProPlaza abrirá sus puestos a <strong>creadores seleccionados</strong>: los que construyen herramientas pequeñas y honestas, cobran por membresía fija (sin comisiones por tus ventas) y mantienen el control total de su dinero. Si tu app encaja en la plaza, escríbenos.",
-  "creatorLabel": "Postula tu app:",
+  "crKicker": "EL PUESTO EN LA PLAZA",
+  "crTitle": "¿Eres creador de una micro app?",
+  "crSub": "Si tu app resuelve un problema real de un nicho real, la plaza te abre sus puertas. Postula — revisamos cada aplicación en menos de 48 horas.",
+  "crIncludes": "El puesto incluye",
+  "crInc1": "Puesto destacado en la vitrina, organizado por nicho y problema",
+  "crInc2": "Enlace directo a tu landing: cobras con tu propia pasarela, cero comisiones nuestras",
+  "crInc3": "Visibilidad ante emprendedores latinos que buscan soluciones reales",
+  "crInc4": "Ficha bilingüe (ES/EN) con tu marca y tu precio",
+  "crHow": "Cómo funciona",
+  "crHow1": "Postulas tu app con el formulario de abajo.",
+  "crHow2": "Verificamos que funcione y que encaje en la plaza (máx. 48 h).",
+  "crHow3": "Si entras, activas tu puesto pagando la membresía mensual. Listo.",
+  "crPriceL": "Membresía del puesto",
+  "crPrice": "USD 30 / mes · USD 75 / trimestre",
+  "formKicker": "POSTULA TU APP",
+  "formTitle": "Cuéntanos de tu micro app",
+  "fNombre": "Tu nombre *", "phNombre": "¿Quién eres?",
+  "fEmail": "Tu correo *",
+  "fApp": "Nombre de tu app *",
+  "fDemo": "Link de demo (opcional)",
+  "fProblema": "¿Qué problema resuelve? *",
+  "phProblema": "Describe el problema y tu solución en 2-3 líneas…",
+  "fConsent": "Acepto los <a href=\"terminos-anunciante-proplaza.html\" target=\"_self\" class=\"underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\">Términos del anunciante</a> *",
+  "fSend": "Enviar postulación",
+  "fSending": "Enviando…",
+  "fOk": "¡Postulación recibida! Te contactamos en menos de 48 horas.",
+  "fErr": "No se pudo enviar. Escríbenos a promptmagnate.app+proplaza@gmail.com",
   "f1": "© 2026 ProPlaza · La vitrina de Magnate Core · Un producto de PromptMagnate Lab",
   "f2": "Contacto:",
-  "f3": "Términos"
+  "f3": "Términos",
+  "f4": "Privacidad",
+  "fDisc": "ProPlaza es un directorio publicitario independiente: las apps de terceros son operadas y facturadas por sus creadores. La plaza no procesa sus pagos ni custodia fondos."
 },
   en: {
   "tagline": "Niche apps · no middlemen",
+  "navApps": "Apps", "navCreators": "For creators", "navTerms": "Terms",
   "navCreator": "Are you a creator?",
   "kicker": "MICRO APPS FOR REAL PROBLEMS",
   "heroTitle": "The plaza where <span class=\"text-brand\">Pro</span> apps solve real problems",
@@ -194,13 +291,38 @@ const I18N = {
   "rule2p": "Zero sales commissions and zero central cashier: every creator collects directly through their own gateway. Your money never passes through someone else's hands.",
   "rule3t": "Neighborhood pricing",
   "rule3p": "Tools priced for the Latin entrepreneur's pocket: one function, done perfectly, at a fair price.",
-  "creatorK": "ARE YOU A CREATOR?",
-  "creatorT": "Got a micro app that solves a niche problem?",
-  "creatorP": "ProPlaza will open its stalls to <strong>selected creators</strong>: those who build small, honest tools, charge a fixed membership (no commissions on your sales) and keep full control of their money. If your app fits the plaza, write to us.",
-  "creatorLabel": "Submit your app:",
+  "crKicker": "YOUR STALL IN THE PLAZA",
+  "crTitle": "Are you a micro app creator?",
+  "crSub": "If your app solves a real problem for a real niche, the plaza opens its doors. Apply — we review every application within 48 hours.",
+  "crIncludes": "The stall includes",
+  "crInc1": "Featured spot in the showcase, organized by niche and problem",
+  "crInc2": "Direct link to your landing: you collect through your own gateway, zero commissions from us",
+  "crInc3": "Visibility among Latin entrepreneurs looking for real solutions",
+  "crInc4": "Bilingual (ES/EN) listing with your brand and your price",
+  "crHow": "How it works",
+  "crHow1": "Submit your app with the form below.",
+  "crHow2": "We verify it works and fits the plaza (max. 48 h).",
+  "crHow3": "If accepted, you activate your stall by paying the monthly membership. Done.",
+  "crPriceL": "Stall membership",
+  "crPrice": "USD 30 / month · USD 75 / quarter",
+  "formKicker": "SUBMIT YOUR APP",
+  "formTitle": "Tell us about your micro app",
+  "fNombre": "Your name *", "phNombre": "Who are you?",
+  "fEmail": "Your email *",
+  "fApp": "Your app's name *",
+  "fDemo": "Demo link (optional)",
+  "fProblema": "What problem does it solve? *",
+  "phProblema": "Describe the problem and your solution in 2-3 lines…",
+  "fConsent": "I accept the <a href=\"terminos-anunciante-proplaza.html\" target=\"_self\" class=\"underline decoration-brand underline-offset-2 font-medium text-navy hover:text-brand transition\">Advertiser Terms</a> *",
+  "fSend": "Submit application",
+  "fSending": "Sending…",
+  "fOk": "Application received! We will reach out within 48 hours.",
+  "fErr": "Could not send. Write to us at promptmagnate.app+proplaza@gmail.com",
   "f1": "© 2026 ProPlaza · The Magnate Core showcase · A PromptMagnate Lab product",
   "f2": "Contact:",
-  "f3": "Terms"
+  "f3": "Terms",
+  "f4": "Privacy",
+  "fDisc": "ProPlaza is an independent advertising directory: third-party apps are operated and billed by their creators. The plaza does not process their payments or hold funds."
 }
 };
 let lang = 'es';
@@ -215,6 +337,10 @@ function applyLang(){
     const k = el.getAttribute('data-i18n');
     if (I18N[lang][k] !== undefined) el.innerHTML = I18N[lang][k];
   });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.getAttribute('data-i18n-ph');
+    if (I18N[lang][k] !== undefined) el.placeholder = I18N[lang][k];
+  });
   document.getElementById('langBtn').textContent = lang === 'es' ? '🇪🇸 ES' : '🇬🇧 EN';
   document.documentElement.lang = lang;
   fixEmails();
@@ -225,6 +351,44 @@ window.toggleLang = function(){
   applyLang();
 };
 applyLang();
+
+/* ── Postulación → webhook (Activepieces "ProPlaza — Postulaciones") ── */
+document.getElementById('postForm').addEventListener('submit', async function(e){
+  e.preventDefault();
+  var st = document.getElementById('formStatus');
+  var btn = document.getElementById('pSend');
+  if (W.indexOf('PONER_') === 0) {
+    st.textContent = 'Configuración pendiente: webhook de postulación no instalado.';
+    st.className = 'text-sm font-semibold text-red-600';
+    st.classList.remove('hidden');
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = I18N[lang]['fSending'] || 'Enviando…';
+  var payload = {
+    evento: 'POSTULACION_PROPLAZA',
+    nombre: document.getElementById('pNombre').value.trim(),
+    email: document.getElementById('pEmail').value.trim(),
+    app: document.getElementById('pApp').value.trim(),
+    demo: document.getElementById('pDemo').value.trim(),
+    problema: document.getElementById('pProblema').value.trim(),
+    idioma: lang
+  };
+  try {
+    var r = await fetch(W, {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)});
+    if (!r.ok) throw new Error('http '+r.status);
+    st.textContent = I18N[lang]['fOk'];
+    st.className = 'text-sm font-semibold text-emerald-700';
+    st.classList.remove('hidden');
+    document.getElementById('postForm').reset();
+  } catch(err) {
+    st.textContent = I18N[lang]['fErr'];
+    st.className = 'text-sm font-semibold text-red-600';
+    st.classList.remove('hidden');
+  }
+  btn.disabled = false;
+  applyLang();
+});
 })();
 </script>
 </body>
