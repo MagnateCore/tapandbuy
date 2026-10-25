@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ProPlaza — Apps Pro para emprendedores de nicho</title>
-<meta name="description" content="Vitrina curada de micro apps que resuelven problemas reales: cobrar deudas sin pena, calcular tela, costos de importación de China y agenda de citas. Sin comisiones por venta: cada creador cobra directo.">
+<meta name="description" content="Micro apps para problemas reales: cobrar deudas sin pena, calcular tela, costos de importación de China y agenda de citas. Sin comisiones por venta: cada creador cobra directo.">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = { theme: { extend: {
@@ -16,7 +16,7 @@ tailwind.config = { theme: { extend: {
 <style>
   body{font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
   .card{transition:transform .12s ease,box-shadow .12s ease}
-  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(52,73,94,.14)}
+  @media (hover:hover){.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(52,73,94,.14)}}
   .kicker{letter-spacing:.25em}
 </style>
 <base target="_blank">
@@ -41,7 +41,7 @@ tailwind.config = { theme: { extend: {
 </header>
 
 <section class="max-w-3xl mx-auto px-5 pt-14 pb-8 text-center">
-  <p class="text-[11px] font-bold uppercase kicker text-brand mb-4" data-i18n="kicker">LA VITRINA CURADA DE MICRO APPS</p>
+  <p class="text-[11px] font-bold uppercase kicker text-brand mb-4" data-i18n="kicker">MICRO APPS PARA PROBLEMAS REALES</p>
   <h1 class="font-display text-4xl md:text-5xl font-bold leading-[1.08] tracking-tight text-navy" data-i18n="heroTitle">
     La plaza donde las apps <span class="text-brand">Pro</span> resuelven problemas reales
   </h1>
@@ -56,6 +56,7 @@ tailwind.config = { theme: { extend: {
 
   <div class="grid md:grid-cols-2 gap-5">
 
+    <!-- CobradorPro -->
     <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
       <div class="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center mb-4">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3AAFA9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-8.5 8.5 8.5 8.5 0 01-3.8-.9L3 21l1.9-5.7a8.5 8.5 0 118.6-3.8"/></svg>
@@ -69,6 +70,7 @@ tailwind.config = { theme: { extend: {
       </div>
     </div>
 
+    <!-- CortePro -->
     <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
       <div class="w-11 h-11 rounded-2xl bg-miel/10 flex items-center justify-center mb-4">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E8B04B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 8.5L20 20M8.5 15.5L20 4"/></svg>
@@ -82,6 +84,7 @@ tailwind.config = { theme: { extend: {
       </div>
     </div>
 
+    <!-- ImportaPro -->
     <div class="card rounded-3xl bg-white border border-slate-200/70 p-7 flex flex-col">
       <div class="w-11 h-11 rounded-2xl bg-navy/5 flex items-center justify-center mb-4">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34495E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><path d="M3.3 7l8.7 5 8.7-5M12 22V12"/></svg>
@@ -104,7 +107,7 @@ tailwind.config = { theme: { extend: {
     <h2 class="font-display text-2xl md:text-3xl font-bold relative mb-8 text-center" data-i18n="rulesTitle">Las reglas de la plaza</h2>
     <div class="grid md:grid-cols-3 gap-6 relative">
       <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
-        <p class="font-display font-bold text-brand-light mb-1.5" data-i18n="rule1t">Curada, no saturada</p>
+        <p class="font-display font-bold text-brand-light mb-1.5" data-i18n="rule1t">Menos, pero mejor</p>
         <p class="text-sm text-slate-300 leading-relaxed" data-i18n="rule1p">Cada app entra por resolver un problema real de un nicho real. Nada de catálogos infinitos donde lo bueno se ahoga.</p>
       </div>
       <div class="rounded-2xl bg-white/5 border border-white/10 p-6">
@@ -144,7 +147,7 @@ const I18N = {
   es: {
   "tagline": "Apps de nicho · sin intermediarios",
   "navCreator": "¿Eres creador?",
-  "kicker": "LA VITRINA CURADA DE MICRO APPS",
+  "kicker": "MICRO APPS PARA PROBLEMAS REALES",
   "heroTitle": "La plaza donde las apps <span class=\"text-brand\">Pro</span> resuelven problemas reales",
   "heroSub": "Herramientas pequeñas, precisas y en tu idioma — cada una diseñada para <strong>un solo problema de un solo nicho</strong>. Sin comisiones por venta: cada creador cobra directo a su nombre.",
   "secTitle": "Identifica tu cuello de botella",
@@ -157,7 +160,7 @@ const I18N = {
   "descImp": "¿Importas de China y no sabes tu costo real? De los yuanes del proveedor al precio final sugerido, con envío, comisión y tu margen real.",
   "cta": "Ver app →",
   "rulesTitle": "Las reglas de la plaza",
-  "rule1t": "Curada, no saturada",
+  "rule1t": "Menos, pero mejor",
   "rule1p": "Cada app entra por resolver un problema real de un nicho real. Nada de catálogos infinitos donde lo bueno se ahoga.",
   "rule2t": "Soberanía total",
   "rule2p": "Cero comisiones por venta y cero cajero central: cada creador cobra directo con su propia pasarela. Tu dinero nunca pasa por manos ajenas.",
@@ -174,7 +177,7 @@ const I18N = {
   en: {
   "tagline": "Niche apps · no middlemen",
   "navCreator": "Are you a creator?",
-  "kicker": "THE CURATED MICRO APPS SHOWCASE",
+  "kicker": "MICRO APPS FOR REAL PROBLEMS",
   "heroTitle": "The plaza where <span class=\"text-brand\">Pro</span> apps solve real problems",
   "heroSub": "Small, precise tools in your language — each one built for <strong>one problem in one niche</strong>. No sales commissions: every creator gets paid directly, in their own name.",
   "secTitle": "Identify your bottleneck",
@@ -184,10 +187,10 @@ const I18N = {
   "catCor": "Sewing & workshops",
   "descCor": "Cut fabric and lose money eyeballing it? Calculate exact materials for your garments and quote with real margin in seconds.",
   "catImp": "Importing",
-  "descImp": "Importing from China without knowing your real cost? From your supplier's yuanes to the suggested final price, with shipping, fees and your real margin.",
+  "descImp": "Importing from China without knowing your real cost? From your supplier's price in yuan to the suggested final price, with shipping, fees and your real margin.",
   "cta": "See app →",
   "rulesTitle": "The rules of the plaza",
-  "rule1t": "Curated, not crowded",
+  "rule1t": "Less, but better",
   "rule1p": "Every app gets in by solving a real problem for a real niche. No infinite catalogs where the good stuff drowns.",
   "rule2t": "Full sovereignty",
   "rule2p": "Zero sales commissions and zero central cashier: every creator collects directly through their own gateway. Your money never passes through someone else's hands.",
