@@ -158,6 +158,12 @@ tailwind.config = { theme: { extend: {
         <span class="text-sm text-slate-500" data-i18n="crPriceL">Membresía del puesto</span>
         <span class="font-display font-bold text-navy text-lg" data-i18n="crPrice">USD 30 / mes · USD 75 / trimestre</span>
       </div>
+      <!-- NOWPAYMENTS: membresía mensual (iid=6231395774) y trimestral (iid=4893303669). IPN de estos links debe apuntar al flujo "ProPlaza — Membresías". -->
+      <div class="mt-4 flex flex-col sm:flex-row gap-2.5">
+        <a href="https://nowpayments.io/payment/?iid=6231395774" target="_blank" class="flex-1 text-center rounded-xl bg-navy hover:bg-navy-dark text-white text-sm font-semibold px-4 py-3 transition" data-i18n="crBtnM">Pagar USD 30 / mes →</a>
+        <a href="https://nowpayments.io/payment/?iid=4893303669" target="_blank" class="flex-1 text-center rounded-xl border-2 border-navy text-navy text-sm font-semibold px-4 py-3 hover:bg-navy hover:text-white transition" data-i18n="crBtnT">Pagar USD 75 / trimestre →</a>
+      </div>
+      <p class="mt-2.5 text-[11px] text-slate-400 leading-snug" data-i18n="crPayNote">Para creadores ya aceptados: el pago activa tu puesto. Si aún no postulas, usa el formulario — verificamos tu app primero.</p>
     </div>
   </div>
 
@@ -210,7 +216,7 @@ tailwind.config = { theme: { extend: {
 (function(){
 'use strict';
 // REEMPLAZO ÚNICO: pegar aquí la URL del webhook del flujo "ProPlaza — Postulaciones" (termina en /sync)
-var W='PONER_WEBHOOK_POSTULACION';
+var W='https://cloud.activepieces.com/api/v1/webhooks/sFzMIREE8VRe9nn4nW9JP/sync'; // ✅ flujo ProPlaza — Postulaciones (25 oct 2026)
 const I18N = {
   es: {
   "tagline": "Apps de nicho · sin intermediarios",
@@ -249,6 +255,9 @@ const I18N = {
   "crHow3": "Si entras, activas tu puesto pagando la membresía mensual. Listo.",
   "crPriceL": "Membresía del puesto",
   "crPrice": "USD 30 / mes · USD 75 / trimestre",
+  "crBtnM": "Pagar USD 30 / mes →",
+  "crBtnT": "Pagar USD 75 / trimestre →",
+  "crPayNote": "Para creadores ya aceptados: el pago activa tu puesto. Si aún no postulas, usa el formulario — verificamos tu app primero.",
   "formKicker": "POSTULA TU APP",
   "formTitle": "Cuéntanos de tu micro app",
   "fNombre": "Tu nombre *", "phNombre": "¿Quién eres?",
@@ -305,6 +314,9 @@ const I18N = {
   "crHow3": "If accepted, you activate your stall by paying the monthly membership. Done.",
   "crPriceL": "Stall membership",
   "crPrice": "USD 30 / month · USD 75 / quarter",
+  "crBtnM": "Pay USD 30 / month →",
+  "crBtnT": "Pay USD 75 / quarter →",
+  "crPayNote": "For accepted creators: payment activates your stall. If you have not applied yet, use the form — we verify your app first.",
   "formKicker": "SUBMIT YOUR APP",
   "formTitle": "Tell us about your micro app",
   "fNombre": "Your name *", "phNombre": "Who are you?",
