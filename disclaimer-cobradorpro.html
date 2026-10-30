@@ -25,11 +25,10 @@
   .foot { margin-top:2rem; font-size:.75rem; color:#94a3b8; text-align:center; }
 </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 <div class="wrap">
-  <button class="langbtn" id="langBtn" onclick="toggleLang()">EN</button>
+  <button class="langbtn" id="langBtn" onclick="toggleLang()">🇪🇸 ES</button>
   <div class="brand"><div class="logo">&#9889;</div><span>Cobrador<span style="color:#3AAFA9">Pro</span></span></div>
 
   <!-- ══════ ESPAÑOL ══════ -->
@@ -74,8 +73,8 @@
 document.querySelectorAll("a.mp").forEach(function(a){a.href="mailto:"+a.dataset.u+"@"+a.dataset.d;if(a.textContent.indexOf("@")===-1)a.textContent=a.dataset.u+"@"+a.dataset.d;});
 function toggleLang(){
   var es=document.getElementById('lang-es'), en=document.getElementById('lang-en'), b=document.getElementById('langBtn');
-  if(es.style.display==='none'){es.style.display='block';en.style.display='none';b.textContent='EN';document.title='CobradorPro — Aviso Legal y Privacidad';}
-  else{es.style.display='none';en.style.display='block';b.textContent='ES';document.title='CobradorPro — Legal Notice and Privacy';}
+  if(es.style.display==='none'){es.style.display='block';en.style.display='none';b.textContent='🇪🇸 ES';document.title='CobradorPro — Aviso Legal y Privacidad';}
+  else{es.style.display='none';en.style.display='block';b.textContent='🇬🇧 EN';document.title='CobradorPro — Legal Notice and Privacy';}
 }
 </script>
 </body>
